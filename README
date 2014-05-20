@@ -1,1 +1,3 @@
 Remake of popular Battle City game written in C programming language using ncurses library.
+
+If using on linux, please set linker options to link ncurses library

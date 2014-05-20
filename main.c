@@ -1,4 +1,15 @@
+//windows only
+#ifdef _WIN32
 #include <curses.h>
+#endif
+
+//linux only
+#ifndef _WIN32
+#include <ncurses.h>
+#include "kbhit_linux.h"
+#endif
+
+
 #include <time.h>
 
 #include "global.h"
