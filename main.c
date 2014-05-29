@@ -15,7 +15,8 @@
 #include "global.h"
 #include "kletve.h"
 #include "editor.h"
-//#include "engine.h"
+#include "engine.h"
+#include "gameloop.h"
 
 int main(int argc, char **argv)
 {
@@ -24,9 +25,10 @@ int main(int argc, char **argv)
 
     print_border(MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
     load_editor();
-    getch();
-    load_map();
-    print_map();
+//    getch();
+//    load_map("Level0x01.map");
+//    print_map();
+    chose_level();
     getch();
     kill_curses();
 

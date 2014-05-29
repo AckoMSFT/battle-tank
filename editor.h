@@ -15,10 +15,10 @@ void print_editor()
     print_tank(UP,MAP_OFFSET_X+tank_x,MAP_OFFSET_Y+tank_y);
     print_base(MAP_OFFSET_X+base_x,MAP_OFFSET_Y+base_y);
 }
-void save_editor()
+void save_editor(char * mapFile)
 {
    int i,j;
-   FILE * output_file = fopen(level_name, "w");
+   FILE * output_file = fopen(mapFile, "w");
     for(i=0;i<MAP_SIZE;i++)
     {
         for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
@@ -128,7 +128,7 @@ void load_editor()
       }
       if(get_me_out_of_here==1)
       {
-          save_editor();
+          save_editor("Level0x01.map");
           break;
       }
       else if(get_me_out_of_here==2) break;

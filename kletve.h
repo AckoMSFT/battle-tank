@@ -172,11 +172,11 @@ void kill_curses(void)
     endwin();
 }
 
-void load_map(void)
+void load_map(char * mapFile)
 {
     int i, j;
     char buffer;
-    FILE * input_file = fopen("Level0x0.txt", "r");
+    FILE * input_file = fopen(mapFile, "r");
     for (i = 0; i < MAP_SIZE; i++)
     {
         for (j = 0; j < MAP_SIZE; j++) fscanf(input_file, "%c", &map[i][j]);
