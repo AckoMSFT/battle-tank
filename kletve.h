@@ -185,13 +185,18 @@ void load_map(char * mapFile)
     {
         for (j = 0; j < MAP_SIZE; j++) {
                 //add frame to map
-                if (i==0 || j==0 || i +1 == MAP_SIZE || j+1 == MAP_SIZE){
+                if (i==0 || j==0 || i == MAP_SIZE -1 || j == MAP_SIZE -1){
                     map[i][j] = FRAME;
+                    if (DEBUG){
+                        move (10,50 );
+                        printw("frame at %d %d",i,j);
+
+                    }
                     continue;
                 }
                 fscanf(input_file, "%c", &map[i][j]);
         }
-        fscanf(input_file, "%c", &buffer);
+        if (i) fscanf(input_file, "%c", &buffer);
     }
     //print_border(MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
 }
@@ -204,10 +209,14 @@ void print_map(void)
     base_x = -1;
     base_y = -1;
 
+    print_border(MAP_OFFSET_X, MAP_OFFSET_Y , MAP_OFFSET_X + MAP_SIZE-1, MAP_OFFSET_Y + MAP_SIZE-1);
+
     //lets print the elements of map
-    for (i = 0; i < MAP_SIZE; i++)
-        for (j = 0; j < MAP_SIZE; j++)
+    for (i = 0; i <= MAP_SIZE; i++)
+        for (j = 0; j <= MAP_SIZE; j++)
         {
+
+
             switch (map[i][j])
             {
                 case EMPTY:
@@ -227,9 +236,11 @@ void print_map(void)
 //                    break;
                 case BASE:
                     if (base_x == -1) base_x = i, base_y = j;
+                case FRAME:
+                    break;
             }
         }
-    print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y);
+    print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
 
     //print my tank
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
