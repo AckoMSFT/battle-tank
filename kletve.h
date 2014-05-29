@@ -105,6 +105,12 @@ void print_tank(int dir, int y, int x)
     }
 }
 
+void print_bullet(int y, int x)
+{
+    move(y, x);
+    printw("+");
+}
+
 void print_empty(int y, int x)
 {
     move(y, x);
@@ -183,9 +189,17 @@ void load_map(char * mapFile)
     FILE * input_file = fopen(mapFile, "r");
     for (i = 0; i < MAP_SIZE; i++)
     {
-        for (j = 0; j < MAP_SIZE; j++) fscanf(input_file, "%c", &map[i][j]);
+        for (j = 0; j < MAP_SIZE; j++) {
+                //add frame to map
+                if (i==0 || j==0 || i +1 == MAP_SIZE || j+1 == MAP_SIZE){
+                    map[i][j] = FRAME;
+                    continue;
+                }
+                fscanf(input_file, "%c", &map[i][j]);
+        }
         fscanf(input_file, "%c", &buffer);
     }
+    //print_border(MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
 }
 
 void print_map(void)
@@ -238,7 +252,7 @@ void print_map(void)
     //now print the bullets
     for (i = 0 ; i < MAXSPRITES; i++){
         if (bullets[i].val){
-            //print bullets !!!
+            print_bullet(bullets[i].x,bullets[i].y);
 
         }
 

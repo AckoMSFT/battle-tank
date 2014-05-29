@@ -27,6 +27,7 @@
 #define EMPTY '.'
 #define STEEL 'S'
 #define BRICK 'B'
+#define FRAME 'F'
 
 //game config options
 #define DEBUG 0
@@ -49,6 +50,6 @@ Bullet bullets[ MAXSPRITES ];
 
 int gameOver;
 
-char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' }, level_name[] = "Level0x01.txt"; // level name currently not used, and it shouldnt be used.
+char map[MAP_SIZE+2][MAP_SIZE+2], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' }, level_name[] = "Level0x01.txt"; // level name currently not used, and it shouldnt be used.
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 #endif // GLOBAL_H_INCLUDED
