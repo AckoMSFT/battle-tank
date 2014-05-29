@@ -15,6 +15,7 @@
 #include "global.h"
 #include "kletve.h"
 #include "editor.h"
+//#include "engine.h"
 
 int main(int argc, char **argv)
 {

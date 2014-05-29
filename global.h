@@ -13,6 +13,7 @@
 #define  DOWN 1
 #define  LEFT 2
 #define RIGHT 3
+#define SPACE ' '
 
 #define MAP_OFFSET_X 1
 #define MAP_OFFSET_Y 1
@@ -26,7 +27,18 @@
 #define STEEL 'S'
 #define BRICK 'B'
 
+typedef struct
+{
+    int x, y, dir;
+}Tank;
+Tank *tank[ 20 ] = { 0 };
+
+typedef struct
+{
+    int x, y, dir;
+}Bullet;
+Bullet *bullets[ 20 ] = { 0 };
+
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' }, level_name[] = "Level0x01.txt";
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
-
 #endif // GLOBAL_H_INCLUDED

@@ -1,3 +1,6 @@
+#ifndef ENGINE_H_INCLUDED
+#define ENGINE_H_INCLUDED
+
 void go_up( Tank tank )
 {
     int up = tank.x - 1;
@@ -70,3 +73,40 @@ void go_right( Tank tank )
             print_tank( tank.dir, tank.x, tank.y );
         }
 }
+void shoot( Tank tank )
+{
+    int i;
+    for ( i = 0; i < 20; i++)
+        if ( !bullets[ i ] )
+        {
+            bullets[ i ] = malloc( sizeof( Bullet ) );
+            bullets[ i ]->x = tank.x;
+            bullets[ i ]->y = tank.y;
+            bullets[ i ]->dir = tank.dir;
+            break;
+        }
+}
+void update_game()
+{
+    for ( i = 0; i < 20; i++ )
+    if ( !bullets[ i ] )
+        {
+            bullets[ i ].state++;
+            if ( bullets[ i ] == BULLET_SPEED )
+            {
+                bullets[ i ]->state = 0;
+                erase_bullet( bullets[ i ]->x, bullets[ i ]->y );
+                switch ( bullets[ i ]->dir )
+                {
+                    case UP: { bullets[ i ]->x--; print_bullet( bullets[ i ]->x, bullets[ i ]->y ); break; }
+                    case DOWN: { bullets[ i ]->x++; print_bullet( bullets[ i ]->x, bullets[ i ]->y ); break; }
+                    case LEFT: { bullets[ i ]->y--; print_bullet( bullets[ i ]->x, bullets[ i ]->y ); break; }
+                    case RIGHT: { bullets[ i ]->y++; print_bullet( bullets[ i ]->x, bullets[ i ]->y ); break; }
+                }
+            }
+            if ( map[ bullets[ i ]->x ][ bullets[ i ]->y ] == 'T' )
+
+
+        }
+
+#endif // ENGINE_H_INCLUDED
