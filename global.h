@@ -19,6 +19,7 @@
 #define MAP_OFFSET_Y 1
 #define MAP_SIZE 39
 
+//map tile types
 #define  TANK 'T'
 #define  BASE 'X'
 #define WATER 'W'
@@ -27,11 +28,17 @@
 #define STEEL 'S'
 #define BRICK 'B'
 
+//game config options
+#define DEBUG 0
+#define FRAMES_PER_SEC 30
+
 typedef struct
 {
     int x, y, dir;
 }Tank;
 Tank *tank[ 20 ] = { 0 };
+
+Tank myTank = {10,10,0};
 
 typedef struct
 {
@@ -39,6 +46,8 @@ typedef struct
 }Bullet;
 Bullet *bullets[ 20 ] = { 0 };
 
-char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' }, level_name[] = "Level0x01.txt";
+int gameOver;
+
+char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' }, level_name[] = "Level0x01.txt"; // level name currently not used, and it shouldnt be used.
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 #endif // GLOBAL_H_INCLUDED
