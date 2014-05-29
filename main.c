@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     srand(time(NULL));
     init_curses();
 
-    print_border(MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
+
     load_editor();
 //    getch();
 //    load_map("Level0x01.map");

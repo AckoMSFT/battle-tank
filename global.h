@@ -17,7 +17,7 @@
 
 #define MAP_OFFSET_X 1
 #define MAP_OFFSET_Y 1
-#define MAP_SIZE 39
+#define MAP_SIZE 41
 
 //map tile types
 #define  TANK 'T'
@@ -40,7 +40,7 @@ typedef struct
 }Tank;
 Tank tanks[ MAXSPRITES ];
 
-Tank myTank = {10,10,0};
+Tank myTank = {36,13,0,1};
 
 typedef struct
 {
