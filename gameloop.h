@@ -19,8 +19,16 @@ void start_game(){
     /* Convert to local time format. */
     c_time_string = ctime(&current_time);
 
-    int keyPressed;
+    int i,keyPressed;
+
+    //init some elements
     gameOver = 0;
+    for (i=0; i<MAXSPRITES ; i++){
+        tanks[i].val = bullets[i].val = 0;
+
+    }
+
+
     while(!gameOver){
 
         /* Obtain current time as seconds elapsed since the Epoch. */
@@ -43,30 +51,33 @@ void start_game(){
             switch(keyPressed){
 
                 case KEY_RIGHT:
-                    go_right(myTank);
+                    go_right(&myTank);
                     if (DEBUG) {
+                            move(3,50);
                         printw("pressed RIGHT");
                         refresh();
                     }
                     break;
                 case KEY_LEFT:
-                    go_left(myTank);
+                    go_left(&myTank);
                     if (DEBUG) printw("pressed LEFT");
                     break;
                 case KEY_UP:
-                    go_up(myTank);
+                    go_up(&myTank);
                     if (DEBUG) printw("pressed UP");
                     break;
                 case KEY_DOWN:
-                    go_down(myTank);
+                    go_down(&myTank);
                     if (DEBUG) printw("pressed DOWN");
                     break;
                 default:
                     if (DEBUG) printw("pressed %c, but keyright is %c, and keyright == pressed %d",keyPressed,KEY_RIGHT,keyPressed==KEY_RIGHT);
             }
+
+            if (DEBUG ) refresh();
         }
 
-        refresh();
+        print_map();
         Sleep(1000/FRAMES_PER_SEC);
 
 

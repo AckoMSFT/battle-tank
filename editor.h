@@ -58,7 +58,7 @@ void erase_tank(int x, int y)
     int i,j;
     for (i=0;i<3;i++)
         for (j=0;j<3;j++)
-            editor[i+x][j+y]=EMPTY;
+            map[i+x][j+y]=EMPTY;
 }
 
 void create_cursor(int x, int y)

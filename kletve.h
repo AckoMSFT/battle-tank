@@ -1,5 +1,6 @@
 #ifndef KLETVE_H_INCLUDED
 #define KLETVE_H_INCLUDED
+#define DEBUG 0
 
 void init_curses(void)
 {
@@ -94,7 +95,14 @@ void print_tank(int dir, int y, int x)
         printw("%c%c%c",35,35,35);
         break;
     }
-    refresh();
+
+    if (DEBUG){
+            move(6,50);
+            printw("yep, im printing it.");
+            move(7,50);
+            printw("%d %d",myTank.x,myTank.y);
+
+    }
 }
 
 void print_empty(int y, int x)
@@ -116,7 +124,6 @@ void print_grass(int y, int x)
     attron(COLOR_PAIR(7));
     addch(ACS_CKBOARD);
     attroff((COLOR_PAIR(7)));
-    refresh();
 }
 
 void print_water(int y, int x)
@@ -125,7 +132,6 @@ void print_water(int y, int x)
     attron(COLOR_PAIR(1));
     addch(ACS_CKBOARD);
     attroff((COLOR_PAIR(1)));
-    refresh();
 }
 
 void print_brick(int y, int x)
@@ -134,7 +140,6 @@ void print_brick(int y, int x)
     attron(COLOR_PAIR(2));
     addch(ACS_PLUS);
     attroff((COLOR_PAIR(2)));
-    refresh();
 }
 
 void print_steel(int y, int x)
@@ -143,7 +148,6 @@ void print_steel(int y, int x)
     attron(COLOR_PAIR(3));
     addch(ACS_LANTERN);
     attroff((COLOR_PAIR(3)));
-    refresh();
 }
 
 void print_base(int y, int x)
@@ -191,6 +195,8 @@ void print_map(void)
     tank_y = -1;
     base_x = -1;
     base_y = -1;
+
+    //lets print the elements of map
     for (i = 0; i < MAP_SIZE; i++)
         for (j = 0; j < MAP_SIZE; j++)
         {
@@ -208,15 +214,37 @@ void print_map(void)
                 case STEEL:
                     print_steel(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
-                case TANK:
-                    if (tank_x == -1) tank_x = i, tank_y = j;
-                    break;
+//                case TANK:
+//                    if (tank_x == -1) tank_x = i, tank_y = j;
+//                    break;
                 case BASE:
                     if (base_x == -1) base_x = i, base_y = j;
             }
         }
-    print_tank(UP, tank_x + MAP_OFFSET_X, tank_y + MAP_OFFSET_Y);
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y);
+
+    //print my tank
+    print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
+
+    //now print the tanks
+    for (i = 0 ; i < MAXSPRITES; i++){
+        if (tanks[i].val){
+            print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
+
+        }
+
+    }
+
+    //now print the bullets
+    for (i = 0 ; i < MAXSPRITES; i++){
+        if (bullets[i].val){
+            //print bullets !!!
+
+        }
+
+    }
+
+    refresh();
 }
 
 #endif // KLETVE_H_INCLUDED

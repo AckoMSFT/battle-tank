@@ -30,21 +30,22 @@
 
 //game config options
 #define DEBUG 0
+#define MAXSPRITES 20
 #define FRAMES_PER_SEC 30
 
 typedef struct
 {
-    int x, y, dir;
+    int x, y, dir,val;
 }Tank;
-Tank *tank[ 20 ] = { 0 };
+Tank tanks[ MAXSPRITES ];
 
 Tank myTank = {10,10,0};
 
 typedef struct
 {
-    int x, y, dir;
+    int x, y, dir, state,val;
 }Bullet;
-Bullet *bullets[ 20 ] = { 0 };
+Bullet bullets[ MAXSPRITES ];
 
 int gameOver;
 
