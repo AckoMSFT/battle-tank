@@ -105,12 +105,6 @@ void print_tank(int dir, int y, int x)
     }
 }
 
-void print_bullet(int y, int x)
-{
-    move(y, x);
-    printw("+");
-}
-
 void print_empty(int y, int x)
 {
     move(y, x);
