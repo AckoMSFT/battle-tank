@@ -99,9 +99,7 @@ void load_editor()
 {
     int i,j,c,get_me_out_of_here=0,iter;
     clock_t prev,curr;
-    for (i=0;i<MAP_SIZE;i++)
-        for(j=0;j<MAP_SIZE;j++) editor[i][j]=EMPTY;
-
+    clear_editor();
     print_border(MAP_OFFSET_X, MAP_OFFSET_Y , MAP_OFFSET_X + MAP_SIZE-1, MAP_OFFSET_Y + MAP_SIZE-1);
 
     editor_cursor_x=1;
@@ -129,6 +127,8 @@ void load_editor()
           case 'w': change_size(); break;
           case 'E':
           case 'e': create_cursor(editor_cursor_x,editor_cursor_y); break;
+          case 'G':
+          case 'g': map_generator(15); break;
           case KEY_F(2): get_me_out_of_here=1; break;
           case KEY_F(12): get_me_out_of_here=2; break;
       }
@@ -195,6 +195,45 @@ void change_size()
     editor_cursor_size%=3;
     if(editor_cursor_x+editor_cursor_size>=MAP_SIZE) editor_cursor_size=0;
     if(editor_cursor_y+editor_cursor_size>=MAP_SIZE) editor_cursor_size=0;
+}
+
+void clear_editor()
+{
+    int i,j;
+    for (i=0;i<MAP_SIZE;i++)
+        for(j=0;j<MAP_SIZE;j++) editor[i][j]=EMPTY;
+}
+
+void print_wall(int a, int b)
+{
+    int i,j,x,y,type;
+    x=rand()%(MAP_SIZE-a);
+    y=rand()%(MAP_SIZE-b);
+    type= rand()%6;
+    for (i=0;i<a;i++)
+        for (j=0;j<b;j++)
+    {
+        switch(type)
+        {
+            case 2: editor[x+i][y+j]=WATER; break;
+            case 3: editor[x+i][y+j]=STEEL; break;
+            default: editor[x+i][y+j]=BRICK; break;
+        }
+    }
+}
+
+void map_generator(int n)
+{
+    int i,a,b;
+    clear_editor();
+    for (i=0;i<n;i++)
+    {
+        a=rand()%10+6; b=rand()%2+2;
+        if (rand()%3) print_wall(a,b);
+        else print_wall(b,a);
+    }
+    create_base(36,16);
+    create_tank(37,13);
 }
 
 #endif // EDITOR_H_INCLUDED
