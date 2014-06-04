@@ -111,10 +111,10 @@ void update_bullets() // Updating bullets states and moving them
                     case ( DOWN ):
                         bullets[ i ].x++;
                         break;
-                    case ( LEFT )
+                    case ( LEFT ):
                         bullets[ i ].y--;
                         break;
-                    case ( RIGHT )
+                    case ( RIGHT ):
                         bullets[ i ].y++;
                         break;
                 }
@@ -128,10 +128,10 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
     int i, j;
     for ( i = 0; i < MAXSPRITES; i++ )
         for ( j = 0; j < MAXSPRITES; j++ )
-        if ( ( tank[ i ].x == bullets[ j ].x ) && ( tank[ i ].y == bullets[ i ].y ) )
+        if ( ( tanks[ i ].x == bullets[ j ].x ) && ( tanks[ i ].y == bullets[ i ].y ) )
         {
             bullets[ i ].val = 0;
-            tank[ i ].val = 0;
+            tanks[ i ].val = 0;
         }
     for ( i = 0; i < MAXSPRITES; i++ )
         for ( j = 0; j < MAXSPRITES; j++ )
@@ -146,12 +146,12 @@ void spawn_tank( int x, int y, int dir )
 {
     int i;
     for ( i = 0; i < MAXSPRITES; i++ )
-        if ( !tank[ i ].val )
+        if ( !tanks[ i ].val )
         {
-            tank[ i ].val = 1;
-            tank[ i ].dir = dir;
-            tank[ i ].x = x;
-            tank[ i ].y = y;
+            tanks[ i ].val = 1;
+            tanks[ i ].dir = dir;
+            tanks[ i ].x = x;
+            tanks[ i ].y = y;
             break;
         }
 }
