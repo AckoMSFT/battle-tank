@@ -95,14 +95,6 @@ void print_tank(int dir, int y, int x)
         printw("%c%c%c",35,35,35);
         break;
     }
-
-    if (DEBUG){
-            move(6,50);
-            printw("yep, im printing it.");
-            move(7,50);
-            printw("%d %d",myTank.x,myTank.y);
-
-    }
 }
 
 void print_empty(int y, int x)
@@ -176,29 +168,20 @@ void kill_curses(void)
     endwin();
 }
 
-void load_map(char * mapFile)
+void load_map(char * input_file_name)
 {
     int i, j;
     char buffer;
-    FILE * input_file = fopen(mapFile, "r");
+    FILE * input_file = fopen(input_file_name, "r");
     for (i = 0; i < MAP_SIZE; i++)
     {
-        for (j = 0; j < MAP_SIZE; j++) {
-                //add frame to map
-                if (i==0 || j==0 || i == MAP_SIZE -1 || j == MAP_SIZE -1){
-                    map[i][j] = FRAME;
-                    if (DEBUG){
-                        move (10,50 );
-                        printw("frame at %d %d",i,j);
-
-                    }
-                    continue;
-                }
-                fscanf(input_file, "%c", &map[i][j]);
+        for (j = 0; j < MAP_SIZE; j++)
+        {
+            if (i == 0 || j == 0 || i == MAP_SIZE - 1 || j == MAP_SIZE - 1) map[i][j] = FRAME;
+            else fscanf(input_file, "%c", &map[i][j]);
         }
         if (i) fscanf(input_file, "%c", &buffer);
     }
-    //print_border(MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
 }
 
 void print_map(void)
@@ -208,15 +191,10 @@ void print_map(void)
     tank_y = -1;
     base_x = -1;
     base_y = -1;
-
-    print_border(MAP_OFFSET_X, MAP_OFFSET_Y , MAP_OFFSET_X + MAP_SIZE-1, MAP_OFFSET_Y + MAP_SIZE-1);
-
-    //lets print the elements of map
+    print_border(MAP_OFFSET_X, MAP_OFFSET_Y , MAP_OFFSET_X + MAP_SIZE - 1, MAP_OFFSET_Y + MAP_SIZE - 1);
     for (i = 0; i <= MAP_SIZE; i++)
         for (j = 0; j <= MAP_SIZE; j++)
         {
-
-
             switch (map[i][j])
             {
                 case EMPTY:
@@ -231,9 +209,6 @@ void print_map(void)
                 case STEEL:
                     print_steel(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
-//                case TANK:
-//                    if (tank_x == -1) tank_x = i, tank_y = j;
-//                    break;
                 case BASE:
                     if (base_x == -1) base_x = i, base_y = j;
                 case FRAME:
@@ -241,29 +216,9 @@ void print_map(void)
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
-
-    //print my tank
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
-
-    //now print the tanks
-    for (i = 0 ; i < MAXSPRITES; i++){
-        if (tanks[i].val){
-            print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
-
-        }
-
-    }
-
-    //now print the bullets
-    for (i = 0 ; i < MAXSPRITES; i++){
-        if (bullets[i].val){
-            print_bullet(bullets[i].x,bullets[i].y);
-
-        }
-
-    }
-
+    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
+    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val) print_bullet(bullets[i].x,bullets[i].y);
     refresh();
 }
-
 #endif // KLETVE_H_INCLUDED
