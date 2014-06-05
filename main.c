@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 //    getch();
 //    load_map("Level0x01.map");
 //    print_map();
-    chose_level();
+    choose_level();
     getch();
     kill_curses();
 

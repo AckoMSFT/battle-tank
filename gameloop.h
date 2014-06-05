@@ -2,8 +2,8 @@
 #define GAMELOOP_H_INCLUDED
 #define DEBUG 0
 
-void chose_level(){
-    //this is for chosing level, not done yet.
+void choose_level(){
+    //this is for choosing level, not done yet.
 
     load_map("Level0x01.map");
     print_map();
