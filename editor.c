@@ -238,7 +238,7 @@ void map_generator(int n)
         if (rand()%3) print_wall(a,b);
         else print_wall(b,a);
     }
-    create_base(36,16);
-    create_tank(37,13);
+    create_base(35,15);
+    create_tank(36,12);
 }
 
