@@ -37,6 +37,21 @@
 #define SHOOTSPEED 15
 #define TANKSPEED 15
 
+//difficulty config
+//easy
+#define SPAWNSPEED_EASY 300
+#define ENEMYSHOOTSPEED_EASY 200
+
+//medium
+#define SPAWNSPEED_MEDIUM 200
+#define ENEMYSHOOTSPEED_MEDIUM 100
+
+
+//hard
+#define SPAWNSPEED_HARD 100
+#define ENEMYSHOOTSPEED_HARD 50
+
+
 typedef struct
 {
     int x, y, dir,val, shootState,moveState;
@@ -49,10 +64,17 @@ typedef struct
     int x, y, dir, state,val;
 }Bullet;
 
+typedef struct
+{
+    int spawn,shoot;
+}difficultyConfig;
+
 extern Tank tanks[ MAXSPRITES ];
 extern Tank myTank;
 extern Bullet bullets[ MAXSPRITES ];
 extern int gameOver;
+extern int gameDifficulty;
+extern const difficultyConfig confDiff[3];
 extern char map[MAP_SIZE+2][MAP_SIZE+2], editor[MAP_SIZE][MAP_SIZE], character_map[];
 extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 #endif // GLOBAL_H_INCLUDED

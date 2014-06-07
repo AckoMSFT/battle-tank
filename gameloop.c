@@ -2,11 +2,16 @@
 #include <stdio.h>
 #include <curses.h>
 #include "global.h"
+#include "kletve.h"
+#include "editor.h"
+#include "engine.h"
+#include "gameloop.h"
 
 void choose_level(){
-    //this is for choosing level, not done yet.
+    //this is for choosing level and difficulty, not done yet.
 
     load_map("Level0x01.map");
+    gameDifficulty = 0;
     print_map();
     start_game();
 }
@@ -20,15 +25,15 @@ void start_game(){
     /* Convert to local time format. */
     c_time_string = ctime(&current_time);
 
-    int i,keyPressed;
+    int i,keyPressed,enemySpawn,x,y;
     const int sleepTime = 1000 / FRAMES_PER_SEC;
 
     //init some elements
     gameOver = 0;
     for (i=0; i<MAXSPRITES ; i++){
         tanks[i].val = bullets[i].val = 0;
-
     }
+    enemySpawn = 0;
 
 
     while(!gameOver){
@@ -44,6 +49,7 @@ void start_game(){
         }
         if (kbhit()){
 
+            //get the last pressed key
             while(kbhit()){
                     keyPressed = getch();
             }
@@ -70,6 +76,21 @@ void start_game(){
                 printw("pressed %d, but keyright is %d, and keyright == pressed %d",keyPressed,KEY_RIGHT,keyPressed==KEY_RIGHT);
                 refresh();
             }
+        }
+
+        //check if we should spawn an enemy tank
+        enemySpawn++;
+        if (enemySpawn == confDiff[ gameDifficulty ].spawn){
+            enemySpawn = 0;
+            //find me a spot for new enemy tank
+            find_space_tank(&x,&y);
+
+            //if valid
+            if (x!=-1){
+                spawn_tank(x,y,DOWN);
+
+            }
+
         }
 
         update_states();

@@ -2,6 +2,32 @@
 #include <stdio.h>
 #include <curses.h>
 #include "global.h"
+#include "kletve.h"
+#include "editor.h"
+#include "engine.h"
+#include "gameloop.h"
+
+void find_space_tank(int *x, int *y){
+    int i,j,empty,di,dj;
+    for (i = 0; i < MAP_SIZE-2; i++)
+        for (j = 0; j < MAP_SIZE-2; j++){
+
+            empty = 1;
+            for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+                if (map[i+di][j+dj] !=EMPTY) empty = 0;
+
+            }
+
+            if (empty){
+                x= i;
+                y=j;
+                return;
+            }
+
+        }
+    x = -1;
+    return;
+}
 
 void move_tank ( Tank *tank, int direction){
 
