@@ -44,15 +44,17 @@
 //easy
 #define SPAWNSPEED_EASY 300
 #define ENEMYSHOOTSPEED_EASY 200
+#define RANDOM_EASY 1
 
 //medium
 #define SPAWNSPEED_MEDIUM 200
 #define ENEMYSHOOTSPEED_MEDIUM 100
+#define RANDOM_MEDIUM 0.5
 
 //hard
 #define SPAWNSPEED_HARD 100
 #define ENEMYSHOOTSPEED_HARD 50
-
+#define RANDOM_HARD 0
 
 typedef struct
 {
@@ -69,6 +71,7 @@ typedef struct
 typedef struct
 {
     int spawn,shoot;
+    int (*AI) ();
 }difficultyConfig;
 
 extern Tank tanks[ MAXSPRITES ];
