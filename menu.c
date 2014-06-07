@@ -1,37 +1,13 @@
-#include <curses.h>
+#include "global.h"
 
-/* Prints a menu according to your arguments/parameters,
-   see the README file for more details */
-int
-print_menu (int sty, int x, int alts, int width,
-            char title[], char entries[][100], int start)
+int print_menu (int sty, int x, int number_of_entries, int width, char title[], char entries[][100], int start)
 {
-    /* "i" will be used for printing out a character several times
-       in a row by using for-loops. Later it will also be used
-       to point to elements in "temparray" in order to assign some
-       spaces after the currently selected word, so that the
-       entire menu cell will be highlighted. */
-    /* "j" will be used once by a for-loop when "i" is used elsewhere. */
-    /* "k" is used to point to the different "entries" strings. */
-    /* "blankspace1" and 2 are used for formatting the strings
-       in the menu cells. */
-    /* "currow" contains the currently highlighted row in the menu. */
-    /* "y" will be used to move the cursor in the y-axis. */
-    /* "key" will hold the keycode of the last key you pressed,
-       in order to later compare it for different actions. */
-    /* "temparray" will as previously stated contain the currently
-       selected word in order to highlight it. */
     int i, j, k, blankspace1, blankspace2, currow = start, y = sty, key;
     char temparray[100];
 
-    if (strlen (title) + 2 > width)    /* "width" cannot be less than */
-        width = strlen (title) + 2;    /* the width of the strings    */
-                                        /* plus some space. First      */
-    for (k = 0; k < alts; k++)          /* check the title, then the   */
-    {                                   /* entries.                    */
-        if (strlen (&entries[k][0]) + 2 > width)
-            width = strlen (&entries[k][0]) + 2;
-    }
+    // fix the width if needed
+    width = MAX(strlen(title) + 2, width);
+    for (i = 0; i < number_of_entries; i++) width = MAX(strlen(&entries[i][0]) + 2, width);
 
     k = 0;
     move (y++, x);
@@ -78,7 +54,7 @@ print_menu (int sty, int x, int alts, int width,
     printw ("\n");
     move (y++, x);
 
-    for (j = 0; j < alts - 1; j++)  /* Here, the loop will print all */
+    for (j = 0; j < number_of_entries - 1; j++)  /* Here, the loop will print all */
     {                               /* except the last entry for the */
         addch (ACS_VLINE);          /* menu.                         */
         printw (" %s", &entries[k][0]);
@@ -143,7 +119,7 @@ print_menu (int sty, int x, int alts, int width,
                       x + 1, "%s", temparray);      /* non-highlighted */
                                                     /* entry over the  */
             if (currow == 1)                        /* highlighted one */
-                currow = alts;
+                currow = number_of_entries;
 
             else                /* Change the currently selected entry */
                 currow--;       /* according to the direction given by */
@@ -154,7 +130,7 @@ print_menu (int sty, int x, int alts, int width,
             mvprintw ((sty + 3) + (currow - 1) * 2,
                       x + 1, "%s", temparray);
 
-            if (currow == alts)
+            if (currow == number_of_entries)
                 currow = 1;
 
             else
@@ -163,5 +139,5 @@ print_menu (int sty, int x, int alts, int width,
     }
     while (key != '\n' && key != '\r' && key != 459);
 
-    return currow;  /* The return is the row-number of the selected */
-}                   /* entry. Can be 1 to "alts" (not 0). */
+    return currow - 1;  /* The return is the row-number of the selected */
+}                   /* entry. Can be 1 to "number_of_entries" (not 0). */

@@ -1,9 +1,9 @@
 #include "global.h"
 
-void choose_level(){
+void choose_level(char * level_name){
     //this is for choosing level and difficulty, not done yet.
 
-    load_map("Level0x01.map");
+    load_map(level_name);
     gameDifficulty = 2;
     print_map();
     start_game();

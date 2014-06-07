@@ -96,22 +96,25 @@ void move_down()
         editor_cursor_x++;
 }
 
-void load_editor()
+void load_editor(char * level_name)
 {
     int i,j,c,get_me_out_of_here=0,iter;
+    FILE * input_file = fopen(level_name, "r");
     clock_t prev,curr;
-    clear_editor();
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
-
+    for(i=0;i<MAP_SIZE;i++)
+    {
+        for(j=0;j<MAP_SIZE;j++) fscanf(input_file,"%c",&editor[i][j]);
+        fgetc(input_file);
+    }
+    fclose(input_file);
     editor_cursor_x=0;
     editor_cursor_y=0;
     editor_cursor_id=0;
     create_base(35,15);
     create_tank(36,12);
     print_editor();
-    attron(COLOR_PAIR(3));
-    print_empty(MAP_OFFSET_X+editor_cursor_x,MAP_OFFSET_Y+editor_cursor_y);
-    attroff(COLOR_PAIR(3));
+    draw_cursor();
     while(1)
     {
       c=getch();
@@ -130,12 +133,14 @@ void load_editor()
           case 'e': create_cursor(editor_cursor_x,editor_cursor_y); break;
           case 'G':
           case 'g': map_generator(15); break;
+          case 'n':
+          case 'N': clear_editor(); create_base(35,15); create_tank(36,12); break;
           case KEY_F(2): get_me_out_of_here=1; break;
           case KEY_F(12): get_me_out_of_here=2; break;
       }
       if(get_me_out_of_here==1)
       {
-          save_editor("Level0x01.map");
+          save_editor(level_name);
           break;
       }
       else if(get_me_out_of_here==2) break;
