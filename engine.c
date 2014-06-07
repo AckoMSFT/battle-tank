@@ -214,6 +214,16 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
         {
             bullets[ i ].val = 0;
         }
+
+    for ( i = 0; i < MAXSPRITES; i++ )
+    {
+        if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == BRICK )
+        {
+            map[ bullets[ i ].x ][ bullets[ i ].y ] = EMPTY;
+            bullets[ i ].val = 0;
+        }
+        if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == STEEL ) bullets[ i ].val = 0;
+    }
 }
 
 void spawn_tank( int x, int y, int dir )
