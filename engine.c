@@ -50,7 +50,7 @@ void go_up( Tank *tank )
 {
     int up = tank->x - 1;
     int x = tank->x, y = tank->y;
-    if ( (y >=0 ) && ( mapUsed[ up ][ y ] == 0 ) && ( mapUsed[ up ][ y + 1 ] == 0 ) && ( mapUsed[ up ][ y + 2 ] == 0 ) )
+    if ( (up >=0 ) && ( mapUsed[ up ][ y ] == 0 ) && ( mapUsed[ up ][ y + 1 ] == 0 ) && ( mapUsed[ up ][ y + 2 ] == 0 ) )
         if ( tank->dir == UP )
         {
             tank->x = up;
@@ -65,7 +65,7 @@ void go_down( Tank *tank )
 {
     int down = tank->x + 3;
     int x = tank->x, y = tank->y;
-    if ( (y+2 < MAP_SIZE ) && ( mapUsed[ down ][ y ] == 0 ) && ( mapUsed[ down ][ y + 1 ] == 0 ) && ( mapUsed[ down ][ y + 2 ] == 0 ) )
+    if ( (down < MAP_SIZE ) && ( mapUsed[ down ][ y ] == 0 ) && ( mapUsed[ down ][ y + 1 ] == 0 ) && ( mapUsed[ down ][ y + 2 ] == 0 ) )
 
         if ( tank->dir == DOWN )
         {
@@ -81,7 +81,12 @@ void go_left( Tank *tank )
 {
     int left = tank->y - 1;
     int x = tank->x, y = tank->y;
-    if ( (x >= 0 ) && ( mapUsed[ x ][ left ] == 0 ) && ( mapUsed[ x + 1 ][ left ] == 0 ) && ( mapUsed[ x + 2 ][ left ] == 0 ) )
+    if (1){
+        move(26,50);
+        printw("whats with this? %d %d %d",x, y, left);
+
+    }
+    if ( (left >= 0 ) && ( mapUsed[ x ][ left ] == 0 ) && ( mapUsed[ x + 1 ][ left ] == 0 ) && ( mapUsed[ x + 2 ][ left ] == 0 ) )
         if ( tank->dir == LEFT )
         {
             tank->y = left;
@@ -96,7 +101,7 @@ void go_right( Tank *tank )
 {
     int right = tank->y + 3;
     int x = tank->x, y = tank->y;
-    if ( (x+2 < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) )
+    if ( (right < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) )
         if ( tank->dir == RIGHT )
         {
             tank->y = right - 2;
@@ -149,7 +154,10 @@ void shoot( Tank *tank ) // Spawns new bullet after shoot command
             bullets[ i ].y = y;
             bullets[ i ].dir = tank->dir;
             bullets[ i ].state = 0;
+
+            //tank shouldnt fire to fast, and also shouldnt kill itself by moving to bullet position by accident :D
             tank->shootState = 0;
+            tank->moveState = 0;
             break;
         }
 }
@@ -207,7 +215,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 
 void collision() // Check for collisions of tanks and bullets, respectively bullets and bullets
 {
-    int i, j;
+    int i, j, di, dj;
 
     //check for tank-bullet colisions
     for ( i = 0; i < MAXSPRITES; i++ )
@@ -215,10 +223,13 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             //dont check if not valid
             if (!tanks[ i ].val || !bullets[ j ].val) continue;
 
-            if ( ( tanks[ i ].x == bullets[ j ].x ) && ( tanks[ i ].y == bullets[ i ].y ) )
-            {
-                bullets[ i ].val = 0;
-                tanks[ i ].val = 0;
+            for( di = 0; di < 3; di++) for( dj = 0; dj < 3; dj++){
+
+                if ( ( tanks[ i ].x + di == bullets[ j ].x ) && ( tanks[ i ].y + dj == bullets[ j ].y ) )
+                {
+                    bullets[ i ].val = 0;
+                    tanks[ i ].val = 0;
+                }
             }
     }
 
