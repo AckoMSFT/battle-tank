@@ -31,9 +31,32 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="BattleTank.cbp" />
+		<Unit filename="Level0x01.map" />
+		<Unit filename="README" />
+		<Unit filename="editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor.h" />
+		<Unit filename="engine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="engine.h" />
+		<Unit filename="gameloop.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gameloop.h" />
+		<Unit filename="gameloop.o" />
+		<Unit filename="global.h" />
+		<Unit filename="kbhit_linux.h" />
+		<Unit filename="kletve.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kletve.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="main.o" />
 		<Extensions>
 			<code_completion />
 			<envvars />
