@@ -1,6 +1,9 @@
 #ifndef GLOBAL_H_INCLUDED
 #define GLOBAL_H_INCLUDED
-
+#include <time.h>
+#include <stdio.h>
+#include <curses.h>
+#include <locale.h>
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0600
 #include <windows.h>
@@ -45,7 +48,6 @@
 //medium
 #define SPAWNSPEED_MEDIUM 200
 #define ENEMYSHOOTSPEED_MEDIUM 100
-
 
 //hard
 #define SPAWNSPEED_HARD 100
