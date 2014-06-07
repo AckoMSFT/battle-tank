@@ -9,8 +9,8 @@ void choose_level();
 void start_game();
 
 //AI
-void get_decision_easy(Tank *tank);
-void get_decision_medium(Tank *tank);
-void get_decision_hard(Tank *tank);
+int get_decision_easy(Tank *tank);
+int get_decision_medium(Tank *tank);
+int get_decision_hard(Tank *tank);
 
 #endif // GAMELOOP_H_INCLUDED

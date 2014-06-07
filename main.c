@@ -1,9 +1,4 @@
 #include "global.h"
-#include "kletve.h"
-#include "editor.h"
-#include "engine.h"
-#include "gameloop.h"
-#include "menu.h"`
 //GLOBALS
 
 Tank tanks[ MAXSPRITES ];
@@ -21,7 +16,7 @@ const difficultyConfig confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY},{SP
 
 char main_menu_entries[][100] = {{"Start Game"}, {"Load Level"}, {"Edit Level"}, {"Exit Game"}};
 char sub_menu_entries[][100] = {{"Level 0"}, {"Level 1"}, {"Level 2"}, {"Level 3"}, {"Level 4"}, {"Level 5"}, {"Level 6"}, {"Level 7"}, {"Level 8"}, {"Level 9"}, {"Return"}};
-char level_name[100] = "Level0x0.map";
+char level_name[100] = "Level0x .map";
 
 int main(int argc, char **argv)
 {
