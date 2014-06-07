@@ -1,22 +1,36 @@
+#include <time.h>
+#include <stdio.h>
+
 //windows only
-#ifdef _WIN32
+
 #include <curses.h>
-#endif
+
 
 //linux only
-#ifndef _WIN32
-#include <ncurses.h>
-#include "kbhit_linux.h"
-#endif
+//#ifndef _WIN32
+//#include <ncurses.h>
+//#include "kbhit_linux.h"
+//#endif
 
-
-#include <time.h>
 
 #include "global.h"
 #include "kletve.h"
 #include "editor.h"
 #include "engine.h"
 #include "gameloop.h"
+
+//GLOBALS
+Tank tanks[ MAXSPRITES ];
+Tank myTank = {35,12,1,1,0,0};
+
+Bullet bullets[ MAXSPRITES ];
+
+int gameOver;
+
+char map[MAP_SIZE+2][MAP_SIZE+2], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' };
+int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
+
+
 
 int main(int argc, char **argv)
 {

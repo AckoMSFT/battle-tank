@@ -33,29 +33,26 @@
 #define DEBUG 0
 #define MAXSPRITES 20
 #define FRAMES_PER_SEC 30
-#define BULLETSPEED 5
+#define BULLETSPEED 3
 #define SHOOTSPEED 15
 #define TANKSPEED 15
-
-//this is the ratio between the keyboard ignore time and not-ignore time
-#define KEYBOARD_IGNORE 0.8
 
 typedef struct
 {
     int x, y, dir,val, shootState,moveState;
 }Tank;
-Tank tanks[ MAXSPRITES ];
 
-Tank myTank = {35,12,1,1,0,0};
+
 
 typedef struct
 {
     int x, y, dir, state,val;
 }Bullet;
-Bullet bullets[ MAXSPRITES ];
 
-int gameOver;
-
-char map[MAP_SIZE+2][MAP_SIZE+2], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' }, level_name[] = "Level0x01.txt"; // level name currently not used, and it shouldnt be used.
-int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
+extern Tank tanks[ MAXSPRITES ];
+extern Tank myTank;
+extern Bullet bullets[ MAXSPRITES ];
+extern int gameOver;
+extern char map[MAP_SIZE+2][MAP_SIZE+2], editor[MAP_SIZE][MAP_SIZE], character_map[];
+extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 #endif // GLOBAL_H_INCLUDED
