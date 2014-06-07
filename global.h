@@ -3,7 +3,8 @@
 #include <time.h>
 #include <stdio.h>
 #include <curses.h>
-#include <locale.h>
+
+
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0600
 #include <windows.h>
@@ -80,4 +81,11 @@ extern const difficultyConfig confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
 extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
+
+
+#include "kletve.h"
+#include "editor.h"
+#include "engine.h"
+#include "gameloop.h"
+
 #endif // GLOBAL_H_INCLUDED

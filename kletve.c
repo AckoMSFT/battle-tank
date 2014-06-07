@@ -1,11 +1,4 @@
-#include <time.h>
-#include <stdio.h>
-#include <curses.h>
 #include "global.h"
-#include "kletve.h"
-#include "editor.h"
-#include "engine.h"
-#include "gameloop.h"
 
 void init_curses(void)
 {
@@ -232,6 +225,8 @@ void print_map(void)
     }
 
     for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) {
+
+
 
             print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
 

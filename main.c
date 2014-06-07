@@ -1,8 +1,4 @@
 #include "global.h"
-#include "kletve.h"
-#include "editor.h"
-#include "engine.h"
-#include "gameloop.h"
 //GLOBALS
 
 Tank tanks[ MAXSPRITES ];
