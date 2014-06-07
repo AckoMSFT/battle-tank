@@ -227,6 +227,10 @@ void print_map(void)
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
 
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        mapUsed[myTank.x+di][myTank.y+dj] = 1;
+    }
+
     for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) {
 
             print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);

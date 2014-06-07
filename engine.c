@@ -57,7 +57,7 @@ void go_up( Tank *tank )
 {
     int up = tank->x - 1;
     int x = tank->x, y = tank->y;
-    if ( (y >=0 ) && ( map[ up ][ y ] == EMPTY ) && ( map[ up ][ y + 1 ] == EMPTY ) && ( map[ up ][ y + 2 ] == EMPTY ) )
+    if ( (y >=0 ) && ( mapUsed[ up ][ y ] == 0 ) && ( mapUsed[ up ][ y + 1 ] == 0 ) && ( mapUsed[ up ][ y + 2 ] == 0 ) )
         if ( tank->dir == UP )
         {
             tank->x = up;
@@ -72,7 +72,7 @@ void go_down( Tank *tank )
 {
     int down = tank->x + 3;
     int x = tank->x, y = tank->y;
-    if ( (y+2 < MAP_SIZE ) && ( map[ down ][ y ] == EMPTY ) && ( map[ down ][ y + 1 ] == EMPTY ) && ( map[ down ][ y + 2 ] == EMPTY ) )
+    if ( (y+2 < MAP_SIZE ) && ( mapUsed[ down ][ y ] == 0 ) && ( mapUsed[ down ][ y + 1 ] == 0 ) && ( mapUsed[ down ][ y + 2 ] == 0 ) )
 
         if ( tank->dir == DOWN )
         {
@@ -88,7 +88,7 @@ void go_left( Tank *tank )
 {
     int left = tank->y - 1;
     int x = tank->x, y = tank->y;
-    if ( (x >= 0 ) && ( map[ x ][ left ] == EMPTY ) && ( map[ x + 1 ][ left ] == EMPTY ) && ( map[ x + 2 ][ left ] == EMPTY ) )
+    if ( (x >= 0 ) && ( mapUsed[ x ][ left ] == 0 ) && ( mapUsed[ x + 1 ][ left ] == 0 ) && ( mapUsed[ x + 2 ][ left ] == 0 ) )
         if ( tank->dir == LEFT )
         {
             tank->y = left;
@@ -103,7 +103,7 @@ void go_right( Tank *tank )
 {
     int right = tank->y + 3;
     int x = tank->x, y = tank->y;
-    if ( (x+2 < MAP_SIZE ) && ( map[ x ][ right ] == EMPTY ) && ( map[ x + 1 ][ right ] == EMPTY ) && ( map[ x + 2 ][ right ] == EMPTY ) )
+    if ( (x+2 < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) )
         if ( tank->dir == RIGHT )
         {
             tank->y = right - 2;
