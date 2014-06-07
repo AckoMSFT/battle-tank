@@ -71,7 +71,7 @@ void start_game(){
             }
         }
 
-        update_bullets();
+        update_states();
         collision();
 
         print_map();

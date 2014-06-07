@@ -32,10 +32,10 @@
 //game config options
 #define DEBUG 0
 #define MAXSPRITES 20
-#define FRAMES_PER_SEC 20
-#define BULLETSPEED 3
-#define SHOOTSPEED 10
-#define TANKSPEED 10
+#define FRAMES_PER_SEC 30
+#define BULLETSPEED 5
+#define SHOOTSPEED 15
+#define TANKSPEED 15
 
 //this is the ratio between the keyboard ignore time and not-ignore time
 #define KEYBOARD_IGNORE 0.8
