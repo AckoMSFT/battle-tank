@@ -218,7 +218,16 @@ void print_map(void)
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
     for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
-    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val) print_bullet(bullets[i].x,bullets[i].y);
+    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val) print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
+
+    if (1){
+        move(15,50);
+        printw("mytank coords %d %d",myTank.x,myTank.y);
+        move(16,50);
+        printw("somebullet coords %d %d",bullets[ 0 ].x,bullets[ 0 ].y);
+
+    }
+
     refresh();
 }
 #endif // KLETVE_H_INCLUDED

@@ -208,7 +208,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
 
     //check for bullet-frame collisions
     for ( i = 0; i < MAXSPRITES; i++ )
-        if ( bullets[ i ].x == 0 || bullets[ i ].y == 0 || bullets[ i ].x == MAP_SIZE || bullets[ i ].y == MAP_SIZE  )
+        if ( bullets[ i ].x < 0 || bullets[ i ].y < 0 || bullets[ i ].x >= MAP_SIZE || bullets[ i ].y >= MAP_SIZE  )
         {
             bullets[ i ].val = 0;
         }
