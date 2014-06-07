@@ -9,8 +9,8 @@
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
-#define    UP 0
-#define  DOWN 1
+#define  DOWN 0
+#define    UP 1
 #define  LEFT 2
 #define RIGHT 3
 #define SPACE ' '
@@ -32,16 +32,21 @@
 //game config options
 #define DEBUG 0
 #define MAXSPRITES 20
-#define FRAMES_PER_SEC 10
+#define FRAMES_PER_SEC 20
 #define BULLETSPEED 3
+#define SHOOTSPEED 10
+#define TANKSPEED 10
+
+//this is the ratio between the keyboard ignore time and not-ignore time
+#define KEYBOARD_IGNORE 0.8
 
 typedef struct
 {
-    int x, y, dir,val, shootState;
+    int x, y, dir,val, shootState,moveState;
 }Tank;
 Tank tanks[ MAXSPRITES ];
 
-Tank myTank = {35,12,0,1,0};
+Tank myTank = {35,12,1,1,0,0};
 
 typedef struct
 {

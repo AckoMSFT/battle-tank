@@ -20,6 +20,7 @@ void start_game(){
     c_time_string = ctime(&current_time);
 
     int i,keyPressed;
+    const int sleepTime = 1000 / FRAMES_PER_SEC;
 
     //init some elements
     gameOver = 0;
@@ -42,7 +43,9 @@ void start_game(){
         }
         if (kbhit()){
 
-            keyPressed = getch();
+            while(kbhit()){
+                    keyPressed = getch();
+            }
 
             if (DEBUG) {
                     move(3,50);
@@ -51,42 +54,28 @@ void start_game(){
             switch(keyPressed){
 
                 case KEY_RIGHT:
-                    go_right(&myTank);
-                    if (DEBUG) {
-                            move(3,50);
-                        printw("pressed RIGHT");
-                        refresh();
-                    }
-                    break;
                 case KEY_LEFT:
-                    go_left(&myTank);
-                    if (DEBUG) printw("pressed LEFT");
-                    break;
                 case KEY_UP:
-                    go_up(&myTank);
-                    if (DEBUG) printw("pressed UP");
-                    break;
                 case KEY_DOWN:
-                    go_down(&myTank);
-                    if (DEBUG) printw("pressed DOWN");
+                    move_tank(&myTank, keyPressed - KEY_DOWN);
                     break;
                 case SPACE:
                     shoot(&myTank);
                     break;
-
-                default:
-                    if (DEBUG) printw("pressed %c, but keyright is %c, and keyright == pressed %d",keyPressed,KEY_RIGHT,keyPressed==KEY_RIGHT);
             }
 
-            if (DEBUG ) refresh();
+            if (DEBUG) {
+                move(10,50);
+                printw("pressed %d, but keyright is %d, and keyright == pressed %d",keyPressed,KEY_RIGHT,keyPressed==KEY_RIGHT);
+                refresh();
+            }
         }
 
         update_bullets();
         collision();
 
         print_map();
-        Sleep(1000/FRAMES_PER_SEC);
-
+        Sleep(sleepTime);
 
     }
 

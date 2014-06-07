@@ -1,6 +1,24 @@
 #ifndef ENGINE_H_INCLUDED
 #define ENGINE_H_INCLUDED
 
+void move_tank ( Tank *tank, int direction){
+    switch(direction){
+    case LEFT:
+        go_left(tank);
+        break;
+    case RIGHT:
+        go_right(tank);
+        break;
+    case UP:
+        go_up(tank);
+        break;
+    case DOWN:
+        go_down(tank);
+        break;
+    }
+}
+
+
 void go_up( Tank *tank )
 {
     int up = tank->x - 1;
@@ -66,13 +84,14 @@ void shoot( Tank *tank ) // Spawns new bullet after shoot command
 {
     int i, x, y;
 
+
+    //if this tank shoot BULLETSPEED earlier, just ignore.
+    if (tank->shootState < SHOOTSPEED) return;
+
     if (1) {
             move(3,50);
-            printw("shoot state %d", tank->shootState);
+            printw("shooting from shoot state %d", tank->shootState);
     }
-
-    //if this tank shooted BULLETSPEED earlier, just ignore.
-    if (tank->shootState < BULLETSPEED) return;
 
     //get x, y of a new bullet
     switch( tank->dir ){
@@ -114,12 +133,12 @@ void update_bullets() // Updating bullets states and moving them
 
     //also update the tanks shoot state
     for(i=0; i < MAXSPRITES ; i++){
-        if (tanks[ i ].val && tanks[ i ].shootState < BULLETSPEED){
+        if (tanks[ i ].val && tanks[ i ].shootState < SHOOTSPEED){
             tanks[ i ].shootState++;
         }
     }
     //also for mytank
-    if (myTank.shootState < BULLETSPEED) myTank.shootState++;
+    if (myTank.shootState < SHOOTSPEED) myTank.shootState++;
 
 
     for ( i = 0; i < MAXSPRITES; i++ )
