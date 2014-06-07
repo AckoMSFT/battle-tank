@@ -192,7 +192,7 @@ void load_map(char * input_file_name)
 
 void print_map(void)
 {
-    int i, j;
+    int i, j,di,dj;
     tank_x = -1;
     tank_y = -1;
     base_x = -1;
@@ -204,25 +204,45 @@ void print_map(void)
             switch (map[i][j])
             {
                 case EMPTY:
+                    mapUsed[i][j] = 0;
                     print_empty(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case BRICK:
+                    mapUsed[i][j] = 1;
                     print_brick(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case WATER:
+                    mapUsed[i][j] = 1;
                     print_water(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case STEEL:
+                    mapUsed[i][j] = 1;
                     print_steel(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case BASE:
+                    mapUsed[i][j] = 1;
                     if (base_x == -1) base_x = i, base_y = j;
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
-    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
-    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val) print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
+
+    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) {
+
+            print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
+
+            for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+                mapUsed[tanks[i].x+di][tanks[i].y+dj] = 1;
+            }
+
+    }
+
+    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val) {
+
+            print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
+
+            mapUsed[bullets[i].x][bullets[i].y] = 1;
+    }
 
     if (1){
         move(15,50);

@@ -14,7 +14,7 @@ void find_space_tank(int *x, int *y){
 
             empty = 1;
             for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-                if (map[i+di][j+dj] !=EMPTY) empty = 0;
+                if (mapUsed[i+di][j+dj]) empty = 0;
 
             }
 

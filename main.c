@@ -28,7 +28,8 @@ Bullet bullets[ MAXSPRITES ];
 int gameOver;
 int gameDifficulty;
 
-char map[MAP_SIZE+2][MAP_SIZE+2], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' };
+char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' };
+int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 //configuration for difficulty
 const difficultyConfig confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD}};
