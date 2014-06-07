@@ -1,6 +1,9 @@
 #ifndef ENGINE_H_INCLUDED
 #define ENGINE_H_INCLUDED
 
+//find a first spot ehre a new tank can be put
+void find_space_tank(int *x, int *y);
+
 //move tank at the right direction and chose if we should move the tank at all
 void move_tank ( Tank *tank, int direction);
 
