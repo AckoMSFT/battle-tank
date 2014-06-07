@@ -1,11 +1,4 @@
-#include <time.h>
-#include <stdio.h>
-#include <curses.h>
 #include "global.h"
-#include "kletve.h"
-#include "editor.h"
-#include "engine.h"
-#include "gameloop.h"
 
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
@@ -255,6 +248,12 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
 void spawn_tank( int x, int y, int dir )
 {
     int i;
+
+    if (1){
+        move(22,50);
+        printw("printing enemy tank ! %d",i);
+
+    }
     for ( i = 0; i < MAXSPRITES; i++ )
         if ( !tanks[ i ].val )
         {

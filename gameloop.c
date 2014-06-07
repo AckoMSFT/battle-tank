@@ -1,11 +1,4 @@
-#include <time.h>
-#include <stdio.h>
-#include <curses.h>
 #include "global.h"
-#include "kletve.h"
-#include "editor.h"
-#include "engine.h"
-#include "gameloop.h"
 
 void choose_level(){
     //this is for choosing level and difficulty, not done yet.
