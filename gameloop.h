@@ -2,11 +2,9 @@
 #define GAMELOOP_H_INCLUDED
 #define DEBUG 0
 
-//chose a level than call startgame
-void choose_level();
 
 //start the gameloop
-void start_game();
+void start_game(char *, int);
 
 //AI
 void get_decision_easy(Tank *tank);

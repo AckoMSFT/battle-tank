@@ -1,26 +1,21 @@
 #include "global.h"
 
-void choose_level(char * level_name){
-    //this is for choosing level and difficulty, not done yet.
-
-    load_map(level_name);
-    gameDifficulty = 2;
-}
-
 int get_decision_easy(Tank *tank){
     //0,1,2,3 are directions, 4 is shoot, and 5 is nothing
     return rand()%6;
 }
 
 int get_decision_medium(Tank *tank){
-
+    return rand()%6;
 }
 
 int get_decision_hard(Tank *tank){
+    return rand()%6;
 }
 
-void start_game(){
-
+void start_game(char * level_name, int difficulty){
+    load_map(level_name);
+    gameDifficulty = difficulty;
     time_t current_time;
     char* c_time_string;
     /* Obtain current time as seconds elapsed since the Epoch. */
