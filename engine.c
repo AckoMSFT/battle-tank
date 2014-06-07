@@ -19,8 +19,8 @@ void find_space_tank(int *x, int *y){
             }
 
             if (empty){
-                x= i;
-                y=j;
+                *x= i;
+                *y=j;
                 return;
             }
 
