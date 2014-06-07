@@ -1,13 +1,9 @@
 #include "global.h"
-<<<<<<< HEAD
 #include "kletve.h"
 #include "editor.h"
 #include "engine.h"
 #include "gameloop.h"
-#include "menu.h"
-
-=======
->>>>>>> 2112711169df7651041c898a9ad1ce55ad25a88b
+#include "menu.h"`
 //GLOBALS
 
 Tank tanks[ MAXSPRITES ];
