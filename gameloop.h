@@ -70,12 +70,19 @@ void start_game(){
                     go_down(&myTank);
                     if (DEBUG) printw("pressed DOWN");
                     break;
+                case SPACE:
+                    shoot(&myTank);
+                    break;
+
                 default:
                     if (DEBUG) printw("pressed %c, but keyright is %c, and keyright == pressed %d",keyPressed,KEY_RIGHT,keyPressed==KEY_RIGHT);
             }
 
             if (DEBUG ) refresh();
         }
+
+        update_bullets();
+        collision();
 
         print_map();
         Sleep(1000/FRAMES_PER_SEC);

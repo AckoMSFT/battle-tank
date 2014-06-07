@@ -2,6 +2,7 @@
 #define KLETVE_H_INCLUDED
 #define DEBUG 0
 
+
 void init_curses(void)
 {
     #ifdef _WIN32
@@ -177,11 +178,12 @@ void load_map(char * input_file_name)
     {
         for (j = 0; j < MAP_SIZE; j++)
         {
-            if (i == 0 || j == 0 || i == MAP_SIZE - 1 || j == MAP_SIZE - 1) map[i][j] = FRAME;
-            else fscanf(input_file, "%c", &map[i][j]);
+            fscanf(input_file, "%c", &map[i][j]);
         }
-        if (i) fscanf(input_file, "%c", &buffer);
+        fscanf(input_file, "%c", &buffer);
     }
+
+    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
 }
 
 void print_map(void)
@@ -191,9 +193,9 @@ void print_map(void)
     tank_y = -1;
     base_x = -1;
     base_y = -1;
-    print_border(MAP_OFFSET_X, MAP_OFFSET_Y , MAP_OFFSET_X + MAP_SIZE - 1, MAP_OFFSET_Y + MAP_SIZE - 1);
-    for (i = 0; i <= MAP_SIZE; i++)
-        for (j = 0; j <= MAP_SIZE; j++)
+    //print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
+    for (i = 0; i < MAP_SIZE; i++)
+        for (j = 0; j < MAP_SIZE; j++)
         {
             switch (map[i][j])
             {
@@ -211,8 +213,6 @@ void print_map(void)
                     break;
                 case BASE:
                     if (base_x == -1) base_x = i, base_y = j;
-                case FRAME:
-                    break;
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;

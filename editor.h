@@ -4,8 +4,8 @@
 void print_editor()
 {
     int i,j,tank_x=-1,tank_y=-1,base_x=-1,base_y=-1;
-     for (i=1;i<MAP_SIZE-1;i++)
-        for(j=1;j<MAP_SIZE-1;j++)
+     for (i=0;i<MAP_SIZE;i++)
+        for(j=0;j<MAP_SIZE;j++)
             switch(editor[i][j])
             {
             case BASE: if(base_x==-1)base_x=i,base_y=j; break;
@@ -20,9 +20,9 @@ void save_editor(char * mapFile)
 {
    int i,j;
    FILE * output_file = fopen(mapFile, "w");
-    for(i=1;i<MAP_SIZE -1;i++)
+    for(i=0;i<MAP_SIZE;i++)
     {
-        for(j=1;j<MAP_SIZE -1;j++) fprintf(output_file,"%c",editor[i][j]);
+        for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
         fprintf(output_file,"\n");
     }
     fclose(output_file);
@@ -70,29 +70,30 @@ void create_cursor(int x, int y)
     for (i=0;i<=editor_cursor_size;i++)
         for(j=0;j<=editor_cursor_size;j++)
             editor[x+i][y+j]=character_map[editor_cursor_id];
-    create_base(36,16);
-    create_tank(37,13);
+    create_base(35,15);
+    create_tank(36,12);
 }
 
 void move_right()
 {
-    if (editor_cursor_y+editor_cursor_size<MAP_SIZE-2)
-    editor_cursor_y++;
+    if (editor_cursor_y+editor_cursor_size<MAP_SIZE-1)
+        editor_cursor_y++;
 }
 
 void move_left()
 {
-    if (editor_cursor_y>1) editor_cursor_y--;
+    if (editor_cursor_y>0) editor_cursor_y--;
 }
 
 void move_up()
 {
-    if (editor_cursor_x>1) editor_cursor_x--;
+    if (editor_cursor_x>0) editor_cursor_x--;
 }
 
 void move_down()
 {
-    if (editor_cursor_x+editor_cursor_size<MAP_SIZE-2) editor_cursor_x++;
+    if (editor_cursor_x+editor_cursor_size<MAP_SIZE-1)
+        editor_cursor_x++;
 }
 
 void load_editor()
@@ -100,13 +101,13 @@ void load_editor()
     int i,j,c,get_me_out_of_here=0,iter;
     clock_t prev,curr;
     clear_editor();
-    print_border(MAP_OFFSET_X, MAP_OFFSET_Y , MAP_OFFSET_X + MAP_SIZE-1, MAP_OFFSET_Y + MAP_SIZE-1);
+    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
 
-    editor_cursor_x=1;
-    editor_cursor_y=1;
+    editor_cursor_x=0;
+    editor_cursor_y=0;
     editor_cursor_id=0;
-    create_base(36,16);
-    create_tank(37,13);
+    create_base(35,15);
+    create_tank(36,12);
     print_editor();
     attron(COLOR_PAIR(3));
     print_empty(MAP_OFFSET_X+editor_cursor_x,MAP_OFFSET_Y+editor_cursor_y);

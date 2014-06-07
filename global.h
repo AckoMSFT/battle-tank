@@ -17,7 +17,7 @@
 
 #define MAP_OFFSET_X 1
 #define MAP_OFFSET_Y 1
-#define MAP_SIZE 41
+#define MAP_SIZE 39
 
 //map tile types
 #define  TANK 'T'
@@ -32,15 +32,16 @@
 //game config options
 #define DEBUG 0
 #define MAXSPRITES 20
-#define FRAMES_PER_SEC 30
+#define FRAMES_PER_SEC 10
+#define BULLETSPEED 3
 
 typedef struct
 {
-    int x, y, dir,val;
+    int x, y, dir,val, shootState;
 }Tank;
 Tank tanks[ MAXSPRITES ];
 
-Tank myTank = {36,13,0,1};
+Tank myTank = {35,12,0,1,0};
 
 typedef struct
 {
