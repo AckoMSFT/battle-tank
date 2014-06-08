@@ -222,6 +222,20 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
         {
             map[ bullets[ i ].x ][ bullets[ i ].y ] = EMPTY;
             bullets[ i ].val = 0;
+            // should actually destroy 1x3 instead of 1x1
+            switch (bullets[i].dir)
+            {
+            case UP:
+            case DOWN:
+                if (map[bullets[i].x][bullets[i].y - 1] == BRICK) map[bullets[i].x][bullets[i].y - 1] = EMPTY;
+                if (map[bullets[i].x][bullets[i].y + 1] == BRICK) map[bullets[i].x][bullets[i].y + 1] = EMPTY;
+                break;
+            case LEFT:
+            case RIGHT:
+                if (map[bullets[i].x - 1][bullets[i].y] == BRICK) map[bullets[i].x - 1][bullets[i].y] = EMPTY;
+                if (map[bullets[i].x + 1][bullets[i].y] == BRICK) map[bullets[i].x + 1][bullets[i].y] = EMPTY;
+                break;
+            }
         }
         if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == STEEL ) bullets[ i ].val = 0;
     }
