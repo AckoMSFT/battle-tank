@@ -20,6 +20,16 @@ char difficulties[][100] = {{"Easy"}, {"Medium"}, {"Hard"}};
 
 char level_name[100] = "Level0x0.map";
 
+int read_input(){
+#ifdef _WIN32
+    return getch();
+#else
+    return getchar();
+#endif // _WIN32
+
+}
+
+
 int main(int argc, char **argv)
 {
     int menu_choice, sub_menu_choice, difficulty = 0;

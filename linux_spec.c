@@ -1,10 +1,9 @@
-#ifndef KBHIT_LINUX_H_INCLUDED
-#define KBHIT_LINUX_H_INCLUDED
+#include "global.h"
 
-#include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
-#include <fcntl.h>
+void Sleep(int time){
+
+    usleep(time*1000);
+}
 
 int kbhit(void)
 {
@@ -34,4 +33,3 @@ int kbhit(void)
 }
 
 
-#endif // KBHIT_LINUX_H_INCLUDED
