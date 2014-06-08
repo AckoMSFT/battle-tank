@@ -23,7 +23,8 @@ void init_colors(void)
     init_pair(4, COLOR_BLACK, COLOR_GREEN);
     init_pair(5, COLOR_YELLOW, COLOR_RED);
     init_pair(6, COLOR_BLACK, COLOR_MAGENTA);
-    init_pair(7, COLOR_GREEN, COLOR_BLACK );
+    init_pair(7, COLOR_GREEN, COLOR_BLACK);
+    init_pair(8, COLOR_YELLOW, COLOR_BLACK);
 }
 
 void print_border(int y1, int x1, int y2, int x2)
@@ -57,6 +58,47 @@ void print_border(int y1, int x1, int y2, int x2)
 }
 
 void print_tank(int dir, int y, int x)
+{
+    attron(COLOR_PAIR(8));
+    switch (dir)
+    {
+    case UP:
+        move(y, x);
+        printw("%c",35);addch(ACS_VLINE);printw("%c",35);
+        move(y + 1, x);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        move(y + 2, x);
+        printw("%c",35);printw(" ");printw("%c",35);
+        break;
+    case DOWN:
+        move(y, x);
+        printw("%c",35);printw(" ");printw("%c",35);
+        move(y + 1, x);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        move(y + 2, x);
+        printw("%c",35);addch(ACS_VLINE);printw("%c",35);
+        break;
+    case LEFT:
+        move(y, x);
+        printw("%c%c%c",35,35,35);
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        printw("%c%c%c",35,35,35);
+        break;
+    case RIGHT:
+        move(y, x);
+        printw("%c%c%c",35,35,35);
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        printw("%c%c%c",35,35,35);
+        break;
+    }
+    attroff(COLOR_PAIR(8));
+}
+
+void print_enemy_tank(int dir, int y, int x)
 {
     switch (dir)
     {
@@ -185,7 +227,7 @@ void load_map(char * input_file_name)
 
 void print_map(void)
 {
-    int i, j,di,dj;
+    int i, j, dx, dy;
     tank_x = -1;
     tank_y = -1;
     base_x = -1;
@@ -219,30 +261,22 @@ void print_map(void)
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
+    for (dx = 0; dx < 3; dx++)
+        for (dy = 0; dy < 3; dy++) mapUsed[myTank.x + dx][myTank.y + dy] = 1;
 
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        mapUsed[myTank.x+di][myTank.y+dj] = 1;
+    for (i = 0; i < MAXSPRITES; i++)
+    {
+        if (tanks[i].val == 0) continue;
+        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
+        for (dx = 0; dx < 3; dx++)
+            for (dy = 0; dy < 3; dy++) mapUsed[tanks[i].x + dx][tanks[i].y + dy] = 1;
     }
-
-    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val) {
-
-
-
-            print_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
-
-            for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-                mapUsed[tanks[i].x+di][tanks[i].y+dj] = 1;
-            }
-
+    for (i = 0; i < MAXSPRITES; i++)
+    {
+        if (bullets[i].val == 0) continue;
+        print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
+        mapUsed[bullets[i].x][bullets[i].y] = 1;
     }
-
-    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val) {
-
-            print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
-
-            mapUsed[bullets[i].x][bullets[i].y] = 1;
-    }
-
     if (1){
         move(15,50);
         printw("mytank coords %d %d",myTank.x,myTank.y);
@@ -250,6 +284,5 @@ void print_map(void)
         printw("somebullet coords %d %d",bullets[ 0 ].x,bullets[ 0 ].y);
 
     }
-
     refresh();
 }

@@ -14,6 +14,9 @@ void print_border(int y1, int x1, int y2, int x2);
 //print tank with this coords and direction
 void print_tank(int dir, int y, int x);
 
+//print tank with this coords and direction
+void print_enemy_tank(int dir, int y, int x);
+
 //print specific fields
 void print_empty(int y, int x);
 
