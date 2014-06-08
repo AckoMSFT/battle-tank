@@ -1,5 +1,38 @@
 #include "global.h"
 
+void update_mapUsed(){
+    int i,j,dx,dy;
+
+    //update from map
+    for (i = 0; i < MAP_SIZE; i++)
+        for (j = 0; j < MAP_SIZE; j++)
+        {
+            if (map[i][j] == EMPTY){
+                mapUsed[i][j] = 0;
+            }
+            else{
+                mapUsed[i][j] = 1;
+            }
+        }
+
+    //update myTank
+    for (dx = 0; dx < 3; dx++)
+        for (dy = 0; dy < 3; dy++) mapUsed[myTank.x + dx][myTank.y + dy] = 1;
+
+    //update tanks
+    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val)
+    {
+        for (dx = 0; dx < 3; dx++)
+            for (dy = 0; dy < 3; dy++) mapUsed[tanks[i].x + dx][tanks[i].y + dy] = 1;
+    }
+
+    //update bullets
+    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val)
+    {
+        mapUsed[bullets[i].x][bullets[i].y] = 1;
+    }
+}
+
 int get_decision_easy(Tank *tank){
     //0,1,2,3 are directions, 4 is shoot, and 5 is nothing
     return rand()%6;
@@ -120,6 +153,7 @@ void start_game(char * level_name, int difficulty){
         collision();
 
         print_map();
+        update_mapUsed();
         Sleep(sleepTime);
 
     }

@@ -239,44 +239,34 @@ void print_map(void)
             switch (map[i][j])
             {
                 case EMPTY:
-                    mapUsed[i][j] = 0;
                     print_empty(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case BRICK:
-                    mapUsed[i][j] = 1;
                     print_brick(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case WATER:
-                    mapUsed[i][j] = 1;
                     print_water(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case STEEL:
-                    mapUsed[i][j] = 1;
                     print_steel(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
                     break;
                 case BASE:
-                    mapUsed[i][j] = 1;
                     if (base_x == -1) base_x = i, base_y = j;
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
-    for (dx = 0; dx < 3; dx++)
-        for (dy = 0; dy < 3; dy++) mapUsed[myTank.x + dx][myTank.y + dy] = 1;
 
-    for (i = 0; i < MAXSPRITES; i++)
+    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val)
     {
-        if (tanks[i].val == 0) continue;
         print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
-        for (dx = 0; dx < 3; dx++)
-            for (dy = 0; dy < 3; dy++) mapUsed[tanks[i].x + dx][tanks[i].y + dy] = 1;
     }
-    for (i = 0; i < MAXSPRITES; i++)
+
+    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val)
     {
-        if (bullets[i].val == 0) continue;
         print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
-        mapUsed[bullets[i].x][bullets[i].y] = 1;
     }
+
     if (DEBUG){
         move(15,50);
         printw("mytank coords %d %d",myTank.x,myTank.y);
