@@ -81,26 +81,27 @@ void start_game(char * level_name, int difficulty){
             move(2,50);
             printw("%s",c_time_string);
         }
-
         //if keyboard is hit update the main tank position or shoot
         if (kbhit()){
 
             //get the last pressed key
             while(kbhit()){
-                    keyPressed = getch();
+                    keyPressed = read_input();
+
+            }
+            if (1) {
+                    move(4,50);
+                    printw("blah pressed %d %d",keyPressed, KEY_RIGHT);
+                    refresh();
             }
 
-            if (DEBUG) {
-                    move(3,50);
-                    printw("not pressed");
-            }
             switch(keyPressed){
 
                 case KEY_RIGHT:
                 case KEY_LEFT:
                 case KEY_UP:
                 case KEY_DOWN:
-                    move_tank(&myTank, keyPressed - KEY_DOWN);
+                    move_tank(&myTank, keyPressed - MIN_KEY);
                     break;
                 case SPACE:
                     shoot(&myTank);

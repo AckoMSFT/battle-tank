@@ -2,20 +2,44 @@
 #define GLOBAL_H_INCLUDED
 #include <time.h>
 #include <stdio.h>
-#include <curses.h>
 #include <locale.h>
+
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0600
 #include <windows.h>
-#endif
-
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#include <curses.h>
 
 #define  DOWN 0
 #define    UP 1
 #define  LEFT 2
 #define RIGHT 3
+
+#define MIN_KEY KEY_DOWN
+
+#else
+#include <ncurses.h>
+#include "linux_spec.h"
+
+#define UP 0
+#define DOWN 1
+#define RIGHT 2
+#define LEFT 3
+
+#define KEY_UP 65
+#define KEY_DOWN 66
+#define KEY_RIGHT 67
+#define KEY_LEFT 68
+
+#define MIN_KEY KEY_UP
+
+#endif
+
+
+
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
+
 #define SPACE ' '
 
 #define MAP_OFFSET_X 1
@@ -83,6 +107,8 @@ extern const difficultyConfig confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
 extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
+
+int read_input();
 
 #include "kletve.h"
 #include "editor.h"
