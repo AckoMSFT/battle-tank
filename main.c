@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     init_curses();
     while ( 1 )
     {
-        menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", main_menu, 1);
+        menu_choice = print_menu (2, 5, 3, 15, "Battle Tank - MAIN MENU", main_menu, 1);
         if (menu_choice == 0)
         {
             erase();
