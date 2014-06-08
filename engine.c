@@ -1,27 +1,5 @@
 #include "global.h"
 
-void find_space_tank(int *x, int *y){
-    int i,j,empty,di,dj;
-    for (i = 0; i < MAP_SIZE-2; i++)
-        for (j = 0; j < MAP_SIZE-2; j++){
-
-            empty = 1;
-            for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-                if (mapUsed[i+di][j+dj]) empty = 0;
-
-            }
-
-            if (empty){
-                *x= i;
-                *y=j;
-                return;
-            }
-
-        }
-    x = -1;
-    return;
-}
-
 void move_tank ( Tank *tank, int direction){
 
     //if this tank moved TANKSPEED earlier, just ignore. else, set movestate to 0

@@ -1,5 +1,30 @@
 #include "global.h"
 
+
+void find_space_tank(int *x, int *y){
+    int i,j,empty,di,dj;
+    for (i = 0; i < MAP_SIZE-2; i++)
+        for (j = 0; j < MAP_SIZE-2; j++){
+
+            empty = 1;
+            for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+                if (mapUsed[i+di][j+dj]) empty = 0;
+
+            }
+
+            if (empty){
+                *x= i;
+                *y=j;
+                return;
+            }
+
+        }
+    x = -1;
+    return;
+}
+
+
+
 void update_mapUsed(){
     int i,j,dx,dy;
 
@@ -33,6 +58,8 @@ void update_mapUsed(){
     }
 }
 
+
+
 int get_decision_easy(Tank *tank){
     //0,1,2,3 are directions, 4 is shoot, and 5 is nothing
     return rand()%6;
@@ -45,6 +72,8 @@ int get_decision_medium(Tank *tank){
 int get_decision_hard(Tank *tank){
     return rand()%6;
 }
+
+
 
 void start_game(char * level_name, int difficulty){
     load_map(level_name);
@@ -95,13 +124,12 @@ void start_game(char * level_name, int difficulty){
                         printw("spawned tank at %d %d",x,y);
                 }
 
-                //we should also update the mapUsed
-                for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-                    mapUsed[x+di][y+dj]=1;
-                }
             }
 
         }
+
+        //now update the mapUsed
+        update_mapUsed();
 
         //move the tanks !
         for ( i = 0; i < MAXSPRITES; i++ ) if (tanks[i].val) {
@@ -153,7 +181,6 @@ void start_game(char * level_name, int difficulty){
         collision();
 
         print_map();
-        update_mapUsed();
         Sleep(sleepTime);
 
     }
