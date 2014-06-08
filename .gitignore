@@ -1,0 +1,6 @@
+*.cbp
+*.depend
+*.layout
+*.o
+*.exe
+/bin/Debug/battle-tank
