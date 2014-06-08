@@ -14,8 +14,8 @@ int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cur
 //configuration for difficulty
 const difficultyConfig confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
 
-char main_menu_entries[][100] = {{"Start Game"}, {"Load Level"}, {"Edit Level"}, {"Edit Difficulty"}, {"Exit Game"}};
-char sub_menu_entries[][100] = {{"Level 0"}, {"Level 1"}, {"Level 2"}, {"Level 3"}, {"Level 4"}, {"Level 5"}, {"Level 6"}, {"Level 7"}, {"Level 8"}, {"Level 9"}, {"Return"}};
+char main_menu[][100] = {{"Start Game"}, {"Edit Level"}, {"Exit Game"}};
+char levels[][100] = {{"Level 0"}, {"Level 1"}, {"Level 2"}, {"Level 3"}, {"Level 4"}, {"Level 5"}, {"Level 6"}, {"Level 7"}, {"Level 8"}, {"Level 9"}, {"Return"}};
 char difficulties[][100] = {{"Easy"}, {"Medium"}, {"Hard"}};
 
 char level_name[100] = "Level0x0.map";
@@ -31,42 +31,32 @@ int read_input(){
 
 int main(int argc, char **argv)
 {
-    int menu_choice, sub_menu_choice, difficulty = 0;
+    int menu_choice, level, difficulty = 0;
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
-
     while ( 1 )
     {
-        menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", main_menu_entries, 1);
-
-        // start the game
+        menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", main_menu, 1);
         if (menu_choice == 0)
         {
+            erase();
+            level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1);
+            erase();
+            difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            erase();
+            level_name[7] = '0' + level;
             start_game(level_name, difficulty);
         }
-
-        // choose level
         if (menu_choice == 1)
         {
-            sub_menu_choice = print_menu (6, 22, 10, 15, "SELECT LEVEL", sub_menu_entries, 1);
-            level_name[7] = '0' + sub_menu_choice;
-        }
-
-        // edit level
-        if (menu_choice == 2)
-        {
             erase();
+            level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1);
+            erase();
+            level_name[7] = '0' + level;
             load_editor(level_name);
         }
-
-        if (menu_choice == 3)
-        {
-            difficulty = print_menu(6, 22, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
-        }
-
-        // get me out of here
-        if (menu_choice == 4)
+        if (menu_choice == 2)
         {
             kill_curses();
             return 0;
