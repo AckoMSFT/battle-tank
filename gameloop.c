@@ -45,7 +45,7 @@ void start_game(char * level_name, int difficulty){
 
         //check if we should spawn an enemy tank
         enemySpawn++;
-        if (1) {
+        if (DEBUG) {
                 move(18,50);
                 printw("enemyspawn %d",enemySpawn);
         }
@@ -57,7 +57,7 @@ void start_game(char * level_name, int difficulty){
             //if valid
             if (x!=-1){
                 spawn_tank(x,y,DOWN);
-                if (1) {
+                if (DEBUG) {
                         move(19,50);
                         printw("spawned tank at %d %d",x,y);
                 }
@@ -89,18 +89,19 @@ void start_game(char * level_name, int difficulty){
                     keyPressed = read_input();
 
             }
-            if (1) {
+            if (DEBUG) {
                     move(4,50);
-                    printw("blah pressed %d %d",keyPressed, KEY_RIGHT);
+                    printw("blah pressed %d %d",keyPressed, NEW_KEY_RIGHT);
                     refresh();
             }
 
             switch(keyPressed){
 
-                case KEY_RIGHT:
-                case KEY_LEFT:
-                case KEY_UP:
-                case KEY_DOWN:
+                case NEW_KEY_RIGHT:
+                case NEW_KEY_LEFT:
+                case NEW_KEY_UP:
+                case NEW_KEY_DOWN:
+                    if (DEBUG) printw("im here ! %d",keyPressed - MIN_KEY);
                     move_tank(&myTank, keyPressed - MIN_KEY);
                     break;
                 case SPACE:

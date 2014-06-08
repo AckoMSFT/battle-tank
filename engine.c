@@ -64,7 +64,7 @@ void go_left( Tank *tank )
 {
     int left = tank->y - 1;
     int x = tank->x, y = tank->y;
-    if (1){
+    if (DEBUG){
         move(26,50);
         printw("whats with this? %d %d %d",x, y, left);
 
@@ -87,7 +87,7 @@ void shoot( Tank *tank ) // Spawns new bullet after shoot command
     //if this tank shoot SHOOTSPEED earlier, just ignore.
     if (tank->shootState < SHOOTSPEED) return;
 
-    if (1) {
+    if (DEBUG) {
             move(3,50);
             printw("shooting from shoot state %d", tank->shootState);
     }
@@ -245,7 +245,7 @@ void spawn_tank( int x, int y, int dir )
 {
     int i;
 
-    if (1){
+    if (DEBUG){
         move(22,50);
         printw("printing enemy tank ! %d",i);
 

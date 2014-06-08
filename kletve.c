@@ -277,7 +277,7 @@ void print_map(void)
         print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
         mapUsed[bullets[i].x][bullets[i].y] = 1;
     }
-    if (1){
+    if (DEBUG){
         move(15,50);
         printw("mytank coords %d %d",myTank.x,myTank.y);
         move(16,50);
