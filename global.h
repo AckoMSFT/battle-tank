@@ -38,7 +38,7 @@
 #define FRAMES_PER_SEC 30
 #define BULLETSPEED 3
 #define SHOOTSPEED 15
-#define TANKSPEED 15
+#define TANKSPEED 3
 
 //difficulty config
 //easy

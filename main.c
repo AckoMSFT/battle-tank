@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
         if (menu_choice == 3)
         {
-            difficulty = print_menu(6, 22, 10, 15, "SELECT DIFFICULTY", difficulties, 1);
+            difficulty = print_menu(6, 22, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
         }
 
         // get me out of here
