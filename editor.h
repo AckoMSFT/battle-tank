@@ -1,7 +1,7 @@
 #ifndef EDITOR_H_INCLUDED
 #define EDITOR_H_INCLUDED
 
-//this is a funciton for printing the editor
+//this is a function for printing the editor
 void print_editor();
 
 //save editor to file mapFile.map

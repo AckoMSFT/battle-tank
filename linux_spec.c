@@ -1,5 +1,6 @@
 #include "global.h"
 
+#ifndef _WIN32
 void Sleep(int time){
 
     usleep(time*1000);
@@ -31,5 +32,5 @@ int kbhit(void)
 
   return 0;
 }
-
+#endif // _WIN32
 

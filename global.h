@@ -1,8 +1,8 @@
 #ifndef GLOBAL_H_INCLUDED
 #define GLOBAL_H_INCLUDED
-#include <time.h>
 #include <stdio.h>
 #include <locale.h>
+#include <time.h>
 
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0600
@@ -112,8 +112,7 @@ int read_input();
 
 #include "kletve.h"
 #include "editor.h"
+#include "menu.h"
 #include "engine.h"
 #include "gameloop.h"
-#include "menu.h"`
-
 #endif // GLOBAL_H_INCLUDED

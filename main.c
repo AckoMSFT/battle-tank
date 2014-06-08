@@ -26,7 +26,6 @@ int read_input(){
 #else
     return getchar();
 #endif // _WIN32
-
 }
 
 
