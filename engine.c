@@ -50,32 +50,15 @@ void go_up( Tank *tank )
 {
     int up = tank->x - 1;
     int x = tank->x, y = tank->y;
-    if ( (up >=0 ) && ( mapUsed[ up ][ y ] == 0 ) && ( mapUsed[ up ][ y + 1 ] == 0 ) && ( mapUsed[ up ][ y + 2 ] == 0 ) )
-        if ( tank->dir == UP )
-        {
-            tank->x = up;
-         }
-        else
-        {
-            tank->dir = UP;
-            tank->x = up;
-        }
+    tank->dir = UP;
+    if ( (up >=0 ) && ( mapUsed[ up ][ y ] == 0 ) && ( mapUsed[ up ][ y + 1 ] == 0 ) && ( mapUsed[ up ][ y + 2 ] == 0 ) ) tank->x = up;
 }
 void go_down( Tank *tank )
 {
     int down = tank->x + 3;
     int x = tank->x, y = tank->y;
-    if ( (down < MAP_SIZE ) && ( mapUsed[ down ][ y ] == 0 ) && ( mapUsed[ down ][ y + 1 ] == 0 ) && ( mapUsed[ down ][ y + 2 ] == 0 ) )
-
-        if ( tank->dir == DOWN )
-        {
-            tank->x = down - 2;
-         }
-        else
-        {
-            tank->dir = DOWN;
-            tank->x = down - 2;
-        }
+    tank->dir = DOWN;
+    if ( (down < MAP_SIZE ) && ( mapUsed[ down ][ y ] == 0 ) && ( mapUsed[ down ][ y + 1 ] == 0 ) && ( mapUsed[ down ][ y + 2 ] == 0 ) ) tank->x = down - 2;
 }
 void go_left( Tank *tank )
 {
@@ -86,31 +69,15 @@ void go_left( Tank *tank )
         printw("whats with this? %d %d %d",x, y, left);
 
     }
-    if ( (left >= 0 ) && ( mapUsed[ x ][ left ] == 0 ) && ( mapUsed[ x + 1 ][ left ] == 0 ) && ( mapUsed[ x + 2 ][ left ] == 0 ) )
-        if ( tank->dir == LEFT )
-        {
-            tank->y = left;
-        }
-        else
-        {
-            tank->dir = LEFT;
-            tank->y = left;
-        }
+    tank->dir = LEFT;
+    if ( (left >= 0 ) && ( mapUsed[ x ][ left ] == 0 ) && ( mapUsed[ x + 1 ][ left ] == 0 ) && ( mapUsed[ x + 2 ][ left ] == 0 ) ) tank->y = left;
 }
 void go_right( Tank *tank )
 {
     int right = tank->y + 3;
     int x = tank->x, y = tank->y;
-    if ( (right < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) )
-        if ( tank->dir == RIGHT )
-        {
-            tank->y = right - 2;
-        }
-        else
-        {
-            tank->dir = RIGHT;
-            tank->y = right - 2;
-        }
+    tank->dir = RIGHT;
+    if ( (right < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) ) tank->y = right - 2;
 }
 void shoot( Tank *tank ) // Spawns new bullet after shoot command
 {
