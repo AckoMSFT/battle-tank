@@ -186,23 +186,22 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
 
     //check for tank-bullet colisions
     for ( i = 0; i < MAXSPRITES; i++ )
-        for ( j = 0; j < MAXSPRITES; j++ ){
+        for ( j = 0; j < MAXSPRITES; j++ ) if (tanks[ i ].val && bullets[ j ].val){
             //dont check if not valid
-            if (!tanks[ i ].val || !bullets[ j ].val) continue;
 
             for( di = 0; di < 3; di++) for( dj = 0; dj < 3; dj++){
 
                 if ( ( tanks[ i ].x + di == bullets[ j ].x ) && ( tanks[ i ].y + dj == bullets[ j ].y ) )
                 {
-                    bullets[ i ].val = 0;
                     tanks[ i ].val = 0;
+                    bullets[ j ].val = 0;
                 }
             }
     }
 
     //check for bullet-bullet colisions
     for ( i = 0; i < MAXSPRITES; i++ )
-        for ( j = 0; j < MAXSPRITES; j++ )
+        for ( j = 0; j < MAXSPRITES; j++ ) if (bullets[ i ].val && bullets[ j ].val)
         if ( ( i != j ) && ( bullets[ i ].x == bullets[ j ].x ) && ( bullets[ i ].y == bullets[ j ].y ) )
         {
             bullets[ i ].val = 0;
@@ -210,7 +209,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
         }
 
     //check for bullet-frame collisions
-    for ( i = 0; i < MAXSPRITES; i++ )
+    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].val)
         if ( bullets[ i ].x < 0 || bullets[ i ].y < 0 || bullets[ i ].x >= MAP_SIZE || bullets[ i ].y >= MAP_SIZE  )
         {
             bullets[ i ].val = 0;
