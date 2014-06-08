@@ -14,6 +14,11 @@
 #define  LEFT 2
 #define RIGHT 3
 
+#define NEW_KEY_UP KEY_UP
+#define NEW_KEY_DOWN KEY_DOWN
+#define NEW_KEY_RIGHT KEY_RIGHT
+#define NEW_KEY_LEFT KEYLEFT
+
 #define MIN_KEY KEY_DOWN
 
 #else
@@ -25,12 +30,12 @@
 #define RIGHT 2
 #define LEFT 3
 
-#define KEY_UP 65
-#define KEY_DOWN 66
-#define KEY_RIGHT 67
-#define KEY_LEFT 68
+#define NEW_KEY_UP 65
+#define NEW_KEY_DOWN 66
+#define NEW_KEY_RIGHT 67
+#define NEW_KEY_LEFT 68
 
-#define MIN_KEY KEY_UP
+#define MIN_KEY NEW_KEY_UP
 
 #endif
 
@@ -62,7 +67,7 @@
 #define FRAMES_PER_SEC 30
 #define BULLETSPEED 3
 #define SHOOTSPEED 15
-#define TANKSPEED 3
+#define TANKSPEED 15
 
 //difficulty config
 //easy
