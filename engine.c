@@ -216,7 +216,8 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             bullets[ i ].val = 0;
         }
 
-    for ( i = 0; i < MAXSPRITES; i++ )
+    //check for bullet-wall collisions
+    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].val )
     {
         if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == BRICK )
         {
@@ -239,6 +240,16 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
         }
         if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == STEEL ) bullets[ i ].val = 0;
     }
+
+    //check for bullet-base collisions
+    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].val )
+    {
+        if (map[ bullets[ i ].x ][ bullets[ i ].y ] == BASE){
+            //game end
+            gameOver = 1;
+        }
+    }
+
 }
 
 void spawn_tank( int x, int y, int dir )
