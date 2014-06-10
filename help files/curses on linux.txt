@@ -1,0 +1,7 @@
+For installing ncurses on linux debian-based distributions, just type the following into terminal:
+
+sudo apt-get install libncurses5-dev
+
+Also, append -lncurses to the end of the command (GCC) so the compiler would know to link the curses library also
+
+If you are using some IDE, you can configure your enviroment to automaticaly link this library. Find the linker options, and add there "ncurses".

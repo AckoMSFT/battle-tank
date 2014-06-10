@@ -1,0 +1,9 @@
+Jump to your compiler's folder (for example C:\Program Files\CodeBlocks\MinGW) , and copy the following files
+
+curses.h >> include\
+pdcurses.lib >> lib\
+pdcurses.dll >> bin\
+
+When linking all object files (with GCC) , append -lpdcurses switch to the command, so compiler would know to link the curses library also.
+
+If you are using some IDE, you can configure your enviroment to automaticaly link this library. Find the linker options, and add there "pdcurses".
