@@ -28,8 +28,6 @@ void init_colors(void)
     init_pair(9, COLOR_GREEN, COLOR_BLACK);
     init_pair(10, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(11, COLOR_CYAN, COLOR_BLACK);
-    init_pair(12, COLOR_GREEN, COLOR_YELLOW);
-    init_pair(13, COLOR_YELLOW, COLOR_BLACK);
 }
 
 void print_border(int y1, int x1, int y2, int x2)
@@ -217,7 +215,7 @@ void print_steel(int y, int x)
 
 void print_bomb(int y, int x)
 {
-    attron(COLOR_PAIR(12));
+    attron(COLOR_PAIR(7));
     move(y, x);
     addch(ACS_ULCORNER);
     addch(ACS_HLINE);
@@ -225,19 +223,19 @@ void print_bomb(int y, int x)
     move(y + 1, x);
     addch(ACS_VLINE);
     attron(A_ALTCHARSET);
-    printw("%c",213);
+    printw("%c",182);
     attroff(A_ALTCHARSET);
     addch(ACS_VLINE);
     move(y + 2, x);
     addch(ACS_LLCORNER);
     addch(ACS_HLINE);
     addch(ACS_LRCORNER);
-    attroff(COLOR_PAIR(12));
+    attroff(COLOR_PAIR(7));
 }
 
 void print_star(int y, int x)
 {
-    attron(COLOR_PAIR(13));
+    attron(COLOR_PAIR(8));
     move(y, x);
     addch(ACS_ULCORNER);
     addch(ACS_HLINE);
@@ -250,7 +248,41 @@ void print_star(int y, int x)
     addch(ACS_LLCORNER);
     addch(ACS_HLINE);
     addch(ACS_LRCORNER);
-    attroff(COLOR_PAIR(13));
+    attroff(COLOR_PAIR(8));
+}
+
+void print_shovel(int y, int x)
+{
+    attron(A_BLINK);
+    attron(A_BOLD);
+    move(y, x);
+    printw("  #");
+    move(y + 1, x);
+    printw(" / ");
+    move(y + 2, x);
+    printw("O  ");
+    attroff(A_BOLD);
+    attroff(A_BLINK);
+}
+
+void print_timer_power_up(int y, int x)
+{
+    attron(COLOR_PAIR(10));
+    move(y, x);
+    addch(ACS_ULCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_URCORNER);
+    move(y + 1, x);
+    addch(ACS_VLINE);
+    attron(A_ALTCHARSET);
+    printw("T");
+    attroff(A_ALTCHARSET);
+    addch(ACS_VLINE);
+    move(y + 2, x);
+    addch(ACS_LLCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_LRCORNER);
+    attroff(COLOR_PAIR(10));
 }
 
 void print_base(int y, int x)
