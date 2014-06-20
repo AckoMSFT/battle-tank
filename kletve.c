@@ -217,7 +217,7 @@ void print_steel(int y, int x)
 
 void print_bomb(int y, int x)
 {
-    attron(COLOR_PAIR(12));
+    attron(COLOR_PAIR(7));
     move(y, x);
     addch(ACS_ULCORNER);
     addch(ACS_HLINE);
@@ -225,19 +225,19 @@ void print_bomb(int y, int x)
     move(y + 1, x);
     addch(ACS_VLINE);
     attron(A_ALTCHARSET);
-    printw("%c",213);
+    printw("%c",182);
     attroff(A_ALTCHARSET);
     addch(ACS_VLINE);
     move(y + 2, x);
     addch(ACS_LLCORNER);
     addch(ACS_HLINE);
     addch(ACS_LRCORNER);
-    attroff(COLOR_PAIR(12));
+    attroff(COLOR_PAIR(7));
 }
 
 void print_star(int y, int x)
 {
-    attron(COLOR_PAIR(13));
+    attron(COLOR_PAIR(8));
     move(y, x);
     addch(ACS_ULCORNER);
     addch(ACS_HLINE);
@@ -250,7 +250,21 @@ void print_star(int y, int x)
     addch(ACS_LLCORNER);
     addch(ACS_HLINE);
     addch(ACS_LRCORNER);
-    attroff(COLOR_PAIR(13));
+    attroff(COLOR_PAIR(8));
+}
+
+void print_shovel(int y, int x)
+{
+    attron(A_BLINK);
+    attron(A_BOLD);
+    move(y, x);
+    printw("  #");
+    move(y + 1, x);
+    printw(" / ");
+    move(y + 2, x);
+    printw("O  ");
+    attroff(A_BOLD);
+    attroff(A_BLINK);
 }
 
 void print_base(int y, int x)
@@ -322,15 +336,15 @@ void print_map(void)
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
-    print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
-    for (i = 0; i < MAXSPRITES; i++)
+    print_tank(player1.dir, player1.x + MAP_OFFSET_X, player1.y + MAP_OFFSET_Y);
+    for (i = 0; i < MAX_SPRITES; i++)
     {
-        if (tanks[i].valid == false) continue;
-        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].lives);
+        if (tanks[i].alive == false) continue;
+        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].hitPoints);
     }
-    for (i = 0; i < MAXSPRITES; i++)
+    for (i = 0; i < MAX_SPRITES; i++)
     {
-        if (bullets[i].valid == false) continue;
+        if (bullets[i].alive == false) continue;
         print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
     }
     refresh();

@@ -11,7 +11,7 @@ void print_editor()
             case TANK: if(tank_x==-1)tank_x=i,tank_y=j; break;
             default: draw_field(i,j);break;
             }
-    print_tank(UP,MAP_OFFSET_X+myTank.x,MAP_OFFSET_Y+myTank.y);
+    print_tank(UP,MAP_OFFSET_X+tank_x,MAP_OFFSET_Y+tank_y);
     print_base(MAP_OFFSET_X+base_x,MAP_OFFSET_Y+base_y);
 }
 
@@ -47,8 +47,6 @@ void create_base(int x, int y)
 
 void create_tank(int x, int y)
 {
-    //just dont create tank
-    return;
     int i,j;
     for (i=0;i<3;i++)
         for (j=0;j<3;j++)
@@ -110,7 +108,7 @@ void load_editor(char * level_name)
     editor_cursor_x=0;
     editor_cursor_y=0;
     editor_cursor_id=0;
-    create_base(35,15);
+    create_base(35,17);
     create_tank(36,12);
     print_editor();
     draw_cursor();
@@ -133,7 +131,7 @@ void load_editor(char * level_name)
           case 'G':
           case 'g': map_generator(15); break;
           case 'n':
-          case 'N': clear_editor(); create_base(35,15); create_tank(36,12); break;
+          case 'N': clear_editor(); create_base(35,17); create_tank(36,12); break;
           case KEY_F(2): get_me_out_of_here=1; break;
           case KEY_F(12): get_me_out_of_here=2; break;
       }
@@ -237,7 +235,7 @@ void map_generator(int n)
         if (rand()%3) print_wall(a,b);
         else print_wall(b,a);
     }
-    create_base(35,15);
+    create_base(35,17);
     create_tank(36,12);
 }
 

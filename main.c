@@ -1,20 +1,17 @@
 #include "global.h"
 //GLOBALS
 
-Tank tanks[ MAXSPRITES ];
-Tank myTank = {35,12,1,0,0,2,0,1};
-Bullet bullets[ MAXSPRITES ];
+Tank tanks[ MAX_SPRITES ];
+Bullet bullets[ MAX_SPRITES ];
 
 int gameOver;
 int gameDifficulty;
-myScore = 0;
-numberOfTanks = 0;
 
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' };
 int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 //configuration for difficulty
-const difficultyConfig confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
+const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
 
 char main_menu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
 char levels[][100] = {{"Level 0"}, {"Level 1"}, {"Level 2"}, {"Level 3"}, {"Level 4"}, {"Level 5"}, {"Level 6"}, {"Level 7"}, {"Level 8"}, {"Level 9"}, {"Return"}};
@@ -30,8 +27,6 @@ int read_input(){
     return getchar();
 #endif // _WIN32
 }
-
-
 int main(int argc, char **argv)
 {
     int menu_choice, level, difficulty = 0;

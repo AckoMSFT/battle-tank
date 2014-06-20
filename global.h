@@ -65,11 +65,11 @@
 
 //game config options
 #define DEBUG 0
-#define MAXSPRITES 20
+#define MAX_SPRITES 20
 #define FRAMES_PER_SEC 30
-#define BULLETSPEED 3
-#define SHOOTSPEED 10
-#define TANKSPEED 3
+#define BULLET_SPEED 3
+#define SHOOT_SPEED 10
+#define TANK_SPEED 3
 
 #define maxNumberOfTanks 5
 
@@ -89,35 +89,46 @@
 #define ENEMYSHOOTSPEED_HARD 50
 #define RANDOM_HARD 0
 
-typedef struct tank
+typedef struct
 {
-    int x, y, dir, shootState, moveState, lives, value;
-    bool valid;
+    int x, y, dir, shootState, moveState, value, hitPoints;
+    bool alive;
 } Tank;
 
-
-
-typedef struct bullet
+typedef struct
 {
-    int x, y, dir, state, origin;
-    bool valid;
+    int x, y, dir, shootState, moveState, hitPoints, stars;
+    bool alive, invulnerable;
+} PlayerTank;
+
+typedef struct
+{
+    int x, y, dir, state, source;
+    bool alive;
 } Bullet;
 
 typedef struct
 {
+} Power;
+
+typedef struct difficulty
+{
     int spawn,shoot;
     int (*AI) ();
-}difficultyConfig;
+} Difficulty;
 
-extern Tank tanks[ MAXSPRITES ];
-extern Tank myTank;
-extern Bullet bullets[ MAXSPRITES ];
-extern int gameOver;
+enum {BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK};
+
+extern Tank tanks[ MAX_SPRITES ];
+PlayerTank player1, player2;
+extern Bullet bullets[ MAX_SPRITES ];
 extern int gameDifficulty;
-extern const difficultyConfig confDiff[3];
+extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
-extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size, myScore, numberOfTanks;
+extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size, numberOfTanks;
+
+int myScore, gameOver, numberOfTanks;
 
 int read_input();
 

@@ -15,6 +15,7 @@ void print_brick(int y, int x);
 void print_steel(int y, int x);
 void print_bomb(int y, int x);
 void print_star(int y, int x);
+void print_shovel(int y, int x);
 void print_base(int y, int x);
 void kill_curses(void);
 void load_map(char * input_file_name);
