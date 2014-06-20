@@ -10,8 +10,8 @@ void find_space_tank(int *x, int *y);
 void update_mapUsed();
 
 //start the gameloop
-void start_game(char *, int);
-
+void startGame(int);
+int startLevel(int, int, int*);
 //AI
 int get_decision_easy(Tank *tank);
 int get_decision_medium(Tank *tank);
