@@ -62,11 +62,11 @@ void update_mapUsed(){
 
 int get_decision_easy(Tank *tank){
     //0,1,2,3 are directions, 4 is shoot, and 5 is nothing
-    return rand()%6;
+    return rand()%20;
 }
 
 int get_decision_medium(Tank *tank){
-    return rand()%6;
+    return rand()%12;
 }
 
 int get_decision_hard(Tank *tank){
