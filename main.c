@@ -1,24 +1,26 @@
 #include "global.h"
-//GLOBALS
 
-Tank tanks[ MAX_SPRITES ];
-Bullet bullets[ MAX_SPRITES ];
+int levelConfiguration[][20] = { { BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK,
+                                   BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK,
+                                   BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK,
+                                   BASIC_TANK, BASIC_TANK, BASIC_TANK,  FAST_TANK,  FAST_TANK }
+                               };
 
 int gameOver;
 int gameDifficulty;
-
-char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' };
+char characterMap[] = { '.', 'B', 'S', 'W', 'X', 'T' };
+char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 //configuration for difficulty
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
 
-char main_menu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
+char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
 char levels[][100] = {{"Level 0"}, {"Level 1"}, {"Level 2"}, {"Level 3"}, {"Level 4"}, {"Level 5"}, {"Level 6"}, {"Level 7"}, {"Level 8"}, {"Level 9"}, {"Return"}};
 char difficulties[][100] = {{"Easy"}, {"Medium"}, {"Hard"}};
-char high_scores[20][100];
+char highScores[20][100];
 
-char level_name[100] = "Level0x0.map";
+char levelName[100], buffer[100];
 
 int read_input(){
 #ifdef _WIN32
@@ -33,24 +35,28 @@ int main(int argc, char **argv)
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
+    resize_term(80,120);
     while ( 1 )
     {
-        menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", main_menu, 1);
+        menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
         if (menu_choice == 0)
         {
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
             erase();
-            level_name[7] = '0';
-            start_game(level_name, difficulty);
+            startGame(0);
         }
         if (menu_choice == 1)
         {
             erase();
             level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1);
             erase();
-            level_name[7] = '0' + level;
-            load_editor(level_name);
+            strcpy(levelName, "Level0x" );
+            itoa(level, buffer, 10);
+            strcat(levelName, buffer);
+            strcat(levelName, ".map");
+            kill_curses();
+            load_editor(levelName);
         }
         if (menu_choice == 2)
         {
@@ -59,12 +65,12 @@ int main(int argc, char **argv)
             FILE * high_scores_file = fopen ( "high_scores.txt", "r" );
             for (i = 0; i < 20; i++)
             {
-                fgets(high_scores[i], 100, high_scores_file);
-                ch = high_scores[i][strlen(high_scores[i]) - 1];
-                if (ch == '\n' || ch == '\r') high_scores[i][strlen(high_scores[i]) - 1] = '\0';
+                fgets(highScores[i], 100, high_scores_file);
+                ch = highScores[i][strlen(highScores[i]) - 1];
+                if (ch == '\n' || ch == '\r') highScores[i][strlen(highScores[i]) - 1] = '\0';
             }
             erase();
-            i = print_menu (2, 5, 20, 15, "PRESS ENTER TO RETURN", high_scores, 1);
+            i = print_menu (2, 5, 20, 15, "PRESS ENTER TO RETURN", highScores, 1);
         }
         if (menu_choice == 3)
         {

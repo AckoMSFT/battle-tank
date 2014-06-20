@@ -1,7 +1,5 @@
 #ifndef KLETVE_H_INCLUDED
 #define KLETVE_H_INCLUDED
-#define DEBUG 0
-
 void init_curses(void);
 void init_colors(void);
 void print_border(int y1, int x1, int y2, int x2);
@@ -21,5 +19,4 @@ void kill_curses(void);
 void load_map(char * input_file_name);
 void print_map(void);
 void print_end_screen(void);
-
 #endif // KLETVE_H_INCLUDED

@@ -74,8 +74,23 @@ int get_decision_hard(Tank *tank){
 }
 
 
+void startGame(int difficulty)
+{
+    int i, stars = 0, score = 0;
+    for (i = 1; i <= NUMBER_OF_LEVELS; i++)
+    {
+        score += startLevel(i, difficulty, &stars);
+    }
+}
 
-void start_game(char * level_name, int difficulty){
+int startLevel(int level, int difficulty, int *stars)
+{
+    char level_name[1 << 5], buffer[1 << 5];
+    strcpy(level_name,"level");
+    itoa(level, buffer, 10);
+    strcat(level_name, buffer);
+    strcat(level_name, ".map");
+
     load_map(level_name);
     gameDifficulty = difficulty;
     time_t current_time;
@@ -96,14 +111,17 @@ void start_game(char * level_name, int difficulty){
     }
     enemySpawn = 0;
     myScore = 0;
-    player1.hitPoints = 50000;
 
+    // initialize player1
+    player1.hitPoints = 50000;
     player1.x = 36;
     player1.y = 12;
     player1.dir = UP;
     player1.alive = true;
     player1.moveState = 0;
     player1.shootState = 0;
+    player1.invulnerable = false;
+    player1.stars = stars;
 
     while(gameOver == false){
 
@@ -164,6 +182,5 @@ void start_game(char * level_name, int difficulty){
 
         if ( player1.hitPoints <= 0 ) gameOver = true;
     }
-    update_high_scores("al3ksandar", myScore);
     print_end_screen();
 }

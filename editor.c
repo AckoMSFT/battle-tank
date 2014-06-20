@@ -66,7 +66,7 @@ void create_cursor(int x, int y)
     int i,j;
     for (i=0;i<=editor_cursor_size;i++)
         for(j=0;j<=editor_cursor_size;j++)
-            editor[x+i][y+j]=character_map[editor_cursor_id];
+            editor[x+i][y+j]=characterMap[editor_cursor_id];
     create_base(35,15);
     create_tank(36,12);
 }
