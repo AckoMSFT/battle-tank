@@ -25,6 +25,11 @@ void init_colors(void)
     init_pair(6, COLOR_BLACK, COLOR_MAGENTA);
     init_pair(7, COLOR_GREEN, COLOR_BLACK);
     init_pair(8, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(9, COLOR_GREEN, COLOR_BLACK);
+    init_pair(10, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(11, COLOR_CYAN, COLOR_BLACK);
+    init_pair(12, COLOR_GREEN, COLOR_YELLOW);
+    init_pair(13, COLOR_YELLOW, COLOR_BLACK);
 }
 
 void print_border(int y1, int x1, int y2, int x2)
@@ -98,8 +103,22 @@ void print_tank(int dir, int y, int x)
     attroff(COLOR_PAIR(8));
 }
 
-void print_enemy_tank(int dir, int y, int x)
+void print_enemy_tank (int dir, int y, int x, int lives)
 {
+    switch (lives)
+    {
+    case 1:
+        break;
+    case 2:
+        attron(COLOR_PAIR(9));
+        break;
+    case 3:
+        attron(COLOR_PAIR(10));
+        break;
+    case 4:
+        attron(COLOR_PAIR(11));
+        break;
+    }
     switch (dir)
     {
     case UP:
@@ -133,6 +152,20 @@ void print_enemy_tank(int dir, int y, int x)
         printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
         move(y + 2, x);
         printw("%c%c%c",35,35,35);
+        break;
+    }
+    switch ( lives )
+    {
+    case 1:
+        break;
+    case 2:
+        attroff(COLOR_PAIR(9));
+        break;
+    case 3:
+        attroff(COLOR_PAIR(10));
+        break;
+    case 4:
+        attroff(COLOR_PAIR(11));
         break;
     }
 }
@@ -182,6 +215,44 @@ void print_steel(int y, int x)
     attroff((COLOR_PAIR(3)));
 }
 
+void print_bomb(int y, int x)
+{
+    attron(COLOR_PAIR(12));
+    move(y, x);
+    addch(ACS_ULCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_URCORNER);
+    move(y + 1, x);
+    addch(ACS_VLINE);
+    attron(A_ALTCHARSET);
+    printw("%c",213);
+    attroff(A_ALTCHARSET);
+    addch(ACS_VLINE);
+    move(y + 2, x);
+    addch(ACS_LLCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_LRCORNER);
+    attroff(COLOR_PAIR(12));
+}
+
+void print_star(int y, int x)
+{
+    attron(COLOR_PAIR(13));
+    move(y, x);
+    addch(ACS_ULCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_URCORNER);
+    move(y + 1, x);
+    addch(ACS_VLINE);
+    printw("%c",'*');
+    addch(ACS_VLINE);
+    move(y + 2, x);
+    addch(ACS_LLCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_LRCORNER);
+    attroff(COLOR_PAIR(13));
+}
+
 void print_base(int y, int x)
 {
     attron(COLOR_PAIR(4));
@@ -221,28 +292,24 @@ void load_map(char * input_file_name)
         }
         fscanf(input_file, "%c", &buffer);
     }
-
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
 }
 
 void print_map(void)
 {
     int i, j, dx, dy;
-    tank_x = -1;
-    tank_y = -1;
     base_x = -1;
     base_y = -1;
-    //print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
     for (i = 0; i < MAP_SIZE; i++)
         for (j = 0; j < MAP_SIZE; j++)
         {
-            switch (map[i][j])
+            switch ( map[i][j] )
             {
                 case EMPTY:
-                    print_empty(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
+                    print_empty ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
                     break;
                 case BRICK:
-                    print_brick(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
+                    print_brick ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
                     break;
                 case WATER:
                     print_water(i + MAP_OFFSET_X, j + MAP_OFFSET_Y);
@@ -256,23 +323,19 @@ void print_map(void)
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
     print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
-
-    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val)
+    for (i = 0; i < MAXSPRITES; i++)
     {
-        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y);
+        if (tanks[i].valid == false) continue;
+        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].lives);
     }
-
-    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val)
+    for (i = 0; i < MAXSPRITES; i++)
     {
+        if (bullets[i].valid == false) continue;
         print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
     }
-
-    if (DEBUG){
-        move(15,50);
-        printw("mytank coords %d %d",myTank.x,myTank.y);
-        move(16,50);
-        printw("somebullet coords %d %d",bullets[ 0 ].x,bullets[ 0 ].y);
-
-    }
     refresh();
+}
+
+void print_end_screen(void)
+{
 }

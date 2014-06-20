@@ -45,14 +45,14 @@ void update_mapUsed(){
         for (dy = 0; dy < 3; dy++) mapUsed[myTank.x + dx][myTank.y + dy] = 1;
 
     //update tanks
-    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].val)
+    for (i = 0; i < MAXSPRITES; i++) if (tanks[i].valid)
     {
         for (dx = 0; dx < 3; dx++)
             for (dy = 0; dy < 3; dy++) mapUsed[tanks[i].x + dx][tanks[i].y + dy] = 1;
     }
 
     //update bullets
-    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].val)
+    for (i = 0; i < MAXSPRITES; i++) if (bullets[i].valid)
     {
         mapUsed[bullets[i].x][bullets[i].y] = 1;
     }
@@ -90,12 +90,13 @@ void start_game(char * level_name, int difficulty){
 
     //init some elements
     gameOver = 0;
+    numberOfTanks = 0;
     for (i=0; i<MAXSPRITES ; i++){
-        tanks[i].val = bullets[i].val = 0;
+        tanks[i].valid = bullets[i].valid = 0;
     }
     enemySpawn = 0;
 
-
+    myTank.lives = 50000;
     while(!gameOver){
 
         /* Obtain current time as seconds elapsed since the Epoch. */
@@ -116,9 +117,9 @@ void start_game(char * level_name, int difficulty){
             //find me a spot for new enemy tank
             find_space_tank(&x,&y);
 
-            //if valid
+            //if
             if (x!=-1){
-                spawn_tank(x,y,DOWN);
+                if ( numberOfTanks < maxNumberOfTanks ) spawn_tank(x,y,DOWN, rand ( ) % 4 + 1);
                 if (DEBUG) {
                         move(19,50);
                         printw("spawned tank at %d %d",x,y);
@@ -132,10 +133,10 @@ void start_game(char * level_name, int difficulty){
         update_mapUsed();
 
         //move the tanks !
-        for ( i = 0; i < MAXSPRITES; i++ ) if (tanks[i].val) {
+        for ( i = 0; i < MAXSPRITES; i++ ) if (tanks[i].valid) {
             enemyChoice = confDiff[gameDifficulty].AI(tanks + i);
             if (enemyChoice >=0 && enemyChoice <=3) move_tank(tanks+i, enemyChoice);
-            else if (enemyChoice == 4) shoot(tanks+i);
+            else if (enemyChoice == 4) shoot(tanks+i, 1);
         }
 
         if (DEBUG) {
@@ -166,14 +167,8 @@ void start_game(char * level_name, int difficulty){
                     move_tank(&myTank, keyPressed - MIN_KEY);
                     break;
                 case SPACE:
-                    shoot(&myTank);
+                    shoot(&myTank, 0);
                     break;
-            }
-
-            if (DEBUG) {
-                move(10,50);
-                printw("pressed %d, but keyright is %d, and keyright == pressed %d",keyPressed,KEY_RIGHT,keyPressed==KEY_RIGHT);
-                refresh();
             }
         }
 
@@ -183,6 +178,13 @@ void start_game(char * level_name, int difficulty){
         print_map();
         Sleep(sleepTime);
 
-    }
+        if ( myTank.lives <= 0 ) gameOver = true;
 
+        print_bomb(5,20);
+        print_star(20,20);
+        refresh();
+        while(!kbhit());
+    }
+    update_high_scores("al3ksandar", myScore);
+    print_end_screen();
 }

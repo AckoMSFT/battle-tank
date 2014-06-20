@@ -14,7 +14,7 @@ void go_left( Tank *tank );
 void go_right( Tank *tank );
 
 // Spawns new bullet after shoot command
-void shoot( Tank *tank );
+void shoot( Tank *tank, int origin );
 
 // Updating bullets states and moving them, and tank shooting states, and tank moving states
 void update_states() ;
@@ -23,5 +23,5 @@ void update_states() ;
 void collision() ;
 
 //spawn a new tank
-void spawn_tank( int x, int y, int dir );
+void spawn_tank( int x, int y, int dir, int lives );
 #endif // ENGINE_H_INCLUDED

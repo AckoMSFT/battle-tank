@@ -1,5 +1,6 @@
 #include "global.h"
 
+// moves the tank
 void move_tank ( Tank *tank, int direction){
 
     //if this tank moved TANKSPEED earlier, just ignore. else, set movestate to 0
@@ -23,7 +24,6 @@ void move_tank ( Tank *tank, int direction){
     }
 }
 
-
 void go_up( Tank *tank )
 {
     int up = tank->x - 1;
@@ -31,6 +31,7 @@ void go_up( Tank *tank )
     tank->dir = UP;
     if ( (up >=0 ) && ( mapUsed[ up ][ y ] == 0 ) && ( mapUsed[ up ][ y + 1 ] == 0 ) && ( mapUsed[ up ][ y + 2 ] == 0 ) ) tank->x = up;
 }
+
 void go_down( Tank *tank )
 {
     int down = tank->x + 3;
@@ -57,7 +58,7 @@ void go_right( Tank *tank )
     tank->dir = RIGHT;
     if ( (right < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) ) tank->y = right - 2;
 }
-void shoot( Tank *tank ) // Spawns new bullet after shoot command
+void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
 {
     int i, x, y;
 
@@ -92,13 +93,14 @@ void shoot( Tank *tank ) // Spawns new bullet after shoot command
 
     //spawn a new bullet at first free spot in bullets array
     for ( i = 0; i < MAXSPRITES; i++ )
-        if ( !bullets[ i ].val )
+        if ( bullets[ i ].valid == false )
         {
-            bullets[ i ].val = 1;
+            bullets[ i ].valid = true;
             bullets[ i ].x = x;
             bullets[ i ].y = y;
             bullets[ i ].dir = tank->dir;
             bullets[ i ].state = 0;
+            bullets[i].origin = origin;
 
             //tank shouldnt fire to fast, and also shouldnt kill itself by moving to bullet position by accident :D
             tank->shootState = 0;
@@ -113,7 +115,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 
     //update the tanks shoot state and movestate
     for(i=0; i < MAXSPRITES ; i++){
-        if (tanks[ i ].val){
+        if (tanks[ i ].valid == true){
 
             if (tanks[ i ].moveState < TANKSPEED){
                 tanks[ i ].moveState++;
@@ -133,7 +135,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 
 
     for ( i = 0; i < MAXSPRITES; i++ )
-        if ( bullets[ i ].val )
+        if ( bullets[ i ].valid == true )
         {
             bullets[ i ].state++;
             if ( bullets[ i ].state == BULLETSPEED )
@@ -161,45 +163,51 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 void collision() // Check for collisions of tanks and bullets, respectively bullets and bullets
 {
     int i, j, di, dj;
-
     //check for tank-bullet colisions
-    for ( i = 0; i < MAXSPRITES; i++ )
-        for ( j = 0; j < MAXSPRITES; j++ ) if (tanks[ i ].val && bullets[ j ].val){
-            //dont check if not valid
-
+    for (i = 0; i < MAXSPRITES; i++)
+        for (j = 0; j < MAXSPRITES; j++) if (tanks[i].valid && bullets[j].valid )
+        {
+            if ( bullets[j].origin == 1 ) continue;
+            bool hit = false;
             for( di = 0; di < 3; di++) for( dj = 0; dj < 3; dj++){
 
-                if ( ( tanks[ i ].x + di == bullets[ j ].x ) && ( tanks[ i ].y + dj == bullets[ j ].y ) )
+                if ( ( tanks[ i ].x + di == bullets[ j ].x ) && ( tanks[ i ].y + dj == bullets[ j ].y ) ) hit = true;
+            }
+            if ( hit )
+            {
+                tanks[i].lives--;
+                bullets[ j ].valid = false;
+                if (tanks[i].lives <= 0)
                 {
-                    tanks[ i ].val = 0;
-                    bullets[ j ].val = 0;
+                    tanks[i].valid = false;
+                    myScore += tanks[i].value;
                 }
             }
     }
 
     //check for bullet-bullet colisions
     for ( i = 0; i < MAXSPRITES; i++ )
-        for ( j = 0; j < MAXSPRITES; j++ ) if (bullets[ i ].val && bullets[ j ].val)
+        for ( j = 0; j < MAXSPRITES; j++ ) if (bullets[ i ].valid && bullets[ j ].valid)
         if ( ( i != j ) && ( bullets[ i ].x == bullets[ j ].x ) && ( bullets[ i ].y == bullets[ j ].y ) )
         {
-            bullets[ i ].val = 0;
-            bullets[ j ].val = 0;
+            bullets[ i ].valid = 0;
+            bullets[ j ].valid = 0;
         }
 
     //check for bullet-frame collisions
-    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].val)
+    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].valid)
         if ( bullets[ i ].x < 0 || bullets[ i ].y < 0 || bullets[ i ].x >= MAP_SIZE || bullets[ i ].y >= MAP_SIZE  )
         {
-            bullets[ i ].val = 0;
+            bullets[ i ].valid = 0;
         }
 
     //check for bullet-wall collisions
-    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].val )
+    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].valid )
     {
         if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == BRICK )
         {
             map[ bullets[ i ].x ][ bullets[ i ].y ] = EMPTY;
-            bullets[ i ].val = 0;
+            bullets[ i ].valid = 0;
             // should actually destroy 1x3 instead of 1x1
             switch (bullets[i].dir)
             {
@@ -215,11 +223,11 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                 break;
             }
         }
-        if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == STEEL ) bullets[ i ].val = 0;
+        if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == STEEL ) bullets[ i ].valid = 0;
     }
 
     //check for bullet-base collisions
-    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].val )
+    for ( i = 0; i < MAXSPRITES; i++ ) if (bullets[ i ].valid )
     {
         if (map[ bullets[ i ].x ][ bullets[ i ].y ] == BASE){
             //game end
@@ -227,24 +235,31 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
         }
     }
 
+    // check for bullet-myTank collisions
+    for (i = 0; i < MAXSPRITES; i++)
+    {
+        if (bullets[i].valid == 0) continue;
+        if (myTank.x <= bullets[i].x && bullets[i].x <= myTank.x + 2 && myTank.y <= bullets[i].y && bullets[i].y <= myTank.y + 2)
+        {
+            myTank.lives--;
+            bullets[i].valid = 0;
+        }
+    }
 }
 
-void spawn_tank( int x, int y, int dir )
+void spawn_tank( int x, int y, int dir, int lives )
 {
+    numberOfTanks++;
     int i;
-
-    if (DEBUG){
-        move(22,50);
-        printw("printing enemy tank ! %d",i);
-
-    }
     for ( i = 0; i < MAXSPRITES; i++ )
-        if ( !tanks[ i ].val )
+        if ( !tanks[ i ].valid )
         {
-            tanks[ i ].val = 1;
+            tanks[ i ].valid = 1;
             tanks[ i ].dir = dir;
             tanks[ i ].x = x;
             tanks[ i ].y = y;
+            tanks[i].lives = lives;
+            tanks[i].value = lives * 100;
             break;
         }
 }

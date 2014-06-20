@@ -2,11 +2,13 @@
 //GLOBALS
 
 Tank tanks[ MAXSPRITES ];
-Tank myTank = {35,12,1,1,0,0};
+Tank myTank = {35,12,1,0,0,2,0,1};
 Bullet bullets[ MAXSPRITES ];
 
 int gameOver;
 int gameDifficulty;
+myScore = 0;
+numberOfTanks = 0;
 
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE], character_map[] = { '.', 'B', 'S', 'W', 'X', 'T' };
 int mapUsed[MAP_SIZE][MAP_SIZE];
@@ -42,11 +44,9 @@ int main(int argc, char **argv)
         if (menu_choice == 0)
         {
             erase();
-            level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1);
-            erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
             erase();
-            level_name[7] = '0' + level;
+            level_name[7] = '0';
             start_game(level_name, difficulty);
         }
         if (menu_choice == 1)

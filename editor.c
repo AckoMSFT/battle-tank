@@ -11,7 +11,6 @@ void print_editor()
             case TANK: if(tank_x==-1)tank_x=i,tank_y=j; break;
             default: draw_field(i,j);break;
             }
-    //print_tank(UP,MAP_OFFSET_X+tank_x,MAP_OFFSET_Y+tank_y);
     print_tank(UP,MAP_OFFSET_X+myTank.x,MAP_OFFSET_Y+myTank.y);
     print_base(MAP_OFFSET_X+base_x,MAP_OFFSET_Y+base_y);
 }
