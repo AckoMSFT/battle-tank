@@ -137,4 +137,5 @@ int read_input();
 #include "menu.h"
 #include "engine.h"
 #include "gameloop.h"
+#include "sound.h"
 #endif // GLOBAL_H_INCLUDED
