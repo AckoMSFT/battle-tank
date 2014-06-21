@@ -1,6 +1,8 @@
 #ifndef SOUND_H_INCLUDED
 #define SOUND_H_INCLUDED
 
+void sound_end();
+
 //play level start music
 void sound_start_music();
 

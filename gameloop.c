@@ -2,21 +2,52 @@
 
 
 
-void updateDecisions(){
+void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
 
+    int x = tank->x, y = tank->y,i,dx,dy;
+    float newRand = (float)rand()/(float)RAND_MAX;
+
+    int mat[MAP_SIZE][MAP_SIZE];
+    memset(mat,0,sizeof(mat));
+
+
+    //go towards base
+    if (newRand < baseRandom){
+
+        for (dx = -1; dx < 2; dx++)
+            for (dy = -1; dy < 2; dy++){
+                if (dx+dy == 2 || dx + dy == -2 || dx + dy == 0) continue;
+
+
+
+            }
+
+    }
+
+    //go towards tank
+    if (newRand < baseRandom + mytankRandom){
+
+
+    }
+
+    //just do it random
+    for( i=0; i<AI_SPEED; i++ ){
+        tank->AIDecisions[i] = rand()%6;
+
+    }
 
 
 }
 
 int get_decision_easy(Tank *tank){
-//    if (AIState++ == AI_SPEED){
-//
-//        updateDecisions();
-//
-//        AIState=0;
-//    }
-//
-//    return AIDecisions[AIState];
+    if (--(tank->AIState) ){
+
+        updateDecisions(tank, BASE_EASY,MYTANK_EASY);
+
+        tank->AIState = AI_SPEED;
+    }
+
+    return tank->AIDecisions[ tank->AIState ];
 
     return rand()%20;
 }
@@ -114,18 +145,19 @@ void startGame(int difficulty)
         bool gameOver = 1 - startLevel(i, &stars, &score);
         if ( gameOver == true )
         {
+            sound_end();
             kill_curses();
             puts("osvojio si");
             printf("%d\n",score);
             update_high_scores("al3ksandar",score);
-            exit(0);
+            return;
         }
     }
     kill_curses();
     puts("osvojio si");
     printf("%d\n",score);
     update_high_scores("al3ksandar",score);
-    exit(0);
+    return;
 }
 
 bool startLevel(int level, int *stars, int *score)

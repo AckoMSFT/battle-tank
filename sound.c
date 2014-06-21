@@ -1,4 +1,10 @@
 #include "global.h"
+
+void sound_end(){
+    PlaySound("endgame.wav", NULL, SND_ASYNC);
+
+}
+
 void sound_start_music(){
     PlaySound("start_game.wav", NULL, SND_ASYNC);
 
