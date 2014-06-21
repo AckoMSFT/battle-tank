@@ -77,33 +77,40 @@ int get_decision_hard(Tank *tank){
 void startGame(int difficulty)
 {
     int i, stars = 0, score = 0;
+    gameDifficulty = difficulty;
     for (i = 1; i <= NUMBER_OF_LEVELS; i++)
     {
-        score += startLevel(i, difficulty, &stars);
+        bool gameOver = startLevel(i, &stars, &score);
+        if ( gameOver == false )
+        {
+            kill_curses();
+            puts("osvojio si");
+            printf("%d\n",score);
+    update_high_scores("al3ksandar",score);
+            exit(0);
+        }
     }
+    kill_curses();
+    puts("osvojio si");
+    printf("%d\n",score);
+    update_high_scores("al3ksandar",score);
+    exit(0);
 }
 
-int startLevel(int level, int difficulty, int *stars)
+bool startLevel(int level, int *stars, int *score)
 {
+    // give me current level
     char level_name[1 << 5], buffer[1 << 5];
     strcpy(level_name,"level");
     itoa(level, buffer, 10);
     strcat(level_name, buffer);
     strcat(level_name, ".map");
-
     load_map(level_name);
-    gameDifficulty = difficulty;
-    time_t current_time;
-    char* c_time_string;
-    /* Obtain current time as seconds elapsed since the Epoch. */
-    current_time = time(NULL);
-    /* Convert to local time format. */
-    c_time_string = ctime(&current_time);
 
-    int i,keyPressed,enemySpawn,x,y,enemyChoice,di,dj;
+
+    int i,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
     const int sleepTime = 1000 / FRAMES_PER_SEC;
 
-    //init some elements
     gameOver = false;
     numberOfTanks = 0;
     for (i=0; i<MAX_SPRITES ; i++){
@@ -122,39 +129,40 @@ int startLevel(int level, int difficulty, int *stars)
     player1.shootState = 0;
     player1.invulnerable = false;
     player1.stars = stars;
-
-    while(gameOver == false){
-
-        /* Obtain current time as seconds elapsed since the Epoch. */
-        current_time = time(NULL);
-        /* Convert to local time format. */
-        c_time_string = ctime(&current_time);
-
-
-
-        //check if we should spawn an enemy tank
+    totalSpawned = 0;
+    while(gameOver == false)
+    {
         enemySpawn++;
-        if (enemySpawn == confDiff[ gameDifficulty ].spawn){
+        if ( enemySpawn == confDiff[gameDifficulty].spawn )
+        {
+            if ( numberOfTanks == MAX_NUMBER_OF_TANKS || totalSpawned == TANKS_PER_LEVEL )
+            {
+                enemySpawn--;
+                goto hell;
+            }
             enemySpawn = 0;
             //find me a spot for new enemy tank
             find_space_tank(&x,&y);
 
             //if
             if (x!=-1){
-                if ( numberOfTanks < maxNumberOfTanks ) spawn_tank(x,y,DOWN, rand ( ) % 4 + 1);
+                spawn_tank(x,y,DOWN, rand ( ) % 4 + 1);
             }
 
         }
-
+        hell:
         //now update the mapUsed
         update_mapUsed();
 
         //move the tanks !
-        for ( i = 0; i < MAX_SPRITES; i++ ) if (tanks[i].alive) {
+        for ( i = 0; i < MAX_SPRITES; i++ )
+        {
+            if ( tanks[i].alive == false ) continue;
             enemyChoice = confDiff[gameDifficulty].AI(tanks + i);
             if (enemyChoice >=0 && enemyChoice <=3) move_tank(tanks+i, enemyChoice);
             else if (enemyChoice == 4) shoot(tanks+i, 0);
         }
+
         if (kbhit()){
             while(kbhit()){
                     keyPressed = read_input();
@@ -175,12 +183,13 @@ int startLevel(int level, int difficulty, int *stars)
         }
 
         update_states();
-        collision();
+        collision(&cntKilled, score);
 
         print_map();
         Sleep(sleepTime);
 
-        if ( player1.hitPoints <= 0 ) gameOver = true;
+        if ( cntKilled == TANKS_PER_LEVEL ) return true;
+        if ( player1.hitPoints <= 0 ) return false;
     }
-    print_end_screen();
+    return gameOver ^ 1;
 }

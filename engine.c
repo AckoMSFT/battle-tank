@@ -150,7 +150,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
         }
 }
 
-void collision() // Check for collisions of tanks and bullets, respectively bullets and bullets
+void collision(int * cntKilled, int * score) // Check for collisions of tanks and bullets, respectively bullets and bullets
 {
     int i, j, di, dj;
     //check for tank-bullet colisions
@@ -170,7 +170,9 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                 if (tanks[i].hitPoints <= 0)
                 {
                     tanks[i].alive = false;
-                    myScore += tanks[i].value;
+                    * score += tanks[i].value;
+                    ( * cntKilled )++;
+                    numberOfTanks--;
                 }
             }
     }
@@ -242,14 +244,15 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
 void spawn_tank( int x, int y, int dir, int hitPoints )
 {
     numberOfTanks++;
+    totalSpawned++;
     int i;
     for ( i = 0; i < MAX_SPRITES; i++ )
         if ( !tanks[ i ].alive )
         {
-            tanks[ i ].alive = 1;
-            tanks[ i ].dir = dir;
-            tanks[ i ].x = x;
-            tanks[ i ].y = y;
+            tanks[i].alive = 1;
+            tanks[i].dir = dir;
+            tanks[i].x = x;
+            tanks[i].y = y;
             tanks[i].hitPoints = hitPoints;
             tanks[i].value = hitPoints * 100;
             break;

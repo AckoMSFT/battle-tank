@@ -52,7 +52,8 @@
 #define MAP_SIZE 39
 
 #define NUMBER_OF_LEVELS 3
-
+#define MAX_NUMBER_OF_TANKS 5
+#define TANKS_PER_LEVEL 20
 //map tile types
 
 #define  TANK 'T'
@@ -72,11 +73,7 @@
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
 
-#define maxNumberOfTanks 5
-
-//difficulty config
-//easy
-#define SPAWNSPEED_EASY 300
+#define SPAWNSPEED_EASY 20
 #define ENEMYSHOOTSPEED_EASY 200
 #define RANDOM_EASY 1
 
@@ -133,6 +130,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 PlayerTank player1, player2;
 Bullet bullets[MAX_SPRITES];
+int totalSpawned;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];

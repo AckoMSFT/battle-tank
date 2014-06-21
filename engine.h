@@ -12,7 +12,7 @@ void shoot( Tank *tank, int origin );
 void update_states() ;
 
 // Check for collisions of tanks and bullets, respectively bullets and bullets
-void collision() ;
+void collision(int *, int *) ;
 
 //spawn a new tank
 void spawn_tank( int x, int y, int dir, int lives );
