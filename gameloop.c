@@ -112,6 +112,7 @@ bool startLevel(int level, int *stars, int *score)
     strcat(level_name, buffer);
     strcat(level_name, ".map");
     load_map(level_name);
+    sound_start_music();
 
 
     int i,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
