@@ -3,6 +3,53 @@
 
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
+
+
+    i = 0; j = 0;
+    empty = 1;
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        if (mapUsed[i+di][j+dj]) empty = 0;
+
+    }
+
+    if (empty){
+        *x= i;
+        *y=j;
+        return;
+    }
+
+
+
+    i = 0; j = MAP_SIZE/2 -1;
+    empty = 1;
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        if (mapUsed[i+di][j+dj]) empty = 0;
+
+    }
+
+    if (empty){
+        *x= i;
+        *y=j;
+        return;
+    }
+
+
+
+    i = 0; j = MAP_SIZE -3;
+    empty = 1;
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        if (mapUsed[i+di][j+dj]) empty = 0;
+
+    }
+
+    if (empty){
+        *x= i;
+        *y=j;
+        return;
+    }
+
+
+
     for (i = 0; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
 
@@ -132,8 +179,8 @@ bool startLevel(int level, int *stars, int *score)
     player1.dir = UP;
     player1.alive = true;
     player1.moveState = 0;
-    player1.shootState = 0;
-    player1.invulnerable = FRAMES_PER_SEC * 5;
+    player1.shootState =  - FRAMES_PER_SEC*5;
+    player1.invulnerable = false;
     player1.stars = stars;
     totalSpawned = 0;
     while(gameOver == false)
@@ -192,12 +239,6 @@ bool startLevel(int level, int *stars, int *score)
         collision(&cntKilled, score);
 
         print_map();
-
-        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 2 == 1 ) attron ( A_BLINK );
-        print_tank(player1.dir, player1.x + MAP_OFFSET_X, player1.y + MAP_OFFSET_Y);
-        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 2 == 1 ) attroff ( A_BLINK );
-        if ( player1.invulnerable > 0 ) player1.invulnerable--;
-        refresh();
         Sleep(sleepTime);
         update_status(player1.hitPoints, *score, *stars);
         refresh();
