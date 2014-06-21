@@ -402,3 +402,27 @@ void print_map(void)
 void print_end_screen(void)
 {
 }
+
+void print_empty_tank(int y, int x)
+{
+    move(y, x);
+    printw("   ");
+    move(y + 1, x);
+    printw("   ");
+    move(y + 2, x);
+    printw("   ");
+}
+
+void print_tank_indicators(int totalSpawned)
+{
+    int i, j, currX = MAP_OFFSET_X, currY = MAP_OFFSET_Y + MAP_SIZE + 5;
+    for ( i = 0; i < TANKS_PER_LEVEL / 2; i++ )
+    {
+        for ( j = 0; j < 2; j++ )
+        {
+            if ( i * 2 + j >= TANKS_PER_LEVEL - totalSpawned ) print_empty_tank(currX, currY + j * 4);
+            else print_enemy_tank(DOWN, currX, currY + j * 4, 1);
+        }
+        currX += 4;
+    }
+}
