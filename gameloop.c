@@ -4,11 +4,16 @@
 
 void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
 
-    int x = tank->x, y = tank->y;
+    int x = tank->x, y = tank->y,i;
     float newRand = (float)rand()/(float)RAND_MAX;
+
+    int mat[MAP_SIZE][MAP_SIZE];
+    memset(mat,0,sizeof(mat));
+
 
     //go towards base
     if (newRand < baseRandom){
+
 
 
     }
@@ -21,7 +26,7 @@ void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
 
     //just do it random
     for( i=0; i<AI_SPEED; i++ ){
-        tank->AIDecisions[i] = rand()%6
+        tank->AIDecisions[i] = rand()%6;
 
     }
 
@@ -29,14 +34,14 @@ void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
 }
 
 int get_decision_easy(Tank *tank){
-    if (--AIState){
+    if (--(tank->AIState) ){
 
-        updateDecisions();
+        updateDecisions(tank, BASE_EASY,MYTANK_EASY);
 
-        AIState=AI_SPEED;
+        tank->AIState = AI_SPEED;
     }
 
-    return AIDecisions[AIState];
+    return tank->AIDecisions[ tank->AIState ];
 
     return rand()%20;
 }
