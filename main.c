@@ -29,6 +29,7 @@ int read_input(){
     return getchar();
 #endif // _WIN32
 }
+#include <mmsystem.h>
 int main(int argc, char **argv)
 {
     int menu_choice, level, difficulty = 0;
@@ -49,13 +50,12 @@ int main(int argc, char **argv)
         if (menu_choice == 1)
         {
             erase();
-            level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1);
+            level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1) + 1;
             erase();
-            strcpy(levelName, "Level0x" );
+            strcpy(levelName, "level" );
             itoa(level, buffer, 10);
             strcat(levelName, buffer);
             strcat(levelName, ".map");
-            kill_curses();
             load_editor(levelName);
         }
         if (menu_choice == 2)
