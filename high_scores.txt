@@ -3,6 +3,7 @@
 5100 al3ksandar
 3500 al3ksandar
 2300 al3ksandar
+2200 al3ksandar
 1400 al3ksandar
 1337 al3ksandar
 1300 al3ksandar
@@ -16,5 +17,4 @@
 300 al3ksandar
 300 al3ksandar
 200 al3ksandar
-100 al3ksandar
 100 al3ksandar

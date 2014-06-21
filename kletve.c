@@ -354,6 +354,8 @@ void load_map(char * input_file_name)
         fscanf(input_file, "%c", &buffer);
     }
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf ( input_file, "%d", &levelConfiguration[i] );
+    fclose ( input_file );
 }
 
 void print_map(void)
