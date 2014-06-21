@@ -4,7 +4,7 @@
 
 void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
 
-    int x = tank->x, y = tank->y,i;
+    int x = tank->x, y = tank->y,i,dx,dy;
     float newRand = (float)rand()/(float)RAND_MAX;
 
     int mat[MAP_SIZE][MAP_SIZE];
@@ -14,7 +14,13 @@ void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
     //go towards base
     if (newRand < baseRandom){
 
+        for (dx = -1; dx < 2; dx++)
+            for (dy = -1; dy < 2; dy++){
+                if (dx+dy == 2 || dx + dy == -2 || dx + dy == 0) continue;
 
+
+
+            }
 
     }
 
@@ -147,18 +153,19 @@ void startGame(int difficulty)
         bool gameOver = 1 - startLevel(i, &stars, &score);
         if ( gameOver == true )
         {
+            sound_end();
             kill_curses();
             puts("osvojio si");
             printf("%d\n",score);
             update_high_scores("al3ksandar",score);
-            exit(0);
+            return;
         }
     }
     kill_curses();
     puts("osvojio si");
     printf("%d\n",score);
     update_high_scores("al3ksandar",score);
-    exit(0);
+    return;
 }
 
 bool startLevel(int level, int *stars, int *score)
