@@ -51,7 +51,7 @@ int main(int argc, char **argv)
             erase();
             level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1);
             erase();
-            strcpy(levelName, "Level0x" );
+            strcpy(levelName, "Level" );
             itoa(level, buffer, 10);
             strcat(levelName, buffer);
             strcat(levelName, ".map");

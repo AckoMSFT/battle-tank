@@ -11,7 +11,7 @@ void print_editor()
             case TANK: if(tank_x==-1)tank_x=i,tank_y=j; break;
             default: draw_field(i,j);break;
             }
-    print_tank(UP,MAP_OFFSET_X+player1.x,MAP_OFFSET_Y+player1.y);
+    print_tank(UP,MAP_OFFSET_X+tank_x,MAP_OFFSET_Y+tank_y);
     print_base(MAP_OFFSET_X+base_x,MAP_OFFSET_Y+base_y);
 }
 
@@ -19,6 +19,7 @@ void save_editor(char * mapFile)
 {
    int i,j;
    FILE * output_file = fopen(mapFile, "w");
+   erase_tank(36,14);
     for(i=0;i<MAP_SIZE;i++)
     {
         for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
@@ -47,8 +48,6 @@ void create_base(int x, int y)
 
 void create_tank(int x, int y)
 {
-    //just dont create tank
-    return;
     int i,j;
     for (i=0;i<3;i++)
         for (j=0;j<3;j++)
@@ -60,7 +59,7 @@ void erase_tank(int x, int y)
     int i,j;
     for (i=0;i<3;i++)
         for (j=0;j<3;j++)
-            map[i+x][j+y]=EMPTY;
+            editor[i+x][j+y]=EMPTY;
 }
 
 void create_cursor(int x, int y)
@@ -240,4 +239,3 @@ void map_generator(int n)
     create_base(35,17);
     create_tank(36,14);
 }
-
