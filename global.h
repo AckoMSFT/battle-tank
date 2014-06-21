@@ -71,10 +71,12 @@
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128
-#define FRAMES_PER_SEC 30
-#define BULLET_SPEED 3
+#define FRAMES_PER_SEC 20
+#define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
+#define AI_SPEED 5
+
 
 #define SPAWNSPEED_EASY 5
 #define ENEMYSHOOTSPEED_EASY 200

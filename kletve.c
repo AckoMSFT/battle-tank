@@ -12,6 +12,7 @@ void init_curses(void)
     keypad(stdscr, TRUE);
 	curs_set(0);
     init_colors();
+
 }
 
 void init_colors(void)
