@@ -37,6 +37,7 @@ int main(int argc, char **argv)
     srand(time(NULL));
     init_curses();
     resize_term(80,120);
+    print_bomb(50,10);
     while ( 1 )
     {
         menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
@@ -57,7 +58,7 @@ int main(int argc, char **argv)
             strcat(levelName, buffer);
             strcat(levelName, ".map");
             load_editor(levelName);
-        }
+         }
         if (menu_choice == 2)
         {
             int i;
