@@ -80,13 +80,13 @@ void startGame(int difficulty)
     gameDifficulty = difficulty;
     for (i = 1; i <= NUMBER_OF_LEVELS; i++)
     {
-        bool gameOver = startLevel(i, &stars, &score);
-        if ( gameOver == false )
+        bool gameOver = 1 - startLevel(i, &stars, &score);
+        if ( gameOver == true )
         {
             kill_curses();
             puts("osvojio si");
             printf("%d\n",score);
-    update_high_scores("al3ksandar",score);
+            update_high_scores("al3ksandar",score);
             exit(0);
         }
     }
@@ -121,7 +121,7 @@ bool startLevel(int level, int *stars, int *score)
     myScore = 0;
 
     // initialize player1
-    player1.hitPoints = 50000;
+    player1.hitPoints = 2000000000;
     player1.x = 36;
     player1.y = 12;
     player1.dir = UP;
