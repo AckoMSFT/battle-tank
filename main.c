@@ -1,11 +1,5 @@
 #include "global.h"
 
-int levelConfiguration[][20] = { { BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK,
-                                   BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK,
-                                   BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK, BASIC_TANK,
-                                   BASIC_TANK, BASIC_TANK, BASIC_TANK,  FAST_TANK,  FAST_TANK }
-                               };
-
 int gameOver;
 int gameDifficulty;
 char characterMap[] = { '.', 'B', 'S', 'W', 'X', 'T' };

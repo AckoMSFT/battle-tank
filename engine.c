@@ -3,10 +3,10 @@
 // moves the tank
 void move_tank ( Tank *tank, int direction){
 
-    //if this tank moved TANKSPEED earlier, just ignore. else, set movestate to 0
-    if (tank->moveState < TANK_SPEED) return;
+    //if this tank moved TANKSPEED earlier, just ignore. else, set move_state to 0
+    if (tank->move_state < TANK_SPEED) return;
 
-    tank->moveState = 0;
+    tank->move_state = 0;
 
     switch(direction){
     case LEFT:
@@ -59,7 +59,7 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
 
 
     //if this tank shoot SHOOTSPEED earlier, just ignore.
-    if (tank->shootState < SHOOT_SPEED) return;
+    if (tank->shoot_state < SHOOT_SPEED) return;
 
     //play a sound !
     if (tank == &player1) sound_shot();
@@ -96,8 +96,8 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
             bullets[i].source = origin;
 
             //tank shouldnt fire to fast, and also shouldnt kill itself by moving to bullet position by accident :D
-            tank->shootState = 0;
-            tank->moveState = 0;
+            tank->shoot_state = 0;
+            tank->move_state = 0;
             break;
         }
 }
@@ -106,16 +106,16 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 {
     int i;
 
-    //update the tanks shoot state and movestate
+    //update the tanks shoot state and move_state
     for(i=0; i < MAX_SPRITES ; i++){
         if (tanks[ i ].alive == true){
 
-            if (tanks[ i ].moveState < TANK_SPEED){
-                tanks[ i ].moveState++;
+            if (tanks[ i ].move_state < TANK_SPEED){
+                tanks[ i ].move_state += tanks[i].move_rate;
             }
 
-            if (tanks[ i ].shootState < SHOOT_SPEED){
-                tanks[ i ].shootState++;
+            if (tanks[ i ].shoot_state < SHOOT_SPEED){
+                tanks[ i ].shoot_state += tanks[i].shoot_rate;
             }
 
         }
@@ -123,8 +123,8 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 
     }
     //also for player_1
-    if (player1.shootState < SHOOT_SPEED) player1.shootState++;
-    if (player1.moveState < TANK_SPEED) player1.moveState++;
+    if (player1.shoot_state < SHOOT_SPEED) player1.shoot_state += player1.shoot_rate;
+    if (player1.move_state < TANK_SPEED) player1.move_state += player1.move_rate;
 
 
     for ( i = 0; i < MAX_SPRITES; i++ )
@@ -168,9 +168,9 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
             }
             if ( hit )
             {
-                tanks[i].hitPoints--;
+                tanks[i].hit_points--;
                 bullets[ j ].alive = false;
-                if (tanks[i].hitPoints <= 0)
+                if (tanks[i].hit_points <= 0)
                 {
                     tanks[i].alive = false;
 
@@ -241,15 +241,19 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
         if (bullets[i].alive == 0) continue;
         if (player1.x <= bullets[i].x && bullets[i].x <= player1.x + 2 && player1.y <= bullets[i].y && bullets[i].y <= player1.y + 2)
         {
-            player1.hitPoints--;
             bullets[i].alive = 0;
-            player1.x = 35;
-            player1.y = 12;
+            if ( player1.invulnerable == 0 )
+            {
+                player1.hit_points--;
+                player1.x = 35;
+                player1.y = 12;
+                player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
+            }
         }
     }
 }
 
-void spawn_tank( int x, int y, int dir, int hitPoints )
+void spawn_tank( int x, int y, int dir, int type )
 {
     numberOfTanks++;
     totalSpawned++;
@@ -261,8 +265,35 @@ void spawn_tank( int x, int y, int dir, int hitPoints )
             tanks[i].dir = dir;
             tanks[i].x = x;
             tanks[i].y = y;
-            tanks[i].hitPoints = hitPoints;
-            tanks[i].value = hitPoints * 100;
+            tanks[i].move_state = 0;
+            tanks[i].shoot_state = 0;
+            switch ( type )
+            {
+            case BASIC_TANK:
+                tanks[i].move_rate = 1;
+                tanks[i].shoot_rate = 1;
+                tanks[i].hit_points = 1;
+                tanks[i].value = 100;
+                break;
+            case FAST_TANK:
+                tanks[i].move_rate = 5;
+                tanks[i].shoot_rate = 1;
+                tanks[i].hit_points = 1;
+                tanks[i].value = 200;
+                break;
+            case POWER_TANK:
+                tanks[i].move_rate = 1;
+                tanks[i].shoot_rate = 5;
+                tanks[i].hit_points = 1;
+                tanks[i].value = 300;
+                break;
+            case ARMOR_TANK:
+                tanks[i].move_rate = 1;
+                tanks[i].shoot_rate = 1;
+                tanks[i].hit_points = 4;
+                tanks[i].value = 400;
+                break;
+            }
             break;
         }
 }
