@@ -130,7 +130,7 @@ void startGame(int difficulty)
 {
     int i, stars = 0, score = 0;
     gameDifficulty = difficulty;
-    player1.hitPoints = 3;
+    player1.hit_points = 3;
     for (i = 1; i <= NUMBER_OF_LEVELS; i++)
     {
         bool gameOver = 1 - startLevel(i, &stars, &score);
@@ -152,6 +152,7 @@ void startGame(int difficulty)
 
 bool startLevel(int level, int *stars, int *score)
 {
+    Power powerUP;
     // give me current level
     char level_name[1 << 5], buffer[1 << 5];
     strcpy(level_name,"level");
@@ -178,11 +179,18 @@ bool startLevel(int level, int *stars, int *score)
     player1.y = 12;
     player1.dir = UP;
     player1.alive = true;
-    player1.moveState = 0;
-    player1.shootState = 0;
+    player1.move_state = 0;
+    player1.shoot_state = 0;
     player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
     player1.stars = stars;
+    player1.move_rate = 1;
+    player1.shoot_rate = 1;
     totalSpawned = 0;
+
+    powerUP.x = 50;
+    powerUP.y = 50;
+    powerUP.type = BOMB;
+    powerUP.state = 0;
     while(gameOver == false)
     {
         enemySpawn++;
@@ -199,7 +207,7 @@ bool startLevel(int level, int *stars, int *score)
 
             //if
             if (x!=-1){
-                spawn_tank(x,y,DOWN, rand ( ) % 4 + 1);
+                spawn_tank(x,y,DOWN, levelConfiguration[totalSpawned]);
             }
 
         }
@@ -239,16 +247,18 @@ bool startLevel(int level, int *stars, int *score)
         collision(&cntKilled, score);
 
         print_map();
-        update_status(player1.hitPoints, *score, *stars);
+        update_status(player1.hit_points, *score, *stars);
 
-        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 2 == 1 ) attron ( A_BLINK );
+        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 5 == 3 ) attron ( A_BLINK );
         print_tank(player1.dir, player1.x + 1, player1.y + 1);
-        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 2 == 1 ) attroff ( A_BLINK );
+        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 5 == 3 ) attroff ( A_BLINK );
         if ( player1.invulnerable > 0 ) player1.invulnerable--;
         refresh();
 
+        powerUP.state = ( powerUP.state + 1 ) % 5;
+        print_power_up(powerUP);
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
-        if ( player1.hitPoints <= 0 ) return false;
+        if ( player1.hit_points <= 0 ) return false;
         Sleep(sleepTime);
     }
     return gameOver ^ 1;

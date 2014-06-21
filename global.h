@@ -90,19 +90,13 @@
 #define ENEMYSHOOTSPEED_HARD 50
 #define RANDOM_HARD 0
 
-typedef struct
+typedef struct tank
 {
-    int x, y, dir, shootState, moveState, value, hitPoints;
+    int x, y, dir, shoot_state, shoot_rate, move_state, move_rate, value, hit_points, stars, invulnerable;
     bool alive;
 } Tank;
 
-typedef struct
-{
-    int x, y, dir, shootState, moveState, hitPoints, stars, invulnerable;
-    bool alive;
-} PlayerTank;
-
-typedef struct
+typedef struct bullet
 {
     int x, y, dir, state, source;
     bool alive;
@@ -110,7 +104,7 @@ typedef struct
 
 typedef struct
 {
-    int type;
+    int type, x, y, state;
 } Power;
 
 typedef struct difficulty
@@ -125,13 +119,13 @@ enum { BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK };
 enum { NORMAL, BOMB, HELMET, SHOVEL, STAR, LIFE, TIMER };
 
 
-extern int levelConfiguration[][20];
+int levelConfiguration[20];
 
 // global variables
 extern char characterMap[];
 
 Tank tanks[MAX_SPRITES];
-PlayerTank player1, player2;
+Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
 int totalSpawned;
 extern int gameDifficulty;

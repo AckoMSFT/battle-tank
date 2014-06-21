@@ -28,6 +28,7 @@ void init_colors(void)
     init_pair(9, COLOR_GREEN, COLOR_BLACK);
     init_pair(10, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(11, COLOR_CYAN, COLOR_BLACK);
+    init_pair(13,COLOR_YELLOW,COLOR_WHITE);
 }
 
 void print_border(int y1, int x1, int y2, int x2)
@@ -101,9 +102,9 @@ void print_tank(int dir, int y, int x)
     attroff(COLOR_PAIR(8));
 }
 
-void print_enemy_tank (int dir, int y, int x, int hitPoints)
+void print_enemy_tank (int dir, int y, int x, int hit_points)
 {
-    switch (hitPoints)
+    switch (hit_points)
     {
     case 1:
         break;
@@ -152,7 +153,7 @@ void print_enemy_tank (int dir, int y, int x, int hitPoints)
         printw("%c%c%c",35,35,35);
         break;
     }
-    switch ( hitPoints )
+    switch ( hit_points )
     {
     case 1:
         break;
@@ -215,22 +216,18 @@ void print_steel(int y, int x)
 
 void print_bomb(int y, int x)
 {
-    attron(COLOR_PAIR(7));
+    attron(COLOR_PAIR(13));
     move(y, x);
-    addch(ACS_ULCORNER);
-    addch(ACS_HLINE);
-    addch(ACS_URCORNER);
+    printw(" * ");
     move(y + 1, x);
-    addch(ACS_VLINE);
-    attron(A_ALTCHARSET);
-    printw("%c",182);
-    attroff(A_ALTCHARSET);
-    addch(ACS_VLINE);
+    attron(COLOR_PAIR(3));
+    printw(" ");
+    addch(ACS_DIAMOND);
+    printw(" ");
     move(y + 2, x);
-    addch(ACS_LLCORNER);
-    addch(ACS_HLINE);
-    addch(ACS_LRCORNER);
-    attroff(COLOR_PAIR(7));
+    printw("   ");
+    attroff(COLOR_PAIR(3));
+    attroff(COLOR_PAIR(13));
 }
 
 void print_star(int y, int x)
@@ -283,6 +280,38 @@ void print_timer_power_up(int y, int x)
     addch(ACS_HLINE);
     addch(ACS_LRCORNER);
     attroff(COLOR_PAIR(10));
+}
+
+void print_tank_power_up(int y, int x)
+{
+    attron(COLOR_PAIR(0));
+    attron(A_BOLD);
+    move(y, x);
+    printw("   ");
+    move(y + 1, x);
+    printw(" O-");
+    move(y + 2, x);
+    printw("OOO");
+    attroff(A_BOLD);
+    attroff(COLOR_PAIR(0));
+}
+
+void print_power_up(Power powerUP)
+{
+    if ( powerUP.state == 3 ) attron(A_BLINK);
+    switch ( powerUP.type )
+    {
+    case NORMAL:
+        break;
+    case BOMB:
+        print_bomb(powerUP.x + MAP_OFFSET_X, powerUP.y + MAP_OFFSET_Y);
+        break;
+    case LIFE:
+        print_tank_power_up(powerUP.x + MAP_OFFSET_X, powerUP.y + MAP_OFFSET_Y);
+        break;
+    }
+    if ( powerUP.state == 3 ) attroff(A_BLINK);
+    refresh();
 }
 
 void print_base(int y, int x)
@@ -357,7 +386,7 @@ void print_map(void)
     for (i = 0; i < MAX_SPRITES; i++)
     {
         if (tanks[i].alive == false) continue;
-        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].hitPoints);
+        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].hit_points);
     }
     for (i = 0; i < MAX_SPRITES; i++)
     {
