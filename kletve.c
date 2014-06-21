@@ -28,8 +28,6 @@ void init_colors(void)
     init_pair(9, COLOR_GREEN, COLOR_BLACK);
     init_pair(10, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(11, COLOR_CYAN, COLOR_BLACK);
-    init_pair(12, COLOR_GREEN, COLOR_YELLOW);
-    init_pair(13, COLOR_YELLOW, COLOR_BLACK);
 }
 
 void print_border(int y1, int x1, int y2, int x2)
@@ -267,6 +265,26 @@ void print_shovel(int y, int x)
     attroff(A_BLINK);
 }
 
+void print_timer_power_up(int y, int x)
+{
+    attron(COLOR_PAIR(10));
+    move(y, x);
+    addch(ACS_ULCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_URCORNER);
+    move(y + 1, x);
+    addch(ACS_VLINE);
+    attron(A_ALTCHARSET);
+    printw("T");
+    attroff(A_ALTCHARSET);
+    addch(ACS_VLINE);
+    move(y + 2, x);
+    addch(ACS_LLCORNER);
+    addch(ACS_HLINE);
+    addch(ACS_LRCORNER);
+    attroff(COLOR_PAIR(10));
+}
+
 void print_base(int y, int x)
 {
     attron(COLOR_PAIR(4));
@@ -336,15 +354,15 @@ void print_map(void)
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
-    print_tank(player1.dir, player1.x + MAP_OFFSET_X, player1.y + MAP_OFFSET_Y);
-    for (i = 0; i < MAX_SPRITES; i++)
+    print_tank(myTank.dir, myTank.x + MAP_OFFSET_X, myTank.y + MAP_OFFSET_Y);
+    for (i = 0; i < MAXSPRITES; i++)
     {
-        if (tanks[i].alive == false) continue;
-        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].hitPoints);
+        if (tanks[i].valid == false) continue;
+        print_enemy_tank(tanks[i].dir, tanks[i].x + MAP_OFFSET_X, tanks[i].y + MAP_OFFSET_Y, tanks[i].lives);
     }
-    for (i = 0; i < MAX_SPRITES; i++)
+    for (i = 0; i < MAXSPRITES; i++)
     {
-        if (bullets[i].alive == false) continue;
+        if (bullets[i].valid == false) continue;
         print_bullet(bullets[i].x + MAP_OFFSET_X,bullets[i].y + MAP_OFFSET_Y);
     }
     refresh();
