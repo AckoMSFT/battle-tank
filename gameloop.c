@@ -2,21 +2,41 @@
 
 
 
-void updateDecisions(){
+void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
 
+    int x = tank->x, y = tank->y;
+    float newRand = (float)rand()/(float)RAND_MAX;
+
+    //go towards base
+    if (newRand < baseRandom){
+
+
+    }
+
+    //go towards tank
+    if (newRand < baseRandom + mytankRandom){
+
+
+    }
+
+    //just do it random
+    for( i=0; i<AI_SPEED; i++ ){
+        tank->AIDecisions[i] = rand()%6
+
+    }
 
 
 }
 
 int get_decision_easy(Tank *tank){
-//    if (AIState++ == AI_SPEED){
-//
-//        updateDecisions();
-//
-//        AIState=0;
-//    }
-//
-//    return AIDecisions[AIState];
+    if (--AIState){
+
+        updateDecisions();
+
+        AIState=AI_SPEED;
+    }
+
+    return AIDecisions[AIState];
 
     return rand()%20;
 }
