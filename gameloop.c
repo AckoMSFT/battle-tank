@@ -1,54 +1,53 @@
 #include "global.h"
 
 
+
+void updateDecisions(){
+
+
+
+}
+
+int get_decision_easy(Tank *tank){
+//    if (AIState++ == AI_SPEED){
+//
+//        updateDecisions();
+//
+//        AIState=0;
+//    }
+//
+//    return AIDecisions[AIState];
+
+    return rand()%20;
+}
+
+int get_decision_medium(Tank *tank){
+    return rand()%12;
+}
+
+int get_decision_hard(Tank *tank){
+    return rand()%6;
+}
+
+
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
+    int jPositions[2] = {0,MAP_SIZE/2 -1 , MAP_SIZE-2};
 
+    for(i=0;i<3;i++){
+        j=jPositions[i];
+        empty = 1;
+        for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+            if (mapUsed[di][j+dj]) empty = 0;
 
-    i = 0; j = 0;
-    empty = 1;
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        if (mapUsed[i+di][j+dj]) empty = 0;
+        }
 
+        if (empty){
+            *x= 0;
+            *y=j;
+            return;
+        }
     }
-
-    if (empty){
-        *x= i;
-        *y=j;
-        return;
-    }
-
-
-
-    i = 0; j = MAP_SIZE/2 -1;
-    empty = 1;
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        if (mapUsed[i+di][j+dj]) empty = 0;
-
-    }
-
-    if (empty){
-        *x= i;
-        *y=j;
-        return;
-    }
-
-
-
-    i = 0; j = MAP_SIZE -3;
-    empty = 1;
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        if (mapUsed[i+di][j+dj]) empty = 0;
-
-    }
-
-    if (empty){
-        *x= i;
-        *y=j;
-        return;
-    }
-
-
 
     for (i = 0; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
@@ -106,19 +105,6 @@ void update_mapUsed(){
 }
 
 
-
-int get_decision_easy(Tank *tank){
-    //0,1,2,3 are directions, 4 is shoot, and 5 is nothing
-    return rand()%20;
-}
-
-int get_decision_medium(Tank *tank){
-    return rand()%12;
-}
-
-int get_decision_hard(Tank *tank){
-    return rand()%6;
-}
 
 void update_status(int lives, int score, int stars)
 {

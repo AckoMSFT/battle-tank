@@ -2,7 +2,6 @@
 #define GAMELOOP_H_INCLUDED
 #define DEBUG 0
 
-
 //find a first spot ehre a new tank can be put
 void find_space_tank(int *x, int *y);
 
@@ -13,6 +12,7 @@ void update_mapUsed();
 void startGame(int);
 int startLevel(int, int*, int*);
 //AI
+void updateDecisions();
 int get_decision_easy(Tank *tank);
 int get_decision_medium(Tank *tank);
 int get_decision_hard(Tank *tank);
