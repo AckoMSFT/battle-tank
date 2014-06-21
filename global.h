@@ -95,8 +95,8 @@ typedef struct
 
 typedef struct
 {
-    int x, y, dir, shootState, moveState, hitPoints, stars;
-    bool alive, invulnerable;
+    int x, y, dir, shootState, moveState, hitPoints, stars, invulnerable;
+    bool alive;
 } PlayerTank;
 
 typedef struct

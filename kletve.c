@@ -354,7 +354,6 @@ void print_map(void)
             }
         }
     print_base(base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y) ;
-    print_tank(player1.dir, player1.x + MAP_OFFSET_X, player1.y + MAP_OFFSET_Y);
     for (i = 0; i < MAX_SPRITES; i++)
     {
         if (tanks[i].alive == false) continue;
