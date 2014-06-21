@@ -54,7 +54,10 @@
 #define NUMBER_OF_LEVELS 3
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
-//map tile types
+
+#define INVULNERABLE_SECS 200
+
+// map tiles
 
 #define  TANK 'T'
 #define  BASE 'X'

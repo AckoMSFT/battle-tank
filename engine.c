@@ -247,7 +247,7 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
                 player1.hitPoints--;
                 player1.x = 35;
                 player1.y = 12;
-                player1.invulnerable = 150;
+                player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
             }
         }
     }

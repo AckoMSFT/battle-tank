@@ -179,8 +179,8 @@ bool startLevel(int level, int *stars, int *score)
     player1.dir = UP;
     player1.alive = true;
     player1.moveState = 0;
-    player1.shootState =  - FRAMES_PER_SEC*5;
-    player1.invulnerable = false;
+    player1.shootState = 0;
+    player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
     player1.stars = stars;
     totalSpawned = 0;
     while(gameOver == false)
@@ -239,11 +239,17 @@ bool startLevel(int level, int *stars, int *score)
         collision(&cntKilled, score);
 
         print_map();
-        Sleep(sleepTime);
         update_status(player1.hitPoints, *score, *stars);
+
+        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 2 == 1 ) attron ( A_BLINK );
+        print_tank(player1.dir, player1.x + 1, player1.y + 1);
+        if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 2 == 1 ) attroff ( A_BLINK );
+        if ( player1.invulnerable > 0 ) player1.invulnerable--;
         refresh();
+
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hitPoints <= 0 ) return false;
+        Sleep(sleepTime);
     }
     return gameOver ^ 1;
 }
