@@ -413,9 +413,46 @@ void print_empty_tank(int y, int x)
     printw("   ");
 }
 
-void print_tank_indicators(int totalSpawned)
+void print_digit(int y, int x, int digit)
+{
+    switch ( digit )
+    {
+    case 0:
+        move(y, x);
+        printw("###");
+        move(y + 1, x);
+        printw("# #");
+        move(y + 2, x);
+        printw("# #");
+        move(y + 3, x);
+        printw("# #");
+        move(y + 4, x );
+        printw("###");
+        break;
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    case 7:
+        break;
+    case 8:
+        break;
+    case 9:
+        break;    }
+}
+
+void print_indicators(int totalSpawned, int lives, int stars, int score)
 {
     int i, j, currX = MAP_OFFSET_X, currY = MAP_OFFSET_Y + MAP_SIZE + 5;
+    // tank indicators
     for ( i = 0; i < TANKS_PER_LEVEL / 2; i++ )
     {
         for ( j = 0; j < 2; j++ )
@@ -425,4 +462,17 @@ void print_tank_indicators(int totalSpawned)
         }
         currX += 4;
     }
+    // lives
+    currX = MAP_OFFSET_X;
+    currY = MAP_OFFSET_Y + MAP_SIZE + 15;
+    move(currX, currY);
+    printw("1P");
+    print_tank(UP, currX + 2, currY);
+    print_digit(currX, currY + 4, 0);
+
+    currX += 6;
+    print_star(currX + 2, currY);
+    print_digit(currX, currY + 4, 0);
+    // stars
+    // score
 }

@@ -104,14 +104,6 @@ void update_mapUsed(){
     }
 }
 
-
-
-void update_status(int lives, int score, int stars)
-{
-    move(10,50);
-    printw("%d %d %d\n", lives, score, stars);
-}
-
 void startGame(int difficulty)
 {
     int i, stars = 0, score = 0;
@@ -233,7 +225,6 @@ bool startLevel(int level, int *stars, int *score)
         collision(&cntKilled, score);
 
         print_map();
-        update_status(player1.hit_points, *score, *stars);
 
         if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 5 == 3 ) attron ( A_BLINK );
         print_tank(player1.dir, player1.x + 1, player1.y + 1);
@@ -246,7 +237,7 @@ bool startLevel(int level, int *stars, int *score)
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hit_points <= 0 ) return false;
 
-        print_tank_indicators(totalSpawned);
+        print_indicators(totalSpawned, player1.hit_points, * stars, * score);
         Sleep(sleepTime);
     }
     return gameOver ^ 1;

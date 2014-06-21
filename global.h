@@ -55,7 +55,7 @@
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
 
-#define INVULNERABLE_SECS 200
+#define INVULNERABLE_SECS 5
 
 // map tiles
 
