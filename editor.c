@@ -11,7 +11,7 @@ void print_editor()
             case TANK: if(tank_x==-1)tank_x=i,tank_y=j; break;
             default: draw_field(i,j);break;
             }
-    print_tank(UP,MAP_OFFSET_X+myTank.x,MAP_OFFSET_Y+myTank.y);
+    print_tank(UP,MAP_OFFSET_X+player1.x,MAP_OFFSET_Y+player1.y);
     print_base(MAP_OFFSET_X+base_x,MAP_OFFSET_Y+base_y);
 }
 
@@ -68,7 +68,7 @@ void create_cursor(int x, int y)
     int i,j;
     for (i=0;i<=editor_cursor_size;i++)
         for(j=0;j<=editor_cursor_size;j++)
-            editor[x+i][y+j]=character_map[editor_cursor_id];
+            editor[x+i][y+j]=characterMap[editor_cursor_id];
     create_base(35,17);
     create_tank(36,14);
 }
