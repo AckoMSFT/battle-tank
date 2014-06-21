@@ -45,7 +45,7 @@ int main(int argc, char **argv)
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
             erase();
-            startGame(0);
+            startGame(difficulty);
         }
         if (menu_choice == 1)
         {
