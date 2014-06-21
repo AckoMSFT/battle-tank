@@ -3,6 +3,53 @@
 
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
+
+
+    i = 0; j = 0;
+    empty = 1;
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        if (mapUsed[i+di][j+dj]) empty = 0;
+
+    }
+
+    if (empty){
+        *x= i;
+        *y=j;
+        return;
+    }
+
+
+
+    i = 0; j = MAP_SIZE/2 -1;
+    empty = 1;
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        if (mapUsed[i+di][j+dj]) empty = 0;
+
+    }
+
+    if (empty){
+        *x= i;
+        *y=j;
+        return;
+    }
+
+
+
+    i = 0; j = MAP_SIZE -3;
+    empty = 1;
+    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+        if (mapUsed[i+di][j+dj]) empty = 0;
+
+    }
+
+    if (empty){
+        *x= i;
+        *y=j;
+        return;
+    }
+
+
+
     for (i = 0; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
 
@@ -73,20 +120,26 @@ int get_decision_hard(Tank *tank){
     return rand()%6;
 }
 
+void update_status(int lives, int score, int stars)
+{
+    move(10,50);
+    printw("%d %d %d\n", lives, score, stars);
+}
 
 void startGame(int difficulty)
 {
     int i, stars = 0, score = 0;
     gameDifficulty = difficulty;
+    player1.hitPoints = 3;
     for (i = 1; i <= NUMBER_OF_LEVELS; i++)
     {
-        bool gameOver = startLevel(i, &stars, &score);
-        if ( gameOver == false )
+        bool gameOver = 1 - startLevel(i, &stars, &score);
+        if ( gameOver == true )
         {
             kill_curses();
             puts("osvojio si");
             printf("%d\n",score);
-    update_high_scores("al3ksandar",score);
+            update_high_scores("al3ksandar",score);
             exit(0);
         }
     }
@@ -106,6 +159,7 @@ bool startLevel(int level, int *stars, int *score)
     strcat(level_name, buffer);
     strcat(level_name, ".map");
     load_map(level_name);
+    sound_start_music();
 
 
     int i,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
@@ -120,13 +174,12 @@ bool startLevel(int level, int *stars, int *score)
     myScore = 0;
 
     // initialize player1
-    player1.hitPoints = 50000;
     player1.x = 36;
     player1.y = 12;
     player1.dir = UP;
     player1.alive = true;
     player1.moveState = 0;
-    player1.shootState = 0;
+    player1.shootState =  - FRAMES_PER_SEC*5;
     player1.invulnerable = false;
     player1.stars = stars;
     totalSpawned = 0;
@@ -187,7 +240,8 @@ bool startLevel(int level, int *stars, int *score)
 
         print_map();
         Sleep(sleepTime);
-
+        update_status(player1.hitPoints, *score, *stars);
+        refresh();
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hitPoints <= 0 ) return false;
     }

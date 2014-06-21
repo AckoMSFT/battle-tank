@@ -61,6 +61,9 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
     //if this tank shoot SHOOTSPEED earlier, just ignore.
     if (tank->shootState < SHOOT_SPEED) return;
 
+    //play a sound !
+    if (tank == &player1) sound_shot();
+
     //get x, y of a new bullet
     switch( tank->dir ){
     case ( UP ):
@@ -170,6 +173,9 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
                 if (tanks[i].hitPoints <= 0)
                 {
                     tanks[i].alive = false;
+
+                    sound_explosion();
+
                     * score += tanks[i].value;
                     ( * cntKilled )++;
                     numberOfTanks--;
@@ -237,6 +243,8 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
         {
             player1.hitPoints--;
             bullets[i].alive = 0;
+            player1.x = 35;
+            player1.y = 12;
         }
     }
 }

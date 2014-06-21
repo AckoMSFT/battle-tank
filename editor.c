@@ -149,6 +149,7 @@ void load_editor(char * level_name)
       iter=0;
       while(!kbhit())
       {
+          Sleep(30);
           curr=clock();
           if((double)(curr-prev)/CLOCKS_PER_SEC<0.1)continue;
           prev=curr;

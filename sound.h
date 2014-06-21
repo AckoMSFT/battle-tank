@@ -7,5 +7,7 @@ void sound_start_music();
 //play explosion sound
 void sound_explosion();
 
+//play sound on shot
+void sound_shot();
 
 #endif // SOUND_H_INCLUDED
