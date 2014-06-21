@@ -259,6 +259,8 @@ bool startLevel(int level, int *stars, int *score)
         print_power_up(powerUP);
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hit_points <= 0 ) return false;
+
+        print_tank_indicators(totalSpawned);
         Sleep(sleepTime);
     }
     return gameOver ^ 1;
