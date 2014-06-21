@@ -1,9 +1,11 @@
 9700 al3ksandar
+5700 al3ksandar
 5100 al3ksandar
 3500 al3ksandar
 2300 al3ksandar
 1400 al3ksandar
 1337 al3ksandar
+1300 al3ksandar
 1300 al3ksandar
 1200 al3ksandar
 900 al3ksandar
@@ -16,5 +18,3 @@
 0 al3ksandar
 0 al3ksandar
 0 al3ksandar
-0 al3ksandar
-0 undefined

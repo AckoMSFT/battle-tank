@@ -237,6 +237,8 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
         {
             player1.hitPoints--;
             bullets[i].alive = 0;
+            player1.x = 35;
+            player1.y = 12;
         }
     }
 }
