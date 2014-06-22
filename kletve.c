@@ -629,6 +629,7 @@ void print_map ( void )
         {
             switch ( map[i][j] )
             {
+                case EXPLOSION_GRASS:
                 case EXPLOSION:
                 {
                     print_field( i, j, EXPLOSION );
