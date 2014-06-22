@@ -86,6 +86,7 @@ int print_menu (int starty, int x, int number_of_entries, int width, char title[
             if (idx == number_of_entries) idx = 1;
             else idx++;
         }
+        else if (key == 27) return INF;
     }
     while (key != '\r' && key != '\n' );
     return idx - 1;

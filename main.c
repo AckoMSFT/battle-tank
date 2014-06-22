@@ -44,11 +44,13 @@ int main(int argc, char **argv)
     resize_term(80,80);
     while ( 1 )
     {
+        erase ( );
         menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
         if (menu_choice == 0)
         {
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            if ( difficulty >= INF ) continue;
             erase();
             demo = 0;
             startGame(difficulty);
@@ -57,6 +59,7 @@ int main(int argc, char **argv)
         {
             erase();
             level = print_menu (2, 5, 35, 15, "SELECT LEVEL", levels, 1) + 1;
+            if ( level >= INF ) continue;
             erase();
             load_editor(level);
          }
@@ -64,6 +67,7 @@ int main(int argc, char **argv)
         {
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            if ( difficulty >= INF ) continue;
             demo = 1;
             startGame(difficulty);
         }
@@ -71,6 +75,7 @@ int main(int argc, char **argv)
         {
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            if ( difficulty >= INF ) continue;
             strcpy(temp, "high_scores");
             switch ( difficulty )
             {

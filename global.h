@@ -62,6 +62,8 @@
 #define EXPTIME 1000
 // map tiles
 
+#define INF 123454321
+
 #define  TANK 'T'
 #define  BASE 'X'
 #define WATER 'W'
