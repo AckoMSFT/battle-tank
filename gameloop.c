@@ -48,7 +48,7 @@ void update_mapUsed(){
     for (i = 0; i < MAP_SIZE; i++)
         for (j = 0; j < MAP_SIZE; j++)
         {
-            if (map[i][j] == EMPTY){
+            if (map[i][j] == EMPTY||map[i][j] == GRASS){
                 mapUsed[i][j] = 0;
             }
             else{
@@ -112,7 +112,7 @@ bool startLevel(int level, int *stars, int *score)
 
 
     int i,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
-    const int SLEEP_TIME = 1337 / FRAMES_PER_SEC;
+    const int SLEEP_TIME = 1000 / FRAMES_PER_SEC;
 
     gameOver = false;
     numberOfTanks = 0;

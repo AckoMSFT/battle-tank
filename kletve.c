@@ -273,6 +273,7 @@ void print_power_tank ( int dir, int y, int x )
     attroff ( COLOR_PAIR ( 8 ) );
     attroff ( A_BOLD );
 }
+
 void print_basic_tank ( int dir, int y, int x )
 {
     attron ( A_BOLD );
@@ -316,9 +317,11 @@ void print_basic_tank ( int dir, int y, int x )
 
 void print_tank ( Tank * this )
 {
+    this -> animation_counter = ( this -> animation_counter + 1 ) % 13;
     if ( this -> player ) print_player_tank ( this );
     else
     {
+        if ( this -> power_type != NORMAL && this -> animation_counter >= 3 && this -> animation_counter <= 6 ) attron ( A_BLINK );
         switch ( this -> type )
         {
         case BASIC_TANK:
@@ -334,6 +337,7 @@ void print_tank ( Tank * this )
             print_armor_tank ( this -> dir, this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y, this -> hit_points );
             break;
         }
+        if ( this -> power_type != NORMAL && this -> animation_counter >= 3 && this -> animation_counter <= 6 ) attroff ( A_BLINK );
     }
 }
 
@@ -341,7 +345,6 @@ void print_empty ( int y, int x )
 {
     move ( y, x );
     printw ( " " );
-    refresh ( );
 }
 
 void print_bullet ( int y, int x )
@@ -354,7 +357,7 @@ void print_bullet ( int y, int x )
     if ( map[y][x] == WATER ) attroff ( COLOR_PAIR ( 19 ) );
     if ( map[y][x] == GRASS ) attroff ( COLOR_PAIR ( 18 ) );
     attroff ( A_BOLD );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_grass ( int y, int x )
@@ -365,7 +368,7 @@ void print_grass ( int y, int x )
     addch ( ACS_CKBOARD );
     attroff ( COLOR_PAIR ( 7 ) );
     attroff ( A_REVERSE );
-    refresh();
+    //refresh();
 }
 
 void print_water ( int y, int x )
@@ -377,7 +380,7 @@ void print_water ( int y, int x )
     else printw("~");
     attroff ( ( COLOR_PAIR ( 1 ) ) );
     attroff ( A_BOLD );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_brick ( int y, int x )
@@ -388,7 +391,7 @@ void print_brick ( int y, int x )
     addch ( ACS_PLUS );
     attroff ( COLOR_PAIR ( 2 ) );
     attroff ( A_BOLD );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_steel(int y, int x)
@@ -399,7 +402,7 @@ void print_steel(int y, int x)
     addch(ACS_LANTERN);
     attroff((COLOR_PAIR(3)));
     attroff(A_STANDOUT);
-    refresh();
+    //refresh();
 }
 
 void print_field ( int y, int x, int type )
@@ -440,7 +443,7 @@ void print_bomb ( int y, int x )
     attroff ( COLOR_PAIR ( 3 ) );
     attroff ( COLOR_PAIR ( 13 ) );
     attroff ( A_BOLD );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_star ( int y, int x )
@@ -461,7 +464,7 @@ void print_star ( int y, int x )
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 8 ) );
     attroff ( A_REVERSE );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_shovel ( int y, int x )
@@ -474,7 +477,7 @@ void print_shovel ( int y, int x )
     move ( y + 2, x );
     printw ( "O  " );
     attroff ( A_BOLD );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_timer ( int y, int x )
@@ -497,7 +500,7 @@ void print_timer ( int y, int x )
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 10 ) );
     attroff ( A_REVERSE );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_life ( int y, int x )
@@ -512,7 +515,7 @@ void print_life ( int y, int x )
     printw ( "OOO" );
     attroff ( A_BOLD );
     attroff ( COLOR_PAIR ( 0 ) );
-    refresh ( );
+    //refresh ( );
 }
 
 void print_power ( Power * this )
@@ -542,7 +545,7 @@ void print_power ( Power * this )
         break;
     }
     if ( this -> state >= 3 && this -> state <= 6 ) attroff ( A_BLINK );
-    refresh();
+    //refresh();
 }
 
 void print_base ( int y, int x )
@@ -565,7 +568,7 @@ void print_base ( int y, int x )
     addch ( ACS_HLINE );
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 4 ) );
-    refresh ( );
+    //refresh ( );
 }
 
 
@@ -784,8 +787,10 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
                 temp.y = currY + j * 4 - MAP_OFFSET_Y;
                 temp.dir = DOWN;
                 temp.player = false;
+                temp.animation_counter = 0;
+                temp.power_type = NORMAL;
                 temp.type = levelConfiguration[TANKS_PER_LEVEL - 1 - i * 2 - j];
-                print_tank ( &temp );//print_basic_tank(DOWN, currX, currY + j * 4);
+                print_tank ( &temp );
             }
         }
         currX += 4;

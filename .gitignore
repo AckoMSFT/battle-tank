@@ -5,3 +5,5 @@
 *.exe
 /bin/Debug/battle-tank
 gameloop.h.rej
+high_scores.txt
+
