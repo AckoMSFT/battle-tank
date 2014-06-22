@@ -208,11 +208,13 @@ void print_fast_tank ( int dir, int y, int x )
         break;
     case LEFT:
         move ( y, x );
+        printw ( " " );
         printw ( "#" );
         printw ( "#" );
         move ( y + 1, x );
         addch ( ACS_HLINE ); addch ( ACS_BLOCK ); printw ( " " );
         move ( y + 2, x );
+        printw ( " " );
         printw ( "#" );
         printw ( "#" );
         break;
