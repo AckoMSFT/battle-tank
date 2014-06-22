@@ -21,7 +21,7 @@ void save_editor(char * mapFile)
 {
    int i,j;
    FILE * output_file = fopen(mapFile, "w");
-   erase_tank(36,14);
+   erase_tank(36,12);
     for(i=0;i<MAP_SIZE;i++)
     {
         for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
@@ -72,7 +72,7 @@ void create_cursor(int x, int y)
         for(j=0;j<=editor_cursor_size;j++)
             editor[x+i][y+j]=characterMap[editor_cursor_id];
     create_base(35,17);
-    create_tank(36,14);
+    create_tank(36,12);
 }
 
 void move_right()
@@ -160,7 +160,10 @@ void load_editor(int level)
       printEditorTanks ();
       if(kbhit())
       {
-          c=getch();
+          while(kbhit()){
+                    c = read_input();
+
+            }
       switch(c)
       {
           get_me_out_of_here=0;
@@ -286,5 +289,5 @@ void map_generator(int n)
         else print_wall(b,a);
     }
     create_base(35,17);
-    create_tank(36,14);
+    create_tank(36,12);
 }
