@@ -2,7 +2,7 @@
 
 int gameOver;
 int gameDifficulty;
-char characterMap[] = { '.', 'B', 'S', 'W', 'X', 'T' };
+char characterMap[] = { '.', 'B', 'S', 'W', 'G', 'X', 'T' };
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
@@ -31,7 +31,8 @@ int main(int argc, char **argv)
     srand(time(NULL));
     init_curses();
     resize_term(80,120);
-    print_bomb(50,10);
+
+
     while ( 1 )
     {
         menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);

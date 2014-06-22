@@ -31,7 +31,7 @@ void save_editor(char * mapFile)
 void change_cursor()
 {
     editor_cursor_id++;
-    editor_cursor_id%=4;
+    editor_cursor_id%=5;
 }
 
 void create_base(int x, int y)
@@ -178,6 +178,7 @@ void draw_cursor()
     case 1 : print_brick(MAP_OFFSET_X+editor_cursor_x+i,MAP_OFFSET_Y+editor_cursor_y+j); break;
     case 2 : print_steel(MAP_OFFSET_X+editor_cursor_x+i,MAP_OFFSET_Y+editor_cursor_y+j); break;
     case 3 : print_water(MAP_OFFSET_X+editor_cursor_x+i,MAP_OFFSET_Y+editor_cursor_y+j); break;
+    case 4 : print_grass(MAP_OFFSET_X+editor_cursor_x+i,MAP_OFFSET_Y+editor_cursor_y+j); break;
     }
 }
 
@@ -191,6 +192,7 @@ void draw_field(int x, int y)
     case BRICK : print_brick(MAP_OFFSET_X+x,MAP_OFFSET_Y+y); break;
     case STEEL : print_steel(MAP_OFFSET_X+x,MAP_OFFSET_Y+y); break;
     case WATER : print_water(MAP_OFFSET_X+x,MAP_OFFSET_Y+y); break;
+    case GRASS : print_grass(MAP_OFFSET_X+x,MAP_OFFSET_Y+y); break;
     }
 }
 

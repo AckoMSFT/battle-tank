@@ -17,7 +17,7 @@ void init_curses(void)
 void init_colors(void)
 {
     start_color();
-    init_pair(1, COLOR_BLUE, COLOR_BLACK);
+    init_pair(1, COLOR_WHITE , COLOR_BLUE);
     init_pair(2, COLOR_BLACK, COLOR_RED);
     init_pair(3, COLOR_BLACK, COLOR_WHITE);
     init_pair(4, COLOR_BLACK, COLOR_GREEN);
@@ -101,8 +101,127 @@ void print_tank(int dir, int y, int x)
     }
     attroff(COLOR_PAIR(8));
 }
-
-void print_enemy_tank (int dir, int y, int x, int hit_points)
+void print_armor_tank(int dir, int y, int x)
+{
+    attron(COLOR_PAIR(8));
+    switch (dir)
+    {
+    case UP:
+        move(y, x);
+        printw("*");addch(ACS_VLINE);printw("*");
+        move(y + 1, x);
+        printw("*");addch(ACS_BLOCK);printw("*");
+        move(y + 2, x);
+        printw("*");printw(" ");printw("*");
+        break;
+    case DOWN:
+        move(y, x);
+        printw("*");printw(" ");printw("*");
+        move(y + 1, x);
+        printw("*");addch(ACS_BLOCK);printw("*");
+        move(y + 2, x);
+        printw("*");addch(ACS_VLINE);printw("*");
+        break;
+    case LEFT:
+        move(y, x);
+        printw("***");
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        printw("***");
+        break;
+    case RIGHT:
+        move(y, x);
+        printw("***");
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        printw("***");
+        break;
+    }
+    attroff(COLOR_PAIR(8));
+}
+void print_fast_tank(int dir, int y, int x)
+{
+    attron(COLOR_PAIR(8));
+    switch (dir)
+    {
+    case UP:
+        move(y, x);
+        printw(" ");addch(ACS_VLINE);printw(" ");
+        move(y + 1, x);
+        printw("#");addch(ACS_BLOCK);printw("#");
+        move(y + 2, x);
+        printw("#");printw(" ");printw("#");
+        break;
+    case DOWN:
+        move(y, x);
+        printw("#");printw(" ");printw("#");
+        move(y + 1, x);
+        printw("#");addch(ACS_BLOCK);printw("#");
+        move(y + 2, x);
+        printw(" ");addch(ACS_VLINE);printw(" ");
+        break;
+    case LEFT:
+        move(y, x);
+        printw(" ##");
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        printw(" ##");
+        break;
+    case RIGHT:
+        move(y, x);
+        printw("## ");
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        printw("## ");
+        break;
+    }
+    attroff(COLOR_PAIR(8));
+}
+void print_power_tank(int dir, int y, int x)
+{
+    attron(COLOR_PAIR(8));
+    switch (dir)
+    {
+    case UP:
+        move(y, x);
+        addch(ACS_VLINE);addch(ACS_VLINE);addch(ACS_VLINE);
+        move(y + 1, x);
+        printw("#");addch(ACS_BLOCK);printw("#");
+        move(y + 2, x);
+        printw("#");printw(" ");printw("#");
+        break;
+    case DOWN:
+        move(y, x);
+        printw("#");printw(" ");printw("#");
+        move(y + 1, x);
+        printw("#");addch(ACS_BLOCK);printw("#");
+        move(y + 2, x);
+        addch(ACS_VLINE);addch(ACS_VLINE);addch(ACS_VLINE);
+        break;
+    case LEFT:
+        move(y, x);
+        addch(ACS_HLINE);printw("##");
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        addch(ACS_HLINE);printw("##");
+        break;
+    case RIGHT:
+        move(y, x);
+        printw("##");addch(ACS_HLINE);
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        printw("##");addch(ACS_HLINE);
+        break;
+    }
+    attroff(COLOR_PAIR(8));
+}
+void print_enemy_tank(int dir, int y, int x, int hit_points)
 {
     switch (hit_points)
     {
@@ -194,7 +313,8 @@ void print_water(int y, int x)
 {
     move(y, x);
     attron(COLOR_PAIR(1));
-    addch(ACS_CKBOARD);
+    if (rand()%2) printw("~");
+        else printw(" ");
     attroff((COLOR_PAIR(1)));
 }
 
