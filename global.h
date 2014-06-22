@@ -2,6 +2,7 @@
 #define GLOBAL_H_INCLUDED
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <locale.h>
 #include <time.h>
 
@@ -9,6 +10,7 @@
 #define _WIN32_WINNT 0x0600
 #include <windows.h>
 #include <curses.h>
+#include <mmsystem.h>
 
 #define  DOWN 0
 #define    UP 1
@@ -36,6 +38,7 @@
 #define  NEW_KEY_LEFT 68
 
 #define MIN_KEY NEW_KEY_UP
+
 #endif
 
 #define bool int

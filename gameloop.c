@@ -113,7 +113,8 @@ bool startLevel(int level)
     // give me current level
     char level_name[1 << 5], buffer[1 << 5];
     strcpy(level_name,"level");
-    itoa(level, buffer, 10);
+    //itoa(level, buffer, 10);
+    sprintf(buffer,"%d",level);
     strcat(level_name, buffer);
     strcat(level_name, ".map");
     load_map(level_name);
@@ -230,7 +231,7 @@ bool startLevel(int level)
                 if (keyPressed == KEY_F(6)) return true;
             }
 
-            move(52,50); printw("inna gameloop     ");refresh();
+            //move(52,50); printw("inna gameloop     ");refresh();
 
             if (! (enemyChoicePlayer == 4 && player1.shoot_state < player1.shoot_speed) && !( player1.move_state < player1.move_speed) ) {
 
