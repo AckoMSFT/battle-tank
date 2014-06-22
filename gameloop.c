@@ -96,6 +96,7 @@ void startGame(int difficulty)
             update_high_scores("al3ksandar",score);
             return;
         }
+        else print_end_level_screen ( i );
     }
     kill_curses();
     puts("osvojio si");
@@ -107,6 +108,7 @@ void startGame(int difficulty)
 bool startLevel(int level)
 {
     print_start_level_screen(level);
+    sound_start_music();
     // give me current level
     char level_name[1 << 5], buffer[1 << 5];
     strcpy(level_name,"level");
@@ -114,7 +116,6 @@ bool startLevel(int level)
     strcat(level_name, buffer);
     strcat(level_name, ".map");
     load_map(level_name);
-    sound_start_music();
 
 
     int i,j,keyPressed,enemySpawn,x,y,enemyChoice,di,dj;

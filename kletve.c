@@ -583,7 +583,6 @@ void print_base ( int y, int x )
     attroff ( COLOR_PAIR ( 4 ) );
 }
 
-
 void load_map ( char * input_file_name )
 {
     int i, j;
@@ -644,16 +643,16 @@ void print_map ( void )
 void print_start_level_screen ( int level )
 {
     sound_end();
-    char level_name[42], buffer[42];
+    char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
-    strcpy ( level_name, "STAGE " );
+    strcpy ( message, "STAGE " );
     itoa ( level, buffer, 10 );
-    strcat ( level_name, buffer );
-    erase();
+    strcat ( message, buffer );
+    erase ( );
     print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
     curr_x = MAP_OFFSET_X + MAP_SIZE / 2;
     curr_y = MAP_OFFSET_Y;
-    size = strlen ( level_name );
+    size = strlen ( message );
     for ( j = 0; j + size < MAP_SIZE; j++ )
     {
         move ( curr_x, curr_y );
@@ -665,7 +664,7 @@ void print_start_level_screen ( int level )
             refresh ( );
         }
         move ( curr_x + 1, curr_y + j );
-        printw ( "%s", level_name );
+        printw ( "%s", message );
         move ( curr_x + 2, curr_y );
         for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
         refresh ( );
@@ -673,8 +672,37 @@ void print_start_level_screen ( int level )
     }
 }
 
-void print_end_level_screen ( void )
+void print_end_level_screen ( int level )
 {
+    sound_end();
+    char message[42], buffer[42];
+    int i, j, size, curr_x, curr_y;
+    strcpy ( message, "STAGE " );
+    itoa ( level, buffer, 10 );
+    strcat ( message, buffer );
+    strcat ( message, " COMPLETE!!!" );
+    erase ( );
+    print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
+    curr_x = MAP_OFFSET_X + MAP_SIZE / 2;
+    curr_y = MAP_OFFSET_Y;
+    size = strlen ( message );
+    for ( j = 0; j + size < MAP_SIZE; j++ )
+    {
+        move ( curr_x, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+        if ( j )
+        {
+            move ( curr_x + 1, curr_y + j - 1 );
+            printw ( " " );
+            refresh ( );
+        }
+        move ( curr_x + 1, curr_y + j );
+        printw ( "%s", message );
+        move ( curr_x + 2, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+        refresh ( );
+        Sleep ( 128 );
+    }
 }
 
 void print_end_game_screen ( void )
@@ -745,9 +773,9 @@ void print_digit ( int y, int x, int digit )
         break;
     case 4:
         move ( y, x );
-        printw ( "#  " );
+        printw ( "# #" );
         move ( y + 1, x );
-        printw ( "#  " );
+        printw ( "# #" );
         move ( y + 2, x );
         printw ( "###" );
         move ( y + 3, x );
@@ -825,7 +853,7 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
     {
         for ( j = 0; j < 2; j++ )
         {
-            if ( i * 2 + j >= TANKS_PER_LEVEL - totalSpawned ) print_empty_tank(currX, currY + j * 4);
+            if ( i * 2 + j >= TANKS_PER_LEVEL - totalSpawned ) print_empty_tank ( currX, currY + j * 4 );
             else
             {
                 Tank temp;
@@ -843,16 +871,16 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
     }
     currX = MAP_OFFSET_X;
     currY = MAP_OFFSET_Y + MAP_SIZE + 15;
-    move(currX, currY);
-    printw("1P");
+    move ( currX, currY );
+    printw ( "1P" );
     Tank P1;
     P1.x = currX + 2 - MAP_OFFSET_X, P1.y = currY - MAP_OFFSET_Y, P1.dir = UP;
     P1.invulnerable = 0;
-    print_player_tank(&P1);
-    print_digit(currX, currY + 4, lives);
+    print_player_tank ( &P1 );
+    print_digit ( currX, currY + 4, lives );
     currX += 6;
-    print_star(currX + 2, currY);
-    print_digit(currX, currY + 4, stars);
+    print_star ( currX + 2, currY );
+    print_digit ( currX, currY + 4, stars );
 }
 
 void kill_curses ( void )
