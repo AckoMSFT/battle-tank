@@ -79,8 +79,10 @@
 #define TANK_SPEED 3
 #define ENEMYSPAWNRANDOM 25
 
-#define AI_SPEED 10
-#define AI_PARAM1 5
+#define AI_SPEED 7
+#define AI_PARAM1 3
+//how often should it shot ( ratio between shooting and moving )
+#define AI_PARAM2 1
 
 #define SPAWNSPEED_EASY 160
 #define ENEMYSHOOTSPEED_EASY 30

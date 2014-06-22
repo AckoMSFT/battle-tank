@@ -117,7 +117,8 @@ bool startLevel(int level)
     load_map(level_name);
 
 
-    int i,j,keyPressed,enemySpawn,x,y,enemyChoice,di,dj;
+    int i,j,keyPressed,enemySpawn,x,y,di,dj;
+    int enemyChoice[MAX_SPRITES];
     const int SLEEP_TIME = 1000 / FRAMES_PER_SEC;
 
     gameOver = false;
@@ -181,10 +182,13 @@ bool startLevel(int level)
         for ( i = 0; i < MAX_SPRITES; i++ )
         {
             if ( tanks[i].alive == false ) continue;
-            if ( tanks[i].move_state < tanks[i].move_speed) continue;
-            enemyChoice = confDiff[gameDifficulty].AI(tanks + i);
-            if (enemyChoice >=0 && enemyChoice <=3) move_tank(tanks+i, enemyChoice);
-            else if (enemyChoice == 4) shoot(tanks+i, 0);
+            if (enemyChoice[i] == 4 && tanks[i].shoot_state < tanks[i].shoot_speed) continue;
+            else if ( tanks[i].move_state < tanks[i].move_speed) continue;
+
+            if (enemyChoice[i] >=0 && enemyChoice[i] <=3) move_tank(tanks+i, enemyChoice[i]);
+            else if (enemyChoice[i] == 4) shoot(tanks+i, 0);
+
+            enemyChoice[i] = confDiff[gameDifficulty].AI(tanks + i);
         }
 
         if (kbhit()){
