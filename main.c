@@ -31,6 +31,7 @@ int main(int argc, char **argv)
     srand(time(NULL));
     init_curses();
     resize_term(80,120);
+    print_armor_tank(1,50,10);
 
 
     while ( 1 )
