@@ -7,6 +7,8 @@ char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 int totalSpawned;
+int power_indexes[] = {3, 10, 17};
+Power power_up;
 //configuration for difficulty
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
 
@@ -31,8 +33,8 @@ int main(int argc, char **argv)
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
-    resize_term(80,120);
-    print_armor_tank(1,50,10);
+    resize_term(80,80);
+    print_life(50,10);
     while ( 1 )
     {
         menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);

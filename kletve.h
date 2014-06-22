@@ -3,7 +3,7 @@
 void init_curses(void);
 void init_colors(void);
 void print_border(int y1, int x1, int y2, int x2);
-void print_tank(int dir, int y, int x);
+void print_tank(Tank * this);
 void print_enemy_tank(int dir, int y, int x, int lives);
 void print_empty(int y, int x);
 void print_bullet(int y, int x);
