@@ -249,12 +249,14 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
     }
 
     // tank powerUP collision
-    if ( fabs ( power_up.x - player1.x ) <= 2 && fabs ( power_up.y - power_up.y ) <= 2 )
+    if ( fabs ( power_up.x - player1.x ) <= 2 && fabs ( power_up.y - player1.y ) <= 2  && power_up.type !=NORMAL)
     {
         switch ( power_up.type )
         {
         case BOMB:
-
+            for ( i = 0; i < MAX_SPRITES; i++ )
+                tanks[ i ].alive= 0;
+            sound_explosion();
             break;
         case HELMET:
             player1.invulnerable = FRAMES_PER_SEC * HELMET_SECS;

@@ -76,6 +76,7 @@
 #define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
+#define ENEMYSPAWNRANDOM 25
 
 #define AI_SPEED 10
 #define AI_PARAM1 5

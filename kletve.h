@@ -12,6 +12,7 @@ void print_water(int y, int x);
 void print_brick(int y, int x);
 void print_steel(int y, int x);
 void print_bomb(int y, int x);
+void print_hlemet ( int y, int x );
 void print_star(int y, int x);
 void print_shovel(int y, int x);
 void print_base(int y, int x);
