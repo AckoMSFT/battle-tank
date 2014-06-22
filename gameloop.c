@@ -1,54 +1,84 @@
 #include "global.h"
 
 
+
+void updateDecisions(Tank *tank,int baseRandom, int mytankRandom){
+
+    int x = tank->x, y = tank->y,i,dx,dy;
+    float newRand = (float)rand()/(float)RAND_MAX;
+
+    int mat[MAP_SIZE][MAP_SIZE];
+    memset(mat,0,sizeof(mat));
+
+
+    //go towards base
+    if (newRand < baseRandom){
+
+        for (dx = -1; dx < 2; dx++)
+            for (dy = -1; dy < 2; dy++){
+                if (dx+dy == 2 || dx + dy == -2 || dx + dy == 0) continue;
+
+
+
+            }
+
+    }
+
+    //go towards tank
+    if (newRand < baseRandom + mytankRandom){
+
+
+    }
+
+    //just do it random
+    for( i=0; i<AI_SPEED; i++ ){
+        tank->AIDecisions[i] = rand()%6;
+
+    }
+
+
+}
+
+int get_decision_easy(Tank *tank){
+    if (--(tank->AIState) ){
+
+        updateDecisions(tank, BASE_EASY,MYTANK_EASY);
+
+        tank->AIState = AI_SPEED;
+    }
+
+    return tank->AIDecisions[ tank->AIState ];
+
+    return rand()%20;
+}
+
+int get_decision_medium(Tank *tank){
+    return rand()%12;
+}
+
+int get_decision_hard(Tank *tank){
+    return rand()%6;
+}
+
+
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
+    int jPositions[2] = {0,MAP_SIZE/2 -1 , MAP_SIZE-2};
 
+    for(i=0;i<3;i++){
+        j=jPositions[i];
+        empty = 1;
+        for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
+            if (mapUsed[di][j+dj]) empty = 0;
 
-    i = 0; j = 0;
-    empty = 1;
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        if (mapUsed[i+di][j+dj]) empty = 0;
+        }
 
+        if (empty){
+            *x= 0;
+            *y=j;
+            return;
+        }
     }
-
-    if (empty){
-        *x= i;
-        *y=j;
-        return;
-    }
-
-
-
-    i = 0; j = MAP_SIZE/2 -1;
-    empty = 1;
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        if (mapUsed[i+di][j+dj]) empty = 0;
-
-    }
-
-    if (empty){
-        *x= i;
-        *y=j;
-        return;
-    }
-
-
-
-    i = 0; j = MAP_SIZE -3;
-    empty = 1;
-    for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-        if (mapUsed[i+di][j+dj]) empty = 0;
-
-    }
-
-    if (empty){
-        *x= i;
-        *y=j;
-        return;
-    }
-
-
 
     for (i = 0; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
@@ -105,27 +135,6 @@ void update_mapUsed(){
     }
 }
 
-
-
-int get_decision_easy(Tank *tank){
-    //0,1,2,3 are directions, 4 is shoot, and 5 is nothing
-    return rand()%20;
-}
-
-int get_decision_medium(Tank *tank){
-    return rand()%12;
-}
-
-int get_decision_hard(Tank *tank){
-    return rand()%6;
-}
-
-void update_status(int lives, int score, int stars)
-{
-    move(10,50);
-    printw("%d %d %d\n", lives, score, stars);
-}
-
 void startGame(int difficulty)
 {
     int i, stars = 0, score = 0;
@@ -136,18 +145,19 @@ void startGame(int difficulty)
         bool gameOver = 1 - startLevel(i, &stars, &score);
         if ( gameOver == true )
         {
+            sound_end();
             kill_curses();
             puts("osvojio si");
             printf("%d\n",score);
             update_high_scores("al3ksandar",score);
-            exit(0);
+            return;
         }
     }
     kill_curses();
     puts("osvojio si");
     printf("%d\n",score);
     update_high_scores("al3ksandar",score);
-    exit(0);
+    return;
 }
 
 bool startLevel(int level, int *stars, int *score)
@@ -247,7 +257,6 @@ bool startLevel(int level, int *stars, int *score)
         collision(&cntKilled, score);
 
         print_map();
-        update_status(player1.hit_points, *score, *stars);
 
         if ( player1.invulnerable > 0 ) if ( player1.invulnerable % 5 == 3 ) attron ( A_BLINK );
         print_tank(player1.dir, player1.x + 1, player1.y + 1);
@@ -259,6 +268,8 @@ bool startLevel(int level, int *stars, int *score)
         print_power_up(powerUP);
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hit_points <= 0 ) return false;
+
+        print_indicators(totalSpawned, player1.hit_points, * stars, * score);
         Sleep(sleepTime);
     }
     return gameOver ^ 1;

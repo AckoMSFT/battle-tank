@@ -55,7 +55,7 @@
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
 
-#define INVULNERABLE_SECS 200
+#define INVULNERABLE_SECS 5
 
 // map tiles
 
@@ -71,28 +71,34 @@
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128
-#define FRAMES_PER_SEC 30
-#define BULLET_SPEED 3
+#define FRAMES_PER_SEC 20
+#define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
+#define AI_SPEED 5
 
-#define SPAWNSPEED_EASY 5
+
+#define SPAWNSPEED_EASY 100
 #define ENEMYSHOOTSPEED_EASY 200
-#define RANDOM_EASY 1
+#define BASE_EASY 0
+#define MYTANK_EASY 0
 
 //medium
-#define SPAWNSPEED_MEDIUM 200
+#define SPAWNSPEED_MEDIUM 75
 #define ENEMYSHOOTSPEED_MEDIUM 100
-#define RANDOM_MEDIUM 0.5
+#define BASE_MEDIUM 0
+#define MYTANK_MEDIUM 0
 
 //hard
-#define SPAWNSPEED_HARD 100
+#define SPAWNSPEED_HARD 50
 #define ENEMYSHOOTSPEED_HARD 50
-#define RANDOM_HARD 0
+#define BASE_HARD 0
+#define MYTANK_HARD 0
 
 typedef struct tank
 {
     int x, y, dir, shoot_state, shoot_rate, move_state, move_rate, value, hit_points, stars, invulnerable;
+    int AIDecisions[AI_SPEED],AIState;
     bool alive;
 } Tank;
 
