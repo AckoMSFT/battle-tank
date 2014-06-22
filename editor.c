@@ -1,6 +1,7 @@
 #include "global.h"
 
-int editorTanks[TANKS_PER_LEVEL], highlightedTank, tankAnim;
+int highlightedTank, tankAnim;
+Tank editorTanks[TANKS_PER_LEVEL];
 
 void print_editor()
 {
@@ -13,7 +14,12 @@ void print_editor()
             case TANK: if(tank_x==-1)tank_x=i,tank_y=j; break;
             default: draw_field(i,j);break;
             }
-    print_tank(UP,MAP_OFFSET_X+tank_x,MAP_OFFSET_Y+tank_y);
+    Tank temp;
+    temp.x = tank_x;
+    temp.y = tank_y;
+    temp.dir = UP;
+    temp.player = true;
+    print_tank(&temp);
     print_base(MAP_OFFSET_X+base_x,MAP_OFFSET_Y+base_y);
 }
 
@@ -105,23 +111,13 @@ void printEditorTanks(void)
     {
         for ( j = 0; j < 2; j++ )
         {
-            if ( i * 2 + j == highlightedTank && tankAnim == 3 ) attron ( A_BLINK );
-            switch ( editorTanks[i * 2 + j] )
-            {
-            case BASIC_TANK:
-                print_enemy_tank(RIGHT, currX, currY + j * 4, 1);
-                break;
-            case FAST_TANK:
-                print_fast_tank(RIGHT, currX, currY + j * 4 );
-                break;
-            case POWER_TANK:
-                print_power_tank(RIGHT, currX, currY + j * 4 );
-                break;
-            case ARMOR_TANK:
-                print_armor_tank(RIGHT, currX, currY + j * 4 );
-                break;
-            }
-            if ( i * 2 + j == highlightedTank && tankAnim == 3 ) attroff ( A_BLINK );
+            if ( i * 2 + j == highlightedTank && tankAnim >= 3 && tankAnim <= 6 ) attron ( A_BLINK );
+            print_empty_tank ( currX, currY + j * 4 );
+            editorTanks[i * 2 + j].dir = RIGHT;
+            editorTanks[i * 2 + j].x = currX - MAP_OFFSET_X;
+            editorTanks[i * 2 + j].y = currY + j * 4 - MAP_OFFSET_Y;
+            print_tank ( &editorTanks[i * 2 + j] );
+            if ( i * 2 + j == highlightedTank && tankAnim >= 3 && tankAnim <= 6 ) attroff ( A_BLINK );
         }
         currX += 4;
     }
@@ -143,7 +139,7 @@ void load_editor(int level)
         for(j=0;j<MAP_SIZE;j++) fscanf(input_file,"%c",&editor[i][j]);
         fgetc(input_file);
     }
-    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf(input_file,"%d",&editorTanks[i]);
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf(input_file,"%d",&editorTanks[i].type);
     fclose(input_file);
     editor_cursor_x=0;
     editor_cursor_y=0;
@@ -156,7 +152,7 @@ void load_editor(int level)
     tankAnim = 0;
     while(1)
     {
-      tankAnim = ( tankAnim + 1 ) % 5;
+      tankAnim = ( tankAnim + 1 ) % 13;
       printEditorTanks ();
       if(kbhit())
       {
@@ -191,7 +187,7 @@ void load_editor(int level)
             break;
           case 'l':
           case 'L':
-              editorTanks[highlightedTank] = ( editorTanks[highlightedTank] + 1 ) % 4;
+              editorTanks[highlightedTank].type = ( editorTanks[highlightedTank].type + 1 ) % 4;
             break;
           case KEY_F(2): get_me_out_of_here=1; break;
           case KEY_F(12): get_me_out_of_here=2; break;
@@ -204,9 +200,9 @@ void load_editor(int level)
       }
       else if(get_me_out_of_here==2) break;
       print_editor();
-      if ( tankAnim == 3 ) attron(A_BLINK);
+      if ( tankAnim >= 3 && tankAnim <= 6 ) attron(A_BLINK);
       draw_cursor();
-      if ( tankAnim == 3 ) attroff(A_BLINK);
+      if ( tankAnim >= 3 && tankAnim <= 6 ) attroff(A_BLINK);
       refresh();
       Sleep(50);
     }

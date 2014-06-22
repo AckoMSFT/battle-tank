@@ -1,5 +1,5 @@
-#ifndef queue_H
-#define queue_H
+#ifndef QUEUЕ_H_INCLUDED
+#define QUEUЕ_H_INCLUDED
 
 #define QUEUEMAX 2000
 
@@ -15,5 +15,4 @@ void queuePush(queue * myQueue, int pushMe);
 
 int queuePop(queue * myQueue);
 
-
-#endif
+#endif // QUEUЕ_H_INCLUDED

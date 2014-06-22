@@ -51,7 +51,7 @@
 #define MAP_OFFSET_Y 1
 #define MAP_SIZE 39
 
-#define NUMBER_OF_LEVELS 3
+#define NUMBER_OF_LEVELS 5
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
 
@@ -71,7 +71,7 @@
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128
-#define FRAMES_PER_SEC 20
+#define FRAMES_PER_SEC 30
 #define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
@@ -95,11 +95,14 @@
 #define BASE_HARD 0.5
 #define MYTANK_HARD 0.5
 
+#define POWERS_PER_LEVEL 3
+extern int power_indexes[];
+
 typedef struct tank
 {
-    int x, y, dir, shoot_state, shoot_rate, move_state, move_rate, value, hit_points, stars, invulnerable;
-    int AIDecisions[AI_SPEED],AIState;
-    bool alive;
+    int x, y, dir, shoot_state, shoot_rate, move_state, move_rate, value, hit_points, stars, invulnerable, power_type, type;
+    int AIDecisions [ AI_SPEED ], AIState;
+    bool alive, player;
 } Tank;
 
 typedef struct bullet
@@ -121,9 +124,12 @@ typedef struct difficulty
 
 // types of tanks
 enum { BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK };
+
+#define NUMBER_OF_POWERS 7
 // types of power-ups
 enum { NORMAL, BOMB, HELMET, SHOVEL, STAR, LIFE, TIMER };
 
+#define FREEZE_SECS 15
 
 int levelConfiguration[20];
 
@@ -133,13 +139,13 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
-int totalSpawned;
+extern int totalSpawned;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
 extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size, numberOfTanks;
-
+extern Power power_up;
 int myScore, gameOver, numberOfTanks;
 
 int read_input();
@@ -152,4 +158,5 @@ int read_input();
 #include "sound.h"
 #include "stack.h"
 #include "queue.h"
+#include "ai.h"
 #endif // GLOBAL_H_INCLUDED

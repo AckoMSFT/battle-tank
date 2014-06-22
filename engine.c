@@ -156,6 +156,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 void collision(int * cntKilled, int * score) // Check for collisions of tanks and bullets, respectively bullets and bullets
 {
     int i, j, di, dj;
+    bool empty;
     //check for tank-bullet colisions
     for (i = 0; i < MAX_SPRITES; i++)
         for (j = 0; j < MAX_SPRITES; j++) if (tanks[i].alive && bullets[j].alive )
@@ -173,7 +174,22 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
                 if (tanks[i].hit_points <= 0)
                 {
                     tanks[i].alive = false;
-
+                    if ( tanks[i].power_type != NORMAL )
+                    {
+                        power_up.type = tanks[i].power_type;
+                        while ( 1 )
+                        {
+                            power_up.x = rand ( ) % ( MAP_SIZE - 3 );
+                            power_up.y = rand ( ) % ( MAP_SIZE - 3 );
+                            empty = false;
+                            for(di=0;di<3;di++)
+                                for(dj=0;dj<3;dj++)
+                                {
+                                    if (map[ power_up.x + di ][ power_up.y + dj ] != EMPTY ) empty = true;
+                                }
+                            if(empty) break;
+                        }
+                    }
                     sound_explosion();
 
                     * score += tanks[i].value;
@@ -183,16 +199,41 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
             }
     }
 
+    // tank powerUP collision
+    if ( fabs ( power_up.x - player1.x ) <= 2 && fabs ( power_up.y - power_up.y ) <= 2 )
+    {
+        switch ( power_up.type )
+        {
+        case BOMB:
+            break;
+        case HELMET:
+            break;
+        case SHOVEL:
+            break;
+        case STAR:
+            break;
+        case LIFE:
+            player1.hit_points++;
+            break;
+        case TIMER:
+            for( i = 0; i < MAX_SPRITES; i++ ) tanks[i].move_state = - FRAMES_PER_SEC * FREEZE_SECS;
+            break;
+        }
+
+        power_up.type = NORMAL;
+    }
     //check for bullet-bullet colisions
     for ( i = 0; i < MAX_SPRITES; i++ )
-        for ( j = 0; j < MAX_SPRITES; j++ ) if (bullets[ i ].alive && bullets[ j ].alive)
-        if ( ( i != j ) && ( bullets[ i ].x == bullets[ j ].x ) && ( bullets[ i ].y == bullets[ j ].y ) )
-        {
-            if (bullets[i].source == 0 && bullets[j].source == 0) continue;
-            if (bullets[i].source > 0 && bullets[j].source > 0) continue;
-            bullets[ i ].alive = 0;
-            bullets[ j ].alive = 0;
-        }
+        for ( j = 0; j < MAX_SPRITES; j++ )
+            if (bullets[ i ].alive && bullets[ j ].alive)
+            if (  ( i != j ) && bullets_collision( bullets[ i ], bullets[ j ] ) )
+            {
+                if (bullets[i].source == 0 && bullets[j].source == 0) continue;
+                if (bullets[i].source > 0 && bullets[j].source > 0) continue;
+                bullets[ i ].alive = 0;
+                bullets[ j ].alive = 0;
+            }
+
 
     //check for bullet-frame collisions
     for ( i = 0; i < MAX_SPRITES; i++ ) if (bullets[ i ].alive)
@@ -257,7 +298,7 @@ void spawn_tank( int x, int y, int dir, int type )
 {
     numberOfTanks++;
     totalSpawned++;
-    int i;
+    int i, j;
     for ( i = 0; i < MAX_SPRITES; i++ )
         if ( !tanks[ i ].alive )
         {
@@ -268,6 +309,17 @@ void spawn_tank( int x, int y, int dir, int type )
             tanks[i].move_state = 0;
             tanks[i].shoot_state = 0;
             tanks[i].AIState = 1;
+            tanks[i].power_type = NORMAL;
+            tanks[i].player = false;
+            tanks[i].type = type;
+            for ( j = 0; j < POWERS_PER_LEVEL; j++ )
+            {
+                if ( totalSpawned == power_indexes[j] )
+                {
+                    tanks[i].power_type = rand ( ) % ( NUMBER_OF_POWERS - 1 ) + 1;
+                    power_up.type = NORMAL;
+                }
+            }
             switch ( type )
             {
             case BASIC_TANK:
@@ -298,3 +350,15 @@ void spawn_tank( int x, int y, int dir, int type )
             break;
         }
 }
+
+bool bullets_collision( Bullet bullet1, Bullet bullet2 )
+{
+    if ( bullet1.x == bullet2.x     && bullet1.y == bullet2.y                                                     ) return true;
+    if ( bullet1.x == bullet2.x + 1 && bullet1.y == bullet2.y     && bullet1.dir == DOWN  && bullet2.dir == UP    ) return true;
+    if ( bullet1.x == bullet2.x - 1 && bullet1.y == bullet2.y     && bullet1.dir == UP    && bullet2.dir == DOWN  ) return true;
+    if ( bullet1.x == bullet2.x     && bullet1.y == bullet2.y + 1 && bullet1.dir == RIGHT && bullet2.dir == LEFT  ) return true;
+    if ( bullet1.x == bullet2.x     && bullet1.y == bullet2.y - 1 && bullet1.dir == LEFT  && bullet2.dir == RIGHT ) return true;
+    return false;
+}
+
+
