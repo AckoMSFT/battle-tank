@@ -267,7 +267,7 @@ void spawn_tank( int x, int y, int dir, int type )
             tanks[i].y = y;
             tanks[i].move_state = 0;
             tanks[i].shoot_state = 0;
-            tanks[i].AIState = 0;
+            tanks[i].AIState = 1;
             switch ( type )
             {
             case BASIC_TANK:
