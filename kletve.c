@@ -627,8 +627,14 @@ void print_map ( void )
     refresh ( );
 }
 
-void print_start_level_screen ( void )
+void print_start_level_screen ( int level )
 {
+    erase();
+    move(50,50);
+    printw("PERICA");
+    refresh();
+    sound_end();
+    Sleep(5000);
 }
 
 void print_end_level_screen ( void )
@@ -805,6 +811,7 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
     printw("1P");
     Tank P1;
     P1.x = currX + 2 - MAP_OFFSET_X, P1.y = currY - MAP_OFFSET_Y, P1.dir = UP;
+    P1.invulnerable = 0;
     print_player_tank(&P1);
     print_digit(currX, currY + 4, lives);
     currX += 6;

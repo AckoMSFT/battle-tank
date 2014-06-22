@@ -101,6 +101,7 @@ void startGame(int difficulty)
 
 bool startLevel(int level, int *stars, int *score)
 {
+    print_start_level_screen(level);
     // give me current level
     char level_name[1 << 5], buffer[1 << 5];
     strcpy(level_name,"level");
@@ -140,12 +141,11 @@ bool startLevel(int level, int *stars, int *score)
 
     power_up.x = 50;
     power_up.y = 10;
-    power_up.type = TIMER;
+    power_up.type = NORMAL;
     power_up.state = 0;
 
     while(gameOver == false)
     {
-        print_power(&power_up);
         enemySpawn++;
         if ( enemySpawn == confDiff[gameDifficulty].spawn )
         {
@@ -206,6 +206,9 @@ bool startLevel(int level, int *stars, int *score)
             for ( j = 0; j < MAP_SIZE; j++ ) if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
         refresh ( );
 
+        print_power(&power_up);
+
+        refresh ( );
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hit_points <= 0 ) return false;
         print_indicators(totalSpawned, player1.hit_points, * stars, * score);
