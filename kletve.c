@@ -411,9 +411,7 @@ void print_explosion(int y, int x)
     attron(A_BOLD);
     move(y, x);
     attron(COLOR_PAIR(20));
-    //if ( rand ( ) % 2 ) printw ( " " );
-    //else
-        printw("*");
+    printw("*");
     attroff((COLOR_PAIR(20)));
     attroff(A_BOLD);
     //refresh();
