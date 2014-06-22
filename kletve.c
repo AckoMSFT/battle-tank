@@ -208,11 +208,13 @@ void print_fast_tank ( int dir, int y, int x )
         break;
     case LEFT:
         move ( y, x );
+        printw ( " " );
         printw ( "#" );
         printw ( "#" );
         move ( y + 1, x );
         addch ( ACS_HLINE ); addch ( ACS_BLOCK ); printw ( " " );
         move ( y + 2, x );
+        printw ( " " );
         printw ( "#" );
         printw ( "#" );
         break;
@@ -317,11 +319,11 @@ void print_basic_tank ( int dir, int y, int x )
 
 void print_tank ( Tank * this )
 {
-    this -> animation_counter = ( this -> animation_counter + 1 ) % 13;
+    this -> animation_counter = ( this -> animation_counter + 1 ) % 3;
     if ( this -> player ) print_player_tank ( this );
     else
     {
-        if ( this -> power_type != NORMAL && this -> animation_counter >= 3 && this -> animation_counter <= 6 ) attron ( A_BLINK );
+        if ( this -> power_type != NORMAL && this -> animation_counter >= 1 && this -> animation_counter <= 2 ) attron ( A_BLINK );
         switch ( this -> type )
         {
         case BASIC_TANK:
@@ -337,7 +339,7 @@ void print_tank ( Tank * this )
             print_armor_tank ( this -> dir, this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y, this -> hit_points );
             break;
         }
-        if ( this -> power_type != NORMAL && this -> animation_counter >= 3 && this -> animation_counter <= 6 ) attroff ( A_BLINK );
+        if ( this -> power_type != NORMAL && this -> animation_counter >= 1 && this -> animation_counter <= 2 ) attroff ( A_BLINK );
     }
 }
 
@@ -357,7 +359,6 @@ void print_bullet ( int y, int x )
     if ( map[y][x] == WATER ) attroff ( COLOR_PAIR ( 19 ) );
     if ( map[y][x] == GRASS ) attroff ( COLOR_PAIR ( 18 ) );
     attroff ( A_BOLD );
-    //refresh ( );
 }
 
 void print_grass ( int y, int x )
@@ -368,7 +369,6 @@ void print_grass ( int y, int x )
     addch ( ACS_CKBOARD );
     attroff ( COLOR_PAIR ( 7 ) );
     attroff ( A_REVERSE );
-    //refresh();
 }
 
 void print_water ( int y, int x )
@@ -380,7 +380,6 @@ void print_water ( int y, int x )
     else printw("~");
     attroff ( ( COLOR_PAIR ( 1 ) ) );
     attroff ( A_BOLD );
-    //refresh ( );
 }
 
 void print_brick ( int y, int x )
@@ -391,7 +390,6 @@ void print_brick ( int y, int x )
     addch ( ACS_PLUS );
     attroff ( COLOR_PAIR ( 2 ) );
     attroff ( A_BOLD );
-    //refresh ( );
 }
 
 void print_steel(int y, int x)
@@ -402,7 +400,6 @@ void print_steel(int y, int x)
     addch(ACS_LANTERN);
     attroff((COLOR_PAIR(3)));
     attroff(A_STANDOUT);
-    //refresh();
 }
 
 void print_field ( int y, int x, int type )
@@ -443,7 +440,6 @@ void print_bomb ( int y, int x )
     attroff ( COLOR_PAIR ( 3 ) );
     attroff ( COLOR_PAIR ( 13 ) );
     attroff ( A_BOLD );
-    //refresh ( );
 }
 
 void print_star ( int y, int x )
@@ -464,7 +460,6 @@ void print_star ( int y, int x )
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 8 ) );
     attroff ( A_REVERSE );
-    //refresh ( );
 }
 
 void print_shovel ( int y, int x )
@@ -477,7 +472,6 @@ void print_shovel ( int y, int x )
     move ( y + 2, x );
     printw ( "O  " );
     attroff ( A_BOLD );
-    //refresh ( );
 }
 
 void print_timer ( int y, int x )
@@ -500,7 +494,6 @@ void print_timer ( int y, int x )
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 10 ) );
     attroff ( A_REVERSE );
-    //refresh ( );
 }
 
 void print_life ( int y, int x )
@@ -515,7 +508,6 @@ void print_life ( int y, int x )
     printw ( "OOO" );
     attroff ( A_BOLD );
     attroff ( COLOR_PAIR ( 0 ) );
-    //refresh ( );
 }
 
 void print_power ( Power * this )
@@ -545,7 +537,6 @@ void print_power ( Power * this )
         break;
     }
     if ( this -> state >= 3 && this -> state <= 6 ) attroff ( A_BLINK );
-    //refresh();
 }
 
 void print_base ( int y, int x )
@@ -568,7 +559,6 @@ void print_base ( int y, int x )
     addch ( ACS_HLINE );
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 4 ) );
-    //refresh ( );
 }
 
 
@@ -585,7 +575,6 @@ void load_map ( char * input_file_name )
         }
         fscanf(input_file, "%c", &buffer);
     }
-    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
     for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf ( input_file, "%d", &levelConfiguration[i] );
     fclose ( input_file );
 }
@@ -595,6 +584,7 @@ void print_map ( void )
     int i, j;
     base_x = -1;
     base_y = -1;
+    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y-1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
     for ( i = 0; i < MAP_SIZE; i++ )
         for ( j = 0; j < MAP_SIZE; j++ )
         {
@@ -629,8 +619,36 @@ void print_map ( void )
     refresh ( );
 }
 
-void print_start_level_screen ( void )
+void print_start_level_screen ( int level )
 {
+    sound_end();
+    char level_name[42], buffer[42];
+    int i, j, size, curr_x, curr_y;
+    strcpy ( level_name, "STAGE " );
+    itoa ( level, buffer, 10 );
+    strcat ( level_name, buffer );
+    erase();
+    print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
+    curr_x = MAP_OFFSET_X + MAP_SIZE / 2;
+    curr_y = MAP_OFFSET_Y;
+    size = strlen ( level_name );
+    for ( j = 0; j + size < MAP_SIZE; j++ )
+    {
+        move ( curr_x, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+        if ( j )
+        {
+            move ( curr_x + 1, curr_y + j - 1 );
+            printw ( " " );
+            refresh ( );
+        }
+        move ( curr_x + 1, curr_y + j );
+        printw ( "%s", level_name );
+        move ( curr_x + 2, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+        refresh ( );
+        Sleep ( 128 );
+    }
 }
 
 void print_end_level_screen ( void )
@@ -807,6 +825,7 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
     printw("1P");
     Tank P1;
     P1.x = currX + 2 - MAP_OFFSET_X, P1.y = currY - MAP_OFFSET_Y, P1.dir = UP;
+    P1.invulnerable = 0;
     print_player_tank(&P1);
     print_digit(currX, currY + 4, lives);
     currX += 6;

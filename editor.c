@@ -33,7 +33,7 @@ void save_editor(char * mapFile)
         for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
         fprintf(output_file,"\n");
     }
-    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fprintf(output_file, "%d ", editorTanks[i] );
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fprintf(output_file, "%d ", editorTanks[i].type );
     fclose(output_file);
 }
 
