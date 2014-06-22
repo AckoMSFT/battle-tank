@@ -224,8 +224,9 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
 
     //just do it random
     for( i=0; i<AI_SPEED; i++ ){
-        dir = rand()%6;
+        dir = rand()%(int)(5 + AI_PARAM2*4.);
 
+        if (dir > 3 && dir < (int)(4 + AI_PARAM2*4.) ) dir = 4;
         for (di =0 ;di<AI_PARAM1; di++){
             if (i + di >= AI_SPEED) break;
             tank->AIDecisions[ i+di ] = dir;
