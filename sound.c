@@ -1,5 +1,9 @@
 #include "global.h"
 
+void sound_level_end(){
+    PlaySound("levelend.wav", NULL, SND_ASYNC);
+}
+
 void sound_end(){
     PlaySound("endgame.wav", NULL, SND_ASYNC);
 

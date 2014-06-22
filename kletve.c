@@ -704,6 +704,9 @@ void print_end_level_screen ( int level )
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y, score_x, score_y, temp_score, base;
     Tank temp;
+
+    sound_level_end();
+
     strcpy ( message, "STAGE " );
     itoa ( level, buffer, 10 );
     strcat ( message, buffer );
