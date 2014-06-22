@@ -152,6 +152,11 @@ bool startLevel(int level)
     power_up.state = 0;
     power_up.time = 0;
 
+    CNT_KILLED[BASIC_TANK] = 0;
+    CNT_KILLED[FAST_TANK]  = 0;
+    CNT_KILLED[POWER_TANK] = 0;
+    CNT_KILLED[ARMOR_TANK] = 0;
+
     while(gameOver == false)
     {
         enemySpawn++;

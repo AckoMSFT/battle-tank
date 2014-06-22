@@ -715,16 +715,24 @@ void print_end_level_screen ( int level )
     temp.type = BASIC_TANK;
     temp.player = false;
     print_tank ( &temp );
-    temp.x += 5;
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[BASIC_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[BASIC_TANK] % 10 );
+    temp.x += 6;
     temp.type = FAST_TANK;
     print_tank ( &temp );
-    temp.x += 5;
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[FAST_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[FAST_TANK] % 10 );
+    temp.x += 6;
     temp.type = POWER_TANK;
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[POWER_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[POWER_TANK] % 10 );
     print_tank ( &temp );
-    temp.x += 5;
+    temp.x += 6;
     temp.type = ARMOR_TANK;
     temp.hit_points = 4;
     print_tank ( &temp );
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[ARMOR_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[ARMOR_TANK] % 10 );
     curr_x = temp.x + 10;
     curr_y = MAP_OFFSET_Y;
     size = strlen ( message );
@@ -744,7 +752,7 @@ void print_end_level_screen ( int level )
         move ( curr_x + 2, curr_y );
         for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
         refresh ( );
-        Sleep ( 128 );
+        Sleep ( 256 );
         attroff ( A_BOLD );
     }
 }
