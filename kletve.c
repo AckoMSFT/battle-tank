@@ -208,11 +208,13 @@ void print_fast_tank ( int dir, int y, int x )
         break;
     case LEFT:
         move ( y, x );
+        printw ( " " );
         printw ( "#" );
         printw ( "#" );
         move ( y + 1, x );
         addch ( ACS_HLINE ); addch ( ACS_BLOCK ); printw ( " " );
         move ( y + 2, x );
+        printw ( " " );
         printw ( "#" );
         printw ( "#" );
         break;
@@ -612,6 +614,8 @@ void print_map ( void )
                     break;
             }
         }
+
+    print_power(&power_up);
     print_tank ( &player1 );
     print_base ( base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y );
     for ( i = 0; i < MAX_SPRITES; i++ )

@@ -19,7 +19,7 @@ void find_space_tank(int *x, int *y){
         }
     }
 
-    for (i = 0; i < MAP_SIZE-2; i++)
+    for (i = 4; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
 
             empty = 1;
