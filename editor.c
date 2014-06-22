@@ -1,5 +1,7 @@
 #include "global.h"
 
+int editorTanks[TANKS_PER_LEVEL], highlightedTank, tankAnim;
+
 void print_editor()
 {
     int i,j,tank_x=-1,tank_y=-1,base_x=-1,base_y=-1;
@@ -25,6 +27,7 @@ void save_editor(char * mapFile)
         for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
         fprintf(output_file,"\n");
     }
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fprintf(output_file, "%d ", editorTanks[i] );
     fclose(output_file);
 }
 
@@ -94,8 +97,6 @@ void move_down()
         editor_cursor_x++;
 }
 
-int editorTanks[TANKS_PER_LEVEL], highlightedTank, tankAnim;
-
 void printEditorTanks(void)
 {
     int i, j, currX = MAP_OFFSET_X, currY = MAP_OFFSET_Y + MAP_SIZE + 5;
@@ -142,6 +143,7 @@ void load_editor(int level)
         for(j=0;j<MAP_SIZE;j++) fscanf(input_file,"%c",&editor[i][j]);
         fgetc(input_file);
     }
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf(input_file,"%d",&editorTanks[i]);
     fclose(input_file);
     editor_cursor_x=0;
     editor_cursor_y=0;
@@ -150,7 +152,6 @@ void load_editor(int level)
     create_tank(36,12);
     print_editor();
     draw_cursor();
-    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) editorTanks[i] = BASIC_TANK;
     highlightedTank = 0;
     tankAnim = 0;
     while(1)

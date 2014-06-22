@@ -10,7 +10,7 @@ int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cur
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
 
 char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
-char levels[][100] = {{"Level 0"}, {"Level 1"}, {"Level 2"}, {"Level 3"}, {"Level 4"}, {"Level 5"}, {"Level 6"}, {"Level 7"}, {"Level 8"}, {"Level 9"}, {"Return"}};
+char levels[][100] = {{"Level  1"}, {"Level  2"}, {"Level  3"}, {"Level  4"}, {"Level  5"}, {"Level  6"}, {"Level  7"}, {"Level  8"}, {"Level  9"}, {"Level 10"}, {"Return"}};
 char difficulties[][100] = {{"Easy"}, {"Medium"}, {"Hard"}};
 char highScores[20][100];
 
