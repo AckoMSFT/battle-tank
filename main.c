@@ -47,11 +47,7 @@ int main(int argc, char **argv)
             erase();
             level = print_menu (2, 5, 10, 15, "SELECT LEVEL", levels, 1) + 1;
             erase();
-            strcpy(levelName, "level" );
-            itoa(level, buffer, 10);
-            strcat(levelName, buffer);
-            strcat(levelName, ".map");
-            load_editor(levelName);
+            load_editor(level);
          }
         if (menu_choice == 2)
         {

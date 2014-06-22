@@ -94,9 +94,14 @@ void move_down()
         editor_cursor_x++;
 }
 
-void load_editor(char * level_name)
+void load_editor(int level)
 {
     int i,j,c,get_me_out_of_here=0,iter;
+    char level_name[20], buffer[20];
+    strcpy(level_name, "level");
+    itoa(level, buffer, 10);
+    strcat(level_name, buffer);
+    strcat(level_name, ".map");
     FILE * input_file = fopen(level_name, "r");
     clock_t prev,curr;
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
