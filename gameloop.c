@@ -97,7 +97,6 @@ void startGame(int difficulty)
         if ( gameOver == true )
         {
             sound_end();
-            kill_curses();
             puts("osvojio si");
             printf("%d\n",score);
             update_high_scores("al3ksandar",score);
