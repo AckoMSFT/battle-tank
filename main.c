@@ -12,7 +12,7 @@ Power power_up;
 //configuration for difficulty
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy,ENEMYMOVESPEED_EASY},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium,ENEMYMOVESPEED_MEDIUM},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard,ENEMYMOVESPEED_HARD}};
 
-char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
+char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Start DEMO"}, {"Show High Scores"}, {"Exit Game"}};
 char levels[][100] = {{"Level  1"}, {"Level  2"}, {"Level  3"}, {"Level  4"}, {"Level  5"},
                       {"Level  6"}, {"Level  7"}, {"Level  8"}, {"Level  9"}, {"Level 10"},
                       {"Level 11"}, {"Level 12"}, {"Level 13"}, {"Level 14"}, {"Level 15"},

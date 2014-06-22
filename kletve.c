@@ -702,7 +702,7 @@ void print_start_level_screen ( int level )
 void print_end_level_screen ( int level )
 {
     char message[42], buffer[42];
-    int i, j, size, curr_x, curr_y;
+    int i, j, size, curr_x, curr_y, score_x, score_y, temp_score, base;
     Tank temp;
     strcpy ( message, "STAGE " );
     itoa ( level, buffer, 10 );
@@ -734,9 +734,19 @@ void print_end_level_screen ( int level )
     print_tank ( &temp );
     print_digit ( temp.x, temp.y + 7, CNT_KILLED[ARMOR_TANK] / 10 );
     print_digit ( temp.x, temp.y + 11, CNT_KILLED[ARMOR_TANK] % 10 );
-    curr_x = temp.x + 10;
+    curr_x = temp.x + 6;
     curr_y = MAP_OFFSET_Y;
     size = strlen ( message );
+    score_x = curr_x + 5;
+    score_y = curr_y + 5;
+    temp_score = score;
+    base = 100000;
+    for ( i = 0; i < 6; i++ )
+    {
+        print_digit ( score_x, score_y + 4 * i, temp_score / base );
+        temp_score %= base;
+        base /= 10;
+    }
     for ( j = 0; j + size < MAP_SIZE; j++ )
     {
         attron ( A_BOLD );
