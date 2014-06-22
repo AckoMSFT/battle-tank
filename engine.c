@@ -55,7 +55,7 @@ void go_right( Tank *tank )
 }
 void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
 {
-    int i, x, y;
+    int i, x, y, x2, y2;
 
 
     //if this tank shoot SHOOTSPEED earlier, just ignore.
@@ -64,42 +64,106 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
     //play a sound !
     if (tank == &player1) sound_shot();
 
-    //get x, y of a new bullet
-    switch( tank->dir ){
-    case ( UP ):
-        x = tank->x - 1;
-        y = tank->y + 1;
-        break;
-    case ( RIGHT ):
-        x = tank->x + 1;
-        y = tank->y + 3;
-        break;
-    case ( LEFT ):
-        x = tank->x + 1;
-        y = tank->y - 1;
-        break;
-    case ( DOWN ):
-        x = tank->x + 3;
-        y = tank->y + 1;
-        break;
-    }
+    if (tank != &player1 || player1.stars < 2) {
 
-    //spawn a new bullet at first free spot in bullets array
-    for ( i = 0; i < MAX_SPRITES; i++ )
-        if ( bullets[i].alive == false )
-        {
-            bullets[i].alive = true;
-            bullets[i].x = x;
-            bullets[i].y = y;
-            bullets[i].dir = tank->dir;
-            bullets[i].state = 0;
-            bullets[i].source = origin;
-
-            //tank shouldnt fire to fast, and also shouldnt kill itself by moving to bullet position by accident :D
-            tank->shoot_state = 0;
-            tank->move_state = 0;
+        //get x, y of a new bullet
+        switch( tank->dir ){
+        case ( UP ):
+            x = tank->x - 1;
+            y = tank->y + 1;
+            break;
+        case ( RIGHT ):
+            x = tank->x + 1;
+            y = tank->y + 3;
+            break;
+        case ( LEFT ):
+            x = tank->x + 1;
+            y = tank->y - 1;
+            break;
+        case ( DOWN ):
+            x = tank->x + 3;
+            y = tank->y + 1;
             break;
         }
+
+        //spawn a new bullet at first free spot in bullets array
+        for ( i = 0; i < MAX_SPRITES; i++ )
+            if ( bullets[i].alive == false )
+            {
+                bullets[i].alive = true;
+                bullets[i].x = x;
+                bullets[i].y = y;
+                bullets[i].dir = tank->dir;
+                bullets[i].state = 0;
+                bullets[i].source = origin;
+
+                break;
+            }
+
+    }
+
+    else {
+
+        //get x, y of a new bullet
+        switch( tank->dir ){
+        case ( UP ):
+            x = tank->x - 1;
+            y = tank->y;
+            x2 = tank->x - 1;
+            y2 = tank->y + 2;
+            break;
+        case ( RIGHT ):
+            x = tank->x ;
+            y = tank->y + 3;
+            x2 = tank->x + 2;
+            y2 = tank->y + 3;
+            break;
+        case ( LEFT ):
+            x = tank->x ;
+            y = tank->y - 1;
+            x2 = tank->x + 2;
+            y2 = tank->y - 1;
+            break;
+        case ( DOWN ):
+            x = tank->x + 3;
+            y = tank->y ;
+            x2 = tank->x + 3;
+            y2 = tank->y + 2;
+            break;
+        }
+
+        //spawn a new bullet at first free spot in bullets array
+        for ( i = 0; i < MAX_SPRITES; i++ )
+            if ( bullets[i].alive == false )
+            {
+                bullets[i].alive = true;
+                bullets[i].x = x;
+                bullets[i].y = y;
+                bullets[i].dir = tank->dir;
+                bullets[i].state = 0;
+                bullets[i].source = origin;
+
+                break;
+            }
+
+        for ( i = 0; i < MAX_SPRITES; i++ )
+            if ( bullets[i].alive == false )
+            {
+                bullets[i].alive = true;
+                bullets[i].x = x2;
+                bullets[i].y = y2;
+                bullets[i].dir = tank->dir;
+                bullets[i].state = 0;
+                bullets[i].source = origin;
+
+                break;
+            }
+    }
+
+    //tank shouldnt fire to fast, and also shouldnt kill itself by moving to bullet position by accident :D
+    tank->shoot_state = 0;
+    tank->move_state = 0;
+
 }
 
 void base_set(char fieldType){
@@ -202,6 +266,12 @@ void update_states() // Updating bullets states and moving them, and tank shooti
         }
 }
 
+int bullet_can_collide(int x,int y){
+    if (map[ x ][ y ] == BRICK
+        || ( map[ x ][ y ] == STEEL && player1.stars == 3 )) return 1;
+    return 0;
+}
+
 void collision() // Check for collisions of tanks and bullets, respectively bullets and bullets
 {
     int i, j, di, dj;
@@ -270,7 +340,13 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             base_set(STEEL);
             break;
         case STAR:
-            if (player1.stars < 3) player1.stars++;
+            if (player1.stars < 3) {
+                    player1.stars++;
+                    switch(player1.stars){
+                    case 1:
+                        player1.shoot_rate = 3;
+                    }
+            }
             break;
         case LIFE:
             player1.hit_points++;
@@ -308,7 +384,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
     //check for bullet-wall collisions
     for ( i = 0; i < MAX_SPRITES; i++ ) if (bullets[ i ].alive )
     {
-        if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == BRICK )
+        if ( bullet_can_collide(bullets[ i ].x, bullets[ i ].y ) )
         {
             map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION;
             bullets[ i ].alive = 0;
@@ -317,13 +393,13 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             {
             case UP:
             case DOWN:
-                if (map[bullets[i].x][bullets[i].y - 1] == BRICK) map[bullets[i].x][bullets[i].y - 1] = EXPLOSION;
-                if (map[bullets[i].x][bullets[i].y + 1] == BRICK) map[bullets[i].x][bullets[i].y + 1] = EXPLOSION;
+                if ( bullet_can_collide( bullets[i].x ,bullets[i].y - 1) ) map[bullets[i].x][bullets[i].y - 1] = EXPLOSION;
+                if ( bullet_can_collide( bullets[i].x ,bullets[i].y + 1) ) map[bullets[i].x][bullets[i].y + 1] = EXPLOSION;
                 break;
             case LEFT:
             case RIGHT:
-                if (map[bullets[i].x - 1][bullets[i].y] == BRICK) map[bullets[i].x - 1][bullets[i].y] = EXPLOSION;
-                if (map[bullets[i].x + 1][bullets[i].y] == BRICK) map[bullets[i].x + 1][bullets[i].y] = EXPLOSION;
+                if ( bullet_can_collide( bullets[i].x - 1 ,bullets[i].y) ) map[bullets[i].x - 1][bullets[i].y] = EXPLOSION;
+                if ( bullet_can_collide( bullets[i].x + 1 ,bullets[i].y) ) map[bullets[i].x + 1][bullets[i].y] = EXPLOSION;
                 break;
             }
         }
@@ -348,6 +424,8 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             bullets[i].alive = 0;
             if ( player1.invulnerable == 0 )
             {
+                player1.stars = 0;
+                player1.shoot_rate =1 ;
                 player1.hit_points--;
                 player1.x = 35;
                 player1.y = 12;

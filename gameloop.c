@@ -144,11 +144,12 @@ bool startLevel(int level)
     player1.shoot_rate = 1;
     player1.player = true;
     player1.power_type = NORMAL;
+    player1.stars = 2;
     totalSpawned = 0;
 
     power_up.x = 30;
     power_up.y = 10;
-    power_up.type = NORMAL;
+    power_up.type = STAR;
     power_up.state = 0;
     power_up.time = 0;
 
