@@ -702,20 +702,37 @@ void print_start_level_screen ( int level )
 
 void print_end_level_screen ( int level )
 {
-    attron ( A_BOLD );
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
+    Tank temp;
     strcpy ( message, "STAGE " );
     itoa ( level, buffer, 10 );
     strcat ( message, buffer );
     strcat ( message, " COMPLETE!!!" );
     erase ( );
     print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
-    curr_x = MAP_OFFSET_X + MAP_SIZE / 2;
+    temp.dir = UP;
+    temp.x = MAP_OFFSET_X + MAP_SIZE / 15;
+    temp.y = MAP_OFFSET_Y + MAP_SIZE / 8;
+    temp.type = BASIC_TANK;
+    temp.player = false;
+    print_tank ( &temp );
+    temp.x += 5;
+    temp.type = FAST_TANK;
+    print_tank ( &temp );
+    temp.x += 5;
+    temp.type = POWER_TANK;
+    print_tank ( &temp );
+    temp.x += 5;
+    temp.type = ARMOR_TANK;
+    temp.hit_points = 4;
+    print_tank ( &temp );
+    curr_x = temp.x + 10;
     curr_y = MAP_OFFSET_Y;
     size = strlen ( message );
     for ( j = 0; j + size < MAP_SIZE; j++ )
     {
+        attron ( A_BOLD );
         move ( curr_x, curr_y );
         for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
         if ( j )
@@ -730,8 +747,8 @@ void print_end_level_screen ( int level )
         for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
         refresh ( );
         Sleep ( 128 );
+        attroff ( A_BOLD );
     }
-    attroff ( A_BOLD );
 }
 
 void print_end_game_screen ( void )
