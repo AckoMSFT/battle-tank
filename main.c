@@ -1,6 +1,7 @@
 #include "global.h"
 
 int gameOver;
+int demo;
 int gameDifficulty;
 char characterMap[] = { '.', 'B', 'S', 'W', 'G', 'X', 'T' };
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
@@ -12,7 +13,7 @@ Power power_up;
 //configuration for difficulty
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy,ENEMYMOVESPEED_EASY},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium,ENEMYMOVESPEED_MEDIUM},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard,ENEMYMOVESPEED_HARD}};
 
-char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
+char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Start DEMO"}, {"Show High Scores"}, {"Exit Game"}};
 char levels[][100] = {{"Level  1"}, {"Level  2"}, {"Level  3"}, {"Level  4"}, {"Level  5"},
                       {"Level  6"}, {"Level  7"}, {"Level  8"}, {"Level  9"}, {"Level 10"},
                       {"Level 11"}, {"Level 12"}, {"Level 13"}, {"Level 14"}, {"Level 15"},
@@ -25,7 +26,7 @@ char difficulties[][100] = {{"Easy"}, {"Medium"}, {"Hard"}};
 char highScores[20][100];
 
 char levelName[100], buffer[100];
-
+int CNT_KILLED[] = { 0, 0, 0, 0 };
 int read_input(){
 #ifdef _WIN32
     return getch();
@@ -36,19 +37,21 @@ int read_input(){
 #include <mmsystem.h>
 int main(int argc, char **argv)
 {
-    int menu_choice, level, difficulty = 0;
+    int menu_choice, level, i, difficulty = 0;
+    char temp[20];
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
     resize_term(80,80);
     while ( 1 )
     {
-        menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
+        menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
         if (menu_choice == 0)
         {
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
             erase();
+            demo = 0;
             startGame(difficulty);
         }
         if (menu_choice == 1)
@@ -58,21 +61,44 @@ int main(int argc, char **argv)
             erase();
             load_editor(level);
          }
-        if (menu_choice == 2)
+        if ( menu_choice == 2 )
         {
+            erase();
+            demo = 1;
+            startGame(0);
+        }
+        if (menu_choice == 3)
+        {
+            erase();
+            difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            strcpy(temp, "high_scores");
+            switch ( difficulty )
+            {
+            case 0:
+                strcat(temp, "_easy.txt");
+                break;
+            case 1:
+                strcat(temp, "_medium.txt");
+                break;
+            case 2:
+                strcat(temp, "_hard.txt");
+                break;
+            }
+            erase();
             int i;
             char ch;
-            FILE * high_scores_file = fopen ( "high_scores.txt", "r" );
+            FILE * high_scores_file = fopen ( temp, "r" );
             for (i = 0; i < 20; i++)
             {
                 fgets(highScores[i], 100, high_scores_file);
                 ch = highScores[i][strlen(highScores[i]) - 1];
                 if (ch == '\n' || ch == '\r') highScores[i][strlen(highScores[i]) - 1] = '\0';
             }
+            fclose ( high_scores_file );
             erase();
             i = print_menu (2, 5, 20, 15, "PRESS ENTER TO RETURN", highScores, 1);
         }
-        if (menu_choice == 3)
+        if (menu_choice == 4)
         {
             kill_curses();
             return 0;

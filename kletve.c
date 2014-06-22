@@ -32,6 +32,8 @@ void init_colors ( void )
     init_pair ( 17, COLOR_GREEN, COLOR_BLACK );
     init_pair ( 18, COLOR_WHITE, COLOR_GREEN );
     init_pair ( 19, COLOR_WHITE, COLOR_BLUE );
+    init_pair ( 20, COLOR_RED, COLOR_YELLOW );
+
 }
 
 void print_border ( int y1, int x1, int y2, int x2 )
@@ -349,8 +351,9 @@ void print_empty ( int y, int x )
     printw ( " " );
 }
 
-void print_bullet ( int y, int x )
+void print_bullet ( int y, int x, int origin )
 {
+    if ( origin == 1 ) attron ( COLOR_PAIR ( 8 ) );
     attron ( A_BOLD );
     if ( map[y][x] == GRASS ) attron ( COLOR_PAIR ( 18 ) );
     if ( map[y][x] == WATER ) attron ( COLOR_PAIR ( 19 ) );
@@ -359,6 +362,7 @@ void print_bullet ( int y, int x )
     if ( map[y][x] == WATER ) attroff ( COLOR_PAIR ( 19 ) );
     if ( map[y][x] == GRASS ) attroff ( COLOR_PAIR ( 18 ) );
     attroff ( A_BOLD );
+    if ( origin == 1 ) attroff ( COLOR_PAIR ( 8 ) );
 }
 
 void print_grass ( int y, int x )
@@ -402,10 +406,24 @@ void print_steel(int y, int x)
     attroff(A_STANDOUT);
 }
 
+void print_explosion(int y, int x)
+{
+    attron(A_BOLD);
+    move(y, x);
+    attron(COLOR_PAIR(20));
+    printw("*");
+    attroff((COLOR_PAIR(20)));
+    attroff(A_BOLD);
+    //refresh();
+}
+
 void print_field ( int y, int x, int type )
 {
     switch ( type )
     {
+    case EXPLOSION:
+        print_explosion( y + MAP_OFFSET_X, x + MAP_OFFSET_Y );
+        break;
     case EMPTY:
         print_empty ( y + MAP_OFFSET_X, x + MAP_OFFSET_Y );
         break;
@@ -602,7 +620,7 @@ void load_map ( char * input_file_name )
 
 void print_map ( void )
 {
-    int i, j;
+    int i, j, k;
     base_x = -1;
     base_y = -1;
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y-1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
@@ -611,6 +629,12 @@ void print_map ( void )
         {
             switch ( map[i][j] )
             {
+                case EXPLOSION_GRASS:
+                case EXPLOSION:
+                {
+                    print_field( i, j, EXPLOSION );
+                    break;
+                }
                 case EMPTY:
                 case BRICK:
                 case WATER:
@@ -621,6 +645,7 @@ void print_map ( void )
                 case BASE:
                     if ( base_x == -1 ) base_x = i, base_y = j;
                     break;
+
             }
         }
 
@@ -635,13 +660,14 @@ void print_map ( void )
     for ( i = 0; i < MAX_SPRITES; i++ )
     {
         if ( bullets[i].alive == false ) continue;
-        print_bullet ( bullets[i].x + MAP_OFFSET_X, bullets[i].y + MAP_OFFSET_Y );
+        print_bullet ( bullets[i].x + MAP_OFFSET_X, bullets[i].y + MAP_OFFSET_Y, bullets[i].source );
     }
     refresh ( );
 }
 
 void print_start_level_screen ( int level )
 {
+    attron ( A_BOLD );
     sound_start_music();
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
@@ -670,24 +696,73 @@ void print_start_level_screen ( int level )
         refresh ( );
         Sleep ( 128 );
     }
+    attroff ( A_BOLD );
 }
 
 void print_end_level_screen ( int level )
 {
-    //sound_end();
     char message[42], buffer[42];
-    int i, j, size, curr_x, curr_y;
+    int i, j, size, curr_x, curr_y, score_x, score_y, temp_score, base;
+    Tank temp;
     strcpy ( message, "STAGE " );
     itoa ( level, buffer, 10 );
     strcat ( message, buffer );
     strcat ( message, " COMPLETE!!!" );
     erase ( );
     print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
-    curr_x = MAP_OFFSET_X + MAP_SIZE / 2;
+    temp.dir = UP;
+    temp.x = MAP_OFFSET_X + MAP_SIZE / 15;
+    temp.y = MAP_OFFSET_Y + MAP_SIZE / 8;
+    temp.type = BASIC_TANK;
+    temp.player = false;
+    print_tank ( &temp );
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[BASIC_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[BASIC_TANK] % 10 );
+    temp.x += 6;
+    temp.type = FAST_TANK;
+    print_tank ( &temp );
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[FAST_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[FAST_TANK] % 10 );
+    temp.x += 6;
+    temp.type = POWER_TANK;
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[POWER_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[POWER_TANK] % 10 );
+    print_tank ( &temp );
+    temp.x += 6;
+    temp.type = ARMOR_TANK;
+    temp.hit_points = 4;
+    print_tank ( &temp );
+    print_digit ( temp.x, temp.y + 7, CNT_KILLED[ARMOR_TANK] / 10 );
+    print_digit ( temp.x, temp.y + 11, CNT_KILLED[ARMOR_TANK] % 10 );
+    curr_x = temp.x + 6;
     curr_y = MAP_OFFSET_Y;
     size = strlen ( message );
+    score_x = curr_x + 5;
+    score_y = curr_y + 5;
+    attron ( A_BOLD );
+    move ( score_x, score_y );
+    printw ( "###" );
+    move ( score_x + 1, score_y );
+    printw ( " # " );
+    move ( score_x + 2, score_y );
+    printw ( "  #" );
+    move ( score_x + 3, score_y );
+    printw ( " # " );
+    move ( score_x + 4, score_y );
+    printw ( "###" );
+    attroff ( A_BOLD );
+    score_y += 6;
+    temp_score = score;
+    base = 100000;
+    for ( i = 0; i < 6; i++ )
+    {
+        print_digit ( score_x, score_y + 4 * i, temp_score / base );
+        temp_score %= base;
+        base /= 10;
+    }
     for ( j = 0; j + size < MAP_SIZE; j++ )
     {
+        attron ( A_BOLD );
         move ( curr_x, curr_y );
         for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
         if ( j )
@@ -701,7 +776,8 @@ void print_end_level_screen ( int level )
         move ( curr_x + 2, curr_y );
         for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
         refresh ( );
-        Sleep ( 128 );
+        Sleep ( 256 );
+        attroff ( A_BOLD );
     }
 }
 
@@ -722,6 +798,7 @@ void print_empty_tank(int y, int x)
 
 void print_digit ( int y, int x, int digit )
 {
+    attron ( A_BOLD );
     switch ( digit )
     {
     case 0:
@@ -845,6 +922,7 @@ void print_digit ( int y, int x, int digit )
         printw ("  #" );
         break;
     }
+    attroff ( A_BOLD );
 }
 
 void print_indicators ( int totalSpawned, int lives, int stars, int score )
@@ -873,7 +951,9 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
     currX = MAP_OFFSET_X;
     currY = MAP_OFFSET_Y + MAP_SIZE + 15;
     move ( currX, currY );
+    attron ( A_BOLD );
     printw ( "1P" );
+    attroff ( A_BOLD );
     Tank P1;
     P1.x = currX + 2 - MAP_OFFSET_X, P1.y = currY - MAP_OFFSET_Y, P1.dir = UP;
     P1.invulnerable = 0;

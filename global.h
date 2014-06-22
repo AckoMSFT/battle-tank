@@ -54,9 +54,9 @@
 #define NUMBER_OF_LEVELS 10
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
-
+#define REFRESHTIME 10
 #define INVULNERABLE_SECS 5
-
+#define EXPTIME 1000
 // map tiles
 
 #define  TANK 'T'
@@ -67,7 +67,8 @@
 #define STEEL 'S'
 #define BRICK 'B'
 #define FRAME 'F'
-
+#define EXPLOSION 'E'
+#define EXPLOSION_GRASS 'Y'
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128
@@ -78,21 +79,23 @@
 #define TANK_SPEED 3
 #define ENEMYSPAWNRANDOM 25
 
-#define AI_SPEED 10
-#define AI_PARAM1 5
+#define AI_SPEED 7
+#define AI_PARAM1 3
+//how often should it shot ( ratio between shooting and moving )
+#define AI_PARAM2 1
 
 #define SPAWNSPEED_EASY 160
 #define ENEMYSHOOTSPEED_EASY 30
-#define BASE_EASY 0.1
-#define MYTANK_EASY 0.1
+#define BASE_EASY 0.2
+#define MYTANK_EASY 0.2
 #define ENEMYMOVESPEED_EASY 9
 
 //medium
 #define SPAWNSPEED_MEDIUM 120
 #define ENEMYSHOOTSPEED_MEDIUM 20
-#define BASE_MEDIUM 0.3
+#define BASE_MEDIUM 0.4
 #define ENEMYMOVESPEED_MEDIUM 6
-#define MYTANK_MEDIUM 0.1
+#define MYTANK_MEDIUM 0.2
 
 //hard
 #define SPAWNSPEED_HARD 100
@@ -148,6 +151,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
+extern int demo;
 extern int totalSpawned, cntKilled, score;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
@@ -155,6 +159,7 @@ extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
 extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size, numberOfTanks;
 extern Power power_up;
+extern int CNT_KILLED[];
 int myScore, gameOver, numberOfTanks;
 
 int read_input();
