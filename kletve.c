@@ -69,13 +69,16 @@ void print_border(int y1, int x1, int y2, int x2)
 void print_tank(int dir, int y, int x)
 {
     attron(COLOR_PAIR(8));
+    if ( !( (x + y) % 2 ) )
     switch (dir)
     {
     case UP:
         move(y, x);
         printw("%c",35);addch(ACS_VLINE);printw("%c",35);
         move(y + 1, x);
-        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attron(A_BOLD);
+        printw("%c",35);attroff(A_BOLD);addch(ACS_BLOCK);attron(A_BOLD);printw("%c",35);
+        attroff(A_BOLD);
         move(y + 2, x);
         printw("%c",35);printw(" ");printw("%c",35);
         break;
@@ -83,38 +86,127 @@ void print_tank(int dir, int y, int x)
         move(y, x);
         printw("%c",35);printw(" ");printw("%c",35);
         move(y + 1, x);
+        attron(A_BOLD);
         printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attroff(A_BOLD);
         move(y + 2, x);
         printw("%c",35);addch(ACS_VLINE);printw("%c",35);
         break;
     case LEFT:
         move(y, x);
-        printw("%c%c%c",35,35,35);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         move(y + 1, x);
         addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
         move(y + 2, x );
-        printw("%c%c%c",35,35,35);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         break;
     case RIGHT:
         move(y, x);
-        printw("%c%c%c",35,35,35);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         move(y + 1, x);
         printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
         move(y + 2, x);
-        printw("%c%c%c",35,35,35);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        break;
+    }
+    else
+        switch (dir)
+    {
+    case UP:
+        move(y, x);
+        attron(A_BOLD);
+        printw("%c",35);attroff(A_BOLD);addch(ACS_VLINE);attron(A_BOLD);printw("%c",35);
+        move(y + 1, x);
+        attroff(A_BOLD);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("%c",35);printw(" ");printw("%c",35);
+        attroff(A_BOLD);
+        break;
+    case DOWN:
+        move(y, x);
+        attron(A_BOLD);
+        printw("%c",35);printw(" ");printw("%c",35);
+        move(y + 1, x);
+        attroff(A_BOLD);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("%c",35);attroff(A_BOLD);addch(ACS_VLINE);attron(A_BOLD);printw("%c",35);
+        attroff(A_BOLD);
+        break;
+    case LEFT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        break;
+    case RIGHT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
         break;
     }
     attroff(COLOR_PAIR(8));
 }
 void print_armor_tank(int dir, int y, int x)
 {
+    attron(COLOR_PAIR(8));
+    if ( !(( x + y ) % 2 ))
     switch (dir)
     {
     case UP:
         move(y, x);
         printw("*");addch(ACS_VLINE);printw("*");
         move(y + 1, x);
-        printw("*");addch(ACS_BLOCK);printw("*");
+        attron(A_BOLD);
+        printw("*");attroff(A_BOLD);addch(ACS_BLOCK);attron(A_BOLD);printw("*");
+        attroff(A_BOLD);
         move(y + 2, x);
         printw("*");printw(" ");printw("*");
         break;
@@ -122,37 +214,127 @@ void print_armor_tank(int dir, int y, int x)
         move(y, x);
         printw("*");printw(" ");printw("*");
         move(y + 1, x);
+        attron(A_BOLD);
         printw("*");addch(ACS_BLOCK);printw("*");
+        attroff(A_BOLD);
         move(y + 2, x);
         printw("*");addch(ACS_VLINE);printw("*");
         break;
     case LEFT:
         move(y, x);
-        printw("***");
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
         move(y + 1, x);
         addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
         move(y + 2, x );
-        printw("***");
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
         break;
     case RIGHT:
         move(y, x);
-        printw("***");
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
         move(y + 1, x);
         printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
         move(y + 2, x);
-        printw("***");
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
         break;
     }
+    else
+        switch (dir)
+    {
+    case UP:
+        move(y, x);
+        attron(A_BOLD);
+        printw("*");attroff(A_BOLD);addch(ACS_VLINE);attron(A_BOLD);printw("*");
+        move(y + 1, x);
+        attroff(A_BOLD);
+        printw("*");addch(ACS_BLOCK);printw("*");
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("*");printw(" ");printw("*");
+        attroff(A_BOLD);
+        break;
+    case DOWN:
+        move(y, x);
+        attron(A_BOLD);
+        printw("*");printw(" ");printw("*");
+        move(y + 1, x);
+        attroff(A_BOLD);
+        printw("*");addch(ACS_BLOCK);printw("*");
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("*");attroff(A_BOLD);addch(ACS_VLINE);attron(A_BOLD);printw("*");
+        attroff(A_BOLD);
+        break;
+    case LEFT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attron(A_BOLD);
+        break;
+    case RIGHT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        printw("*");
+        attron(A_BOLD);
+        printw("*");
+        attroff(A_BOLD);
+        break;
+    }
+    attroff(COLOR_PAIR(8));
 }
 void print_fast_tank(int dir, int y, int x)
 {
+    attron(COLOR_PAIR(8));
+    if ( !( ( x + y ) % 2 ) )
     switch (dir)
     {
     case UP:
         move(y, x);
         printw(" ");addch(ACS_VLINE);printw(" ");
         move(y + 1, x);
-        printw("#");addch(ACS_BLOCK);printw("#");
+        attron(A_BOLD);
+        printw("#");attroff(A_BOLD);addch(ACS_BLOCK);attron(A_BOLD);printw("#");
+        attroff(A_BOLD);
         move(y + 2, x);
         printw("#");printw(" ");printw("#");
         break;
@@ -160,65 +342,220 @@ void print_fast_tank(int dir, int y, int x)
         move(y, x);
         printw("#");printw(" ");printw("#");
         move(y + 1, x);
+        attron(A_BOLD);
+        printw("#");attroff(A_BOLD);addch(ACS_BLOCK);attron(A_BOLD);printw("#");
+        attroff(A_BOLD);
+        move(y + 2, x);
+        printw(" ");addch(ACS_VLINE);printw(" ");
+        break;
+    case LEFT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("#");attroff(A_BOLD);
+        printw("#");
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        move(y + 2, x );
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        break;
+    case RIGHT:
+        move(y, x);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        move(y + 1, x);
+        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        break;
+    }
+    else
+    switch (dir)
+    {
+    case UP:
+        move(y, x);
+        printw(" ");addch(ACS_VLINE);printw(" ");
+        move(y + 1, x);
+        printw("#");addch(ACS_BLOCK);printw("#");
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("#");printw(" ");printw("#");
+        attron(A_BOLD);
+        break;
+    case DOWN:
+        move(y, x);
+        attron(A_BOLD);
+        printw("#");printw(" ");printw("#");
+        attroff(A_BOLD);
+        move(y + 1, x);
         printw("#");addch(ACS_BLOCK);printw("#");
         move(y + 2, x);
         printw(" ");addch(ACS_VLINE);printw(" ");
         break;
     case LEFT:
         move(y, x);
-        printw(" ##");
+        printw("#");attron(A_BOLD);
+        printw("#");attroff(A_BOLD);
         move(y + 1, x);
         addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
         move(y + 2, x );
-        printw(" ##");
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
         break;
     case RIGHT:
         move(y, x);
-        printw("## ");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         move(y + 1, x);
         printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
         move(y + 2, x);
-        printw("## ");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         break;
     }
+    attroff(COLOR_PAIR(8));
 }
 void print_power_tank(int dir, int y, int x)
 {
+    attron(COLOR_PAIR(8));
+    if ( !( (x + y) % 2 ) )
     switch (dir)
     {
     case UP:
         move(y, x);
-        addch(ACS_VLINE);addch(ACS_VLINE);addch(ACS_VLINE);
+        printw("%c",35);addch(ACS_VLINE);printw("%c",35);
         move(y + 1, x);
-        printw("#");addch(ACS_BLOCK);printw("#");
+        attron(A_BOLD);
+        printw("%c",35);attroff(A_BOLD);addch(ACS_BLOCK);attron(A_BOLD);printw("%c",35);
+        attroff(A_BOLD);
         move(y + 2, x);
-        printw("#");printw(" ");printw("#");
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
         break;
     case DOWN:
         move(y, x);
-        printw("#");printw(" ");printw("#");
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
         move(y + 1, x);
-        printw("#");addch(ACS_BLOCK);printw("#");
+        attron(A_BOLD);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attroff(A_BOLD);
         move(y + 2, x);
-        addch(ACS_VLINE);addch(ACS_VLINE);addch(ACS_VLINE);
+        printw("%c",35);addch(ACS_VLINE);printw("%c",35);
         break;
     case LEFT:
         move(y, x);
-        addch(ACS_HLINE);printw("##");
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         move(y + 1, x);
-        addch(ACS_HLINE);addch(ACS_BLOCK);printw(" ");
+        addch(ACS_HLINE);addch(ACS_BLOCK);addch(ACS_BLOCK);
         move(y + 2, x );
-        addch(ACS_HLINE);printw("##");
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         break;
     case RIGHT:
         move(y, x);
-        printw("##");addch(ACS_HLINE);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         move(y + 1, x);
-        printw(" ");addch(ACS_BLOCK);addch(ACS_HLINE);
+        addch(ACS_BLOCK);addch(ACS_BLOCK);addch(ACS_HLINE);
         move(y + 2, x);
-        printw("##");addch(ACS_HLINE);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
         break;
     }
+    else
+        switch (dir)
+    {
+    case UP:
+        move(y, x);
+        attron(A_BOLD);
+        printw("%c",35);attroff(A_BOLD);addch(ACS_VLINE);attron(A_BOLD);printw("%c",35);
+        move(y + 1, x);
+        attroff(A_BOLD);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attroff(A_BOLD);
+        break;
+    case DOWN:
+        move(y, x);
+        attron(A_BOLD);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        move(y + 1, x);
+        attroff(A_BOLD);
+        printw("%c",35);addch(ACS_BLOCK);printw("%c",35);
+        attron(A_BOLD);
+        move(y + 2, x);
+        printw("%c",35);attroff(A_BOLD);addch(ACS_VLINE);attron(A_BOLD);printw("%c",35);
+        attroff(A_BOLD);
+        break;
+    case LEFT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        move(y + 1, x);
+        addch(ACS_HLINE);addch(ACS_BLOCK);addch(ACS_BLOCK);
+        move(y + 2, x );
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        break;
+    case RIGHT:
+        move(y, x);
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        move(y + 1, x);
+        addch(ACS_BLOCK);addch(ACS_BLOCK);addch(ACS_HLINE);
+        move(y + 2, x);
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        printw("#");
+        attron(A_BOLD);
+        printw("#");
+        attroff(A_BOLD);
+        break;
+    }
+
+    attroff(COLOR_PAIR(8));
 }
 void print_enemy_tank(int dir, int y, int x, int hit_points)
 {
