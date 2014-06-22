@@ -545,6 +545,7 @@ void print_power ( Power * this )
         print_bomb ( this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y );
         break;
     case HELMET:
+        print_helmet ( this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y );
         break;
     case SHOVEL:
         print_shovel ( this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y );
@@ -643,7 +644,7 @@ void print_map ( void )
 
 void print_start_level_screen ( int level )
 {
-    sound_end();
+    sound_start_music();
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
     strcpy ( message, "STAGE " );
@@ -675,7 +676,7 @@ void print_start_level_screen ( int level )
 
 void print_end_level_screen ( int level )
 {
-    sound_end();
+    //sound_end();
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
     strcpy ( message, "STAGE " );
@@ -708,6 +709,7 @@ void print_end_level_screen ( int level )
 
 void print_end_game_screen ( void )
 {
+    sound_end();
 }
 
 void print_empty_tank(int y, int x)

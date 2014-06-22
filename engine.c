@@ -254,8 +254,10 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
         switch ( power_up.type )
         {
         case BOMB:
-            for ( i = 0; i < MAX_SPRITES; i++ )
+            for ( i = 0; i < MAX_SPRITES; i++ ) if (tanks[ i ].alive){
+                cntKilled++;
                 tanks[ i ].alive= 0;
+            }
             sound_explosion();
             break;
         case HELMET:

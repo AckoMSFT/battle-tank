@@ -108,7 +108,6 @@ void startGame(int difficulty)
 bool startLevel(int level)
 {
     print_start_level_screen(level);
-    sound_start_music();
     // give me current level
     char level_name[1 << 5], buffer[1 << 5];
     strcpy(level_name,"level");
