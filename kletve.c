@@ -349,8 +349,9 @@ void print_empty ( int y, int x )
     printw ( " " );
 }
 
-void print_bullet ( int y, int x )
+void print_bullet ( int y, int x, int origin )
 {
+    if ( origin == 1 ) attron ( COLOR_PAIR ( 8 ) );
     attron ( A_BOLD );
     if ( map[y][x] == GRASS ) attron ( COLOR_PAIR ( 18 ) );
     if ( map[y][x] == WATER ) attron ( COLOR_PAIR ( 19 ) );
@@ -359,6 +360,7 @@ void print_bullet ( int y, int x )
     if ( map[y][x] == WATER ) attroff ( COLOR_PAIR ( 19 ) );
     if ( map[y][x] == GRASS ) attroff ( COLOR_PAIR ( 18 ) );
     attroff ( A_BOLD );
+    if ( origin == 1 ) attroff ( COLOR_PAIR ( 8 ) );
 }
 
 void print_grass ( int y, int x )
@@ -634,7 +636,7 @@ void print_map ( void )
     for ( i = 0; i < MAX_SPRITES; i++ )
     {
         if ( bullets[i].alive == false ) continue;
-        print_bullet ( bullets[i].x + MAP_OFFSET_X, bullets[i].y + MAP_OFFSET_Y );
+        print_bullet ( bullets[i].x + MAP_OFFSET_X, bullets[i].y + MAP_OFFSET_Y, bullets[i].source );
     }
     refresh ( );
 }
