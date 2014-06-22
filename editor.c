@@ -175,7 +175,7 @@ void load_editor(int level)
           case 'E':
           case 'e': create_cursor(editor_cursor_x,editor_cursor_y); break;
           case 'G':
-          case 'g': map_generator(15); break;
+          case 'g': map_generator(18); break;
           case 'n':
           case 'N': clear_editor(); create_base(35,17); create_tank(36,12); break;
           case 'j':
@@ -262,7 +262,7 @@ void print_wall(int a, int b)
     int i,j,x,y,type;
     x=rand()%(MAP_SIZE-a);
     y=rand()%(MAP_SIZE-b);
-    type= rand()%6;
+    type= rand()%10;
     for (i=0;i<a;i++)
         for (j=0;j<b;j++)
     {
@@ -270,6 +270,7 @@ void print_wall(int a, int b)
         {
             case 2: editor[x+i][y+j]=WATER; break;
             case 3: editor[x+i][y+j]=STEEL; break;
+            case 4: editor[x+i][y+j]=GRASS; break;
             default: editor[x+i][y+j]=BRICK; break;
         }
     }

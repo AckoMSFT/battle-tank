@@ -447,7 +447,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                 player1.stars = 0;
                 player1.shoot_rate =1 ;
                 player1.hit_points--;
-                player1.x = 35;
+                player1.x = 36;
                 player1.y = 12;
                 player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
                 sound_explosion();
