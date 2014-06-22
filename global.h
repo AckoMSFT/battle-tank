@@ -84,7 +84,7 @@
 //how often should it shot ( ratio between shooting and moving )
 #define AI_PARAM2 1
 
-#define SPAWNSPEED_EASY 160
+#define SPAWNSPEED_EASY 60
 #define ENEMYSHOOTSPEED_EASY 30
 #define BASE_EASY 0.2
 #define MYTANK_EASY 0.2

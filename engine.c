@@ -164,6 +164,10 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
     tank->shoot_state = 0;
     tank->move_state = 0;
 
+    //fire one bullet than two bullets than one bullet ...
+    if (player1.stars == 3 || player1.stars == 2 || player1.stars == -2 || player1.stars == -3)
+        player1.stars*=-1;
+
 }
 
 void base_set(char fieldType){
@@ -298,13 +302,20 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                         power_up.type = tanks[i].power_type;
                         while ( 1 )
                         {
-                            power_up.x = rand ( ) % ( MAP_SIZE - 3 );
+                            //power_up.x = rand ( ) % ( MAP_SIZE - 3 );
                             power_up.y = rand ( ) % ( MAP_SIZE - 3 );
-                            empty = demo;
+                            power_up.x = 0;
+                            if (demo) empty = true;
+                            else empty = false;
                             for(di=0;di<3;di++)
                                 for(dj=0;dj<3;dj++)
                                 {
-                                    if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY ) empty = !demo;
+                                    if (!demo) {
+                                            if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY ) empty = true;
+                                    }
+                                    else{
+                                            if (map[ power_up.x + di ][ power_up.y + dj ] != EMPTY ) empty = false;
+                                    }
                                 }
                             if(empty) break;
                         }
@@ -344,11 +355,15 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             base_set(STEEL);
             break;
         case STAR:
-            if (player1.stars < 3) {
+            if (fabs(player1.stars) < 3) {
                     player1.stars++;
                     switch(player1.stars){
                     case 1:
-                        player1.shoot_rate = 3;
+                        player1.shoot_rate = 2;
+                        break;
+                    case -1:
+                        player1.stars = 3;
+                        break;
                     }
             }
             break;

@@ -6,7 +6,7 @@
 void find_space_tank(int *x, int *y);
 
 //update the mapused, so we can check collisions and find space and tank movement
-void update_mapUsed();
+void update_mapUsed(int usePowerUp);
 
 //start the gameloop
 void startGame(int);

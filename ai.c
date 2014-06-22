@@ -26,10 +26,17 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
         for (dy = 0; dy < 3; dy++) mapAI[tank->x + dx][tank->y + dy] = EMPTY;
 
 
-
     matrixQueue.front = matrixQueue.end = 0;
     memset(mapMove,0,sizeof(mapMove));
     memset(mapMoveLast,0,sizeof(mapMove));
+
+    move(50,50);
+    printw("%d %d    ",chaseMeX,chaseMeY);
+    move(51,50);
+    printw("%d %d    ",player1.x, player1.y);
+    refresh();
+    move(52,50); printw("inna ai          "); refresh();
+
 
 
     //go towards base
@@ -96,6 +103,8 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
                 popY = popX % MAP_SIZE;
                 popX /= MAP_SIZE;
 
+                move(53,50);printw("pop: %d %d       ",popX,popY);refresh();
+
                 if (popX ==0 && popY ==0){
                     popX =0 ;
 
@@ -109,7 +118,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
                         currY = popY + dy;
 
                         //off the map
-                        if (currX >MAP_SIZE -2 || currY > MAP_SIZE -2 || currX < 0 || currY < 0) continue;
+                        if (currX >=MAP_SIZE -2 || currY >= MAP_SIZE -2 || currX < 0 || currY < 0) continue;
 
                         empty =1;
                         for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
@@ -152,7 +161,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
             currY = tank->y;
 
 
-            //you can go to the base
+            //you can go to the chasing object
             if (mapMove[ currX ][ currY ]){
 
                 i=aiSpeed;
@@ -162,7 +171,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
                     if (mapMove[ currX ][ currY ] == 1 ){
 
                         if (currX == fromX){
-                            if (currY > base_y){
+                            if (currY > fromY){
                                 dir = LEFT;
                             }
                             else{
@@ -170,7 +179,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
                             }
                         }
                         else{
-                            if (currX > fromY){
+                            if (currX > fromX){
                                 dir = UP;
                             }
                             else{
