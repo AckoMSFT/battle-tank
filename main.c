@@ -7,7 +7,7 @@ char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
 int totalSpawned;
-int power_indexes[] = {3, 10, 17};
+int power_indexes[] = {4, 11, 18};
 Power power_up;
 //configuration for difficulty
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
