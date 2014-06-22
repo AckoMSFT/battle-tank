@@ -118,7 +118,7 @@ typedef struct bullet
 
 typedef struct
 {
-    int type, x, y, state;
+    int type, x, y, state, time;
 } Power;
 
 typedef struct difficulty
@@ -135,7 +135,9 @@ enum { BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK };
 // types of power-ups
 enum { NORMAL, BOMB, HELMET, SHOVEL, STAR, LIFE, TIMER };
 
-#define FREEZE_SECS 15
+#define TIMER_SECS 15
+#define SHOVEL_SECS 20
+#define HELMET_SECS 15
 
 int levelConfiguration[20];
 
@@ -145,7 +147,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
-extern int totalSpawned;
+extern int totalSpawned, cntKilled, score;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];

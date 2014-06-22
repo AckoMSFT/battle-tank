@@ -6,7 +6,7 @@ char characterMap[] = { '.', 'B', 'S', 'W', 'G', 'X', 'T' };
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 int mapUsed[MAP_SIZE][MAP_SIZE];
 int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size;
-int totalSpawned;
+int totalSpawned, cntKilled, score;
 int power_indexes[] = {4, 11, 18};
 Power power_up;
 //configuration for difficulty
