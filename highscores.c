@@ -1,12 +1,26 @@
 #include "global.h"
 
-void update_high_scores (char name[20], int score)
+void update_high_scores (char name[20], int score, int difficulty)
 {
      int i,n,j;
-     char names[21][20],t[20];
+     char names[21][20], t[20];
+     char temp[20];
+     strcpy("high_scores", temp);
+     switch ( difficulty )
+     {
+     case 0:
+         strcat(temp, "_easy.txt");
+         break;
+     case 1:
+         strcat(temp, "_medium.txt");
+         break;
+     case 2:
+         strcat(temp, "_hard.txt");
+         break;
+     }
      int scores[21];
      FILE *high_scores;
-     high_scores = fopen("high_scores.txt", "r");
+     high_scores = fopen(temp, "r");
      n=0;
      while (fscanf(high_scores,"%d",&scores[n])!=EOF)
      {
@@ -39,7 +53,7 @@ void update_high_scores (char name[20], int score)
      }
      if (n<20) n++;
      i=0;
-     high_scores = fopen("high_scores.txt", "w");
+     high_scores = fopen(temp, "w");
      while (i<n)
      {
          fprintf(high_scores, "%d %s\n", scores[i], names[i]);

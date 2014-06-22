@@ -105,10 +105,7 @@ void startGame(int difficulty)
         }
         else print_end_level_screen ( i );
     }
-    kill_curses();
-    puts("osvojio si");
-    printf("%d\n",score);
-    update_high_scores("al3ksandar",score);
+    update_high_scores("al3ksandar",score,difficulty);
     return;
 }
 

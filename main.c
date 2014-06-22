@@ -37,7 +37,8 @@ int read_input(){
 #include <mmsystem.h>
 int main(int argc, char **argv)
 {
-    int menu_choice, level,i, difficulty = 0;
+    int menu_choice, level, i, difficulty = 0;
+    char temp[20];
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
@@ -68,15 +69,32 @@ int main(int argc, char **argv)
         }
         if (menu_choice == 3)
         {
+            erase();
+            difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            strcpy(temp, "high_scores");
+            switch ( difficulty )
+            {
+            case 0:
+                strcat(temp, "_easy.txt");
+                break;
+            case 1:
+                strcat(temp, "_medium.txt");
+                break;
+            case 2:
+                strcat(temp, "_hard.txt");
+                break;
+            }
+            erase();
             int i;
             char ch;
-            FILE * high_scores_file = fopen ( "high_scores.txt", "r" );
+            FILE * high_scores_file = fopen ( temp, "r" );
             for (i = 0; i < 20; i++)
             {
                 fgets(highScores[i], 100, high_scores_file);
                 ch = highScores[i][strlen(highScores[i]) - 1];
                 if (ch == '\n' || ch == '\r') highScores[i][strlen(highScores[i]) - 1] = '\0';
             }
+            fclose ( high_scores_file );
             erase();
             i = print_menu (2, 5, 20, 15, "PRESS ENTER TO RETURN", highScores, 1);
         }
