@@ -587,7 +587,6 @@ void load_map ( char * input_file_name )
         }
         fscanf(input_file, "%c", &buffer);
     }
-    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
     for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf ( input_file, "%d", &levelConfiguration[i] );
     fclose ( input_file );
 }
@@ -597,6 +596,7 @@ void print_map ( void )
     int i, j;
     base_x = -1;
     base_y = -1;
+    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y-1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
     for ( i = 0; i < MAP_SIZE; i++ )
         for ( j = 0; j < MAP_SIZE; j++ )
         {
@@ -633,12 +633,34 @@ void print_map ( void )
 
 void print_start_level_screen ( int level )
 {
-    erase();
-    move(50,50);
-    printw("PERICA");
-    refresh();
     sound_end();
-    Sleep(5000);
+    char level_name[42], buffer[42];
+    int i, j, size, curr_x, curr_y;
+    strcpy ( level_name, "STAGE " );
+    itoa ( level, buffer, 10 );
+    strcat ( level_name, buffer );
+    erase();
+    print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
+    curr_x = MAP_OFFSET_X + MAP_SIZE / 2;
+    curr_y = MAP_OFFSET_Y;
+    size = strlen ( level_name );
+    for ( j = 0; j + size < MAP_SIZE; j++ )
+    {
+        move ( curr_x, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+        if ( j )
+        {
+            move ( curr_x + 1, curr_y + j - 1 );
+            printw ( " " );
+            refresh ( );
+        }
+        move ( curr_x + 1, curr_y + j );
+        printw ( "%s", level_name );
+        move ( curr_x + 2, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+        refresh ( );
+        Sleep ( 128 );
+    }
 }
 
 void print_end_level_screen ( void )
