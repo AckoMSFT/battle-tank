@@ -144,12 +144,12 @@ bool startLevel(int level)
     player1.shoot_rate = 1;
     player1.player = true;
     player1.power_type = NORMAL;
-    player1.stars = 2;
+    //player1.stars = 2;
     totalSpawned = 0;
 
     power_up.x = 30;
     power_up.y = 10;
-    power_up.type = STAR;
+    power_up.type = NORMAL;
     power_up.state = 0;
     power_up.time = 0;
 
@@ -211,9 +211,16 @@ bool startLevel(int level)
         collision();
 
         print_map();
+
         for ( i = 0; i < MAP_SIZE; i++ )
             for ( j = 0; j < MAP_SIZE; j++ ) if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
         refresh ( );
+        for ( i = 0; i < MAP_SIZE; i++ )
+            for ( j = 0; j < MAP_SIZE; j++ )
+            {
+                if ( map[i][j] == EXPLOSION_GRASS ) map[i][j] = GRASS;
+                if ( map[i][j] == EXPLOSION ) map[i][j] = EMPTY;
+            }
 
         print_power(&power_up);
 
