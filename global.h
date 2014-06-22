@@ -159,6 +159,7 @@ extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
 extern int tank_x, tank_y, base_x, base_y, editor_cursor_x, editor_cursor_y, editor_cursor_id, editor_cursor_size, numberOfTanks;
 extern Power power_up;
+extern int CNT_KILLED[];
 int myScore, gameOver, numberOfTanks;
 
 int read_input();

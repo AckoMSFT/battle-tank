@@ -318,6 +318,8 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                     score += tanks[i].value;
                     cntKilled++;
                     numberOfTanks--;
+
+                    CNT_KILLED[tanks[i].type]++;
                 }
             }
     }

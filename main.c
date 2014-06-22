@@ -26,7 +26,7 @@ char difficulties[][100] = {{"Easy"}, {"Medium"}, {"Hard"}};
 char highScores[20][100];
 
 char levelName[100], buffer[100];
-
+int CNT_KILLED[] = { 0, 0, 0, 0 };
 int read_input(){
 #ifdef _WIN32
     return getch();
