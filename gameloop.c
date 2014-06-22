@@ -43,8 +43,8 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
         }
         else{
             //go toward ME
-            fromX = player1.x;
-            fromY = player1.y;
+            fromX = player1.x+1;
+            fromY = player1.y+1;
 
         }
 
@@ -267,10 +267,10 @@ int get_decision_hard(Tank *tank){
 
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
-    int jPositions[2] = {0,MAP_SIZE/2 -1 , MAP_SIZE-2};
+    int jPositions[3] = {0,MAP_SIZE/2 -1 , MAP_SIZE-3};
 
     for(i=0;i<3;i++){
-        j=jPositions[i];
+        j=jPositions[(i + totalSpawned) %3];
         empty = 1;
         for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
             if (mapUsed[di][j+dj]) empty = 0;

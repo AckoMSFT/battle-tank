@@ -133,7 +133,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
-int totalSpawned;
+extern int totalSpawned;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
