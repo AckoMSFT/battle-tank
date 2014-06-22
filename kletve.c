@@ -614,6 +614,8 @@ void print_map ( void )
                     break;
             }
         }
+
+    print_power(&power_up);
     print_tank ( &player1 );
     print_base ( base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y );
     for ( i = 0; i < MAX_SPRITES; i++ )
@@ -629,11 +631,15 @@ void print_map ( void )
     refresh ( );
 }
 
-void print_end_level_screen()
+void print_start_level_screen ( void )
 {
 }
 
-void print_end_game_screen()
+void print_end_level_screen ( void )
+{
+}
+
+void print_end_game_screen ( void )
 {
 }
 

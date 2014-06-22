@@ -19,7 +19,7 @@ void find_space_tank(int *x, int *y){
         }
     }
 
-    for (i = 0; i < MAP_SIZE-2; i++)
+    for (i = 4; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
 
             empty = 1;
@@ -111,7 +111,7 @@ bool startLevel(int level, int *stars, int *score)
     sound_start_music();
 
 
-    int i,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
+    int i,j,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
     const int SLEEP_TIME = 1000 / FRAMES_PER_SEC;
 
     gameOver = false;
@@ -140,12 +140,11 @@ bool startLevel(int level, int *stars, int *score)
 
     power_up.x = 50;
     power_up.y = 10;
-    power_up.type = TIMER;
+    power_up.type = NORMAL;
     power_up.state = 0;
 
     while(gameOver == false)
     {
-        print_power(&power_up);
         enemySpawn++;
         if ( enemySpawn == confDiff[gameDifficulty].spawn )
         {
@@ -202,6 +201,9 @@ bool startLevel(int level, int *stars, int *score)
         collision(&cntKilled, score);
 
         print_map();
+        for ( i = 0; i < MAP_SIZE; i++ )
+            for ( j = 0; j < MAP_SIZE; j++ ) if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
+        refresh ( );
 
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hit_points <= 0 ) return false;
