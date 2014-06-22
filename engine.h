@@ -15,5 +15,5 @@ int bullets_collision( Bullet bullet1, Bullet bullet2 );
 void collision(int *, int *) ;
 
 //spawn a new tank
-void spawn_tank( int x, int y, int dir, int lives );
+void spawn_tank( int x, int y, int dir, int lives, int, int );
 #endif // ENGINE_H_INCLUDED

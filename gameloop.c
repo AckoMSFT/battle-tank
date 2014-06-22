@@ -132,6 +132,7 @@ bool startLevel(int level, int *stars, int *score)
     player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
     player1.stars = stars;
     player1.move_rate = 1;
+    player1.move_speed = TANK_SPEED;
     player1.shoot_rate = 1;
     player1.player = true;
     totalSpawned = 0;
@@ -158,7 +159,7 @@ bool startLevel(int level, int *stars, int *score)
 
             //if
             if (x!=-1){
-                spawn_tank(x,y,DOWN, levelConfiguration[totalSpawned]);
+                spawn_tank(x,y,DOWN, levelConfiguration[totalSpawned],confDiff[gameDifficulty].speed,confDiff[gameDifficulty].shoot);
             }
 
         }
