@@ -2,6 +2,7 @@
 
 int print_menu (int starty, int x, int number_of_entries, int width, char title[], char entries[][100], int idx)
 {
+    attron ( A_BOLD );
     int i, j, k, left_space, right_space, y = starty, key;
     char temp[100];
     width = MAX(strlen(title) + 2, width);
@@ -65,14 +66,15 @@ int print_menu (int starty, int x, int number_of_entries, int width, char title[
     printw ("\n");
     do
     {
-        attron (A_STANDOUT);
+        attroff ( A_BOLD );
+        attron ( A_STANDOUT );
         left_space = width - (strlen (&entries[idx - 1][0]) + 1);
         temp[0] = ' ';
         strcpy (&temp[1], &entries[idx - 1][0]);
         for (i = strlen (&entries[idx - 1][0]) + 1; i < width; i++) temp[i] = ' ';
         temp[i] = '\0';
         mvprintw ((starty + 3) + (idx - 1) * 2, x + 1, "%s", temp);
-        attroff (A_STANDOUT);
+        attroff ( A_STANDOUT );
         key = getch();
         if (key == KEY_UP)
         {
@@ -86,7 +88,9 @@ int print_menu (int starty, int x, int number_of_entries, int width, char title[
             if (idx == number_of_entries) idx = 1;
             else idx++;
         }
+        attron ( A_BOLD );
     }
     while (key != '\r' && key != '\n' );
+    attroff ( A_BOLD );
     return idx - 1;
 }
