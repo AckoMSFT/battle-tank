@@ -627,11 +627,15 @@ void print_map ( void )
     refresh ( );
 }
 
-void print_end_level_screen()
+void print_start_level_screen ( void )
 {
 }
 
-void print_end_game_screen()
+void print_end_level_screen ( void )
+{
+}
+
+void print_end_game_screen ( void )
 {
 }
 
