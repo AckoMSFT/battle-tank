@@ -361,6 +361,7 @@ bool startLevel(int level)
             for ( j = 0; j < MAP_SIZE; j++ )
             {
                 if ( map[i][j] == EXPLOSION_GRASS ) map[i][j] = GRASS;
+                if ( map[i][j] == EXPLOSION_WATER ) map[i][j] = WATER;
                 if ( map[i][j] == EXPLOSION ) map[i][j] = EMPTY;
             }
 

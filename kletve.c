@@ -33,7 +33,8 @@ void init_colors ( void )
     init_pair ( 18, COLOR_WHITE, COLOR_GREEN );
     init_pair ( 19, COLOR_WHITE, COLOR_BLUE );
     init_pair ( 20, COLOR_RED, COLOR_YELLOW );
-
+    init_pair ( 21, COLOR_MAGENTA, COLOR_BLACK );
+    init_pair ( 22, COLOR_RED, COLOR_BLACK );
 }
 
 void print_border ( int y1, int x1, int y2, int x2 )
@@ -189,7 +190,7 @@ void print_armor_tank ( int dir, int y, int x, int hit_points )
 void print_fast_tank ( int dir, int y, int x )
 {
     attron ( A_BOLD );
-    attron ( COLOR_PAIR ( 8 ) );
+    attron ( COLOR_PAIR ( 22 ) );
     switch ( dir )
     {
     case UP:
@@ -231,14 +232,14 @@ void print_fast_tank ( int dir, int y, int x )
         printw ( "#" );
         break;
     }
-    attroff ( COLOR_PAIR ( 8 ) );
+    attroff ( COLOR_PAIR ( 22 ) );
     attroff ( A_BOLD );
 }
 
 void print_power_tank ( int dir, int y, int x )
 {
     attron ( A_BOLD );
-    attron ( COLOR_PAIR ( 8 ) );
+    attron ( COLOR_PAIR ( 21 ) );
     switch ( dir )
     {
     case UP:
@@ -274,7 +275,7 @@ void print_power_tank ( int dir, int y, int x )
         printw ( "###" );
         break;
     }
-    attroff ( COLOR_PAIR ( 8 ) );
+    attroff ( COLOR_PAIR ( 21 ) );
     attroff ( A_BOLD );
 }
 
@@ -630,6 +631,7 @@ void print_map ( void )
             switch ( map[i][j] )
             {
                 case EXPLOSION_GRASS:
+                case EXPLOSION_WATER:
                 case EXPLOSION:
                 {
                     print_field( i, j, EXPLOSION );
@@ -720,6 +722,7 @@ void print_end_level_screen ( int level )
     temp.y = MAP_OFFSET_Y + MAP_SIZE / 8;
     temp.type = BASIC_TANK;
     temp.player = false;
+    temp.power_type = NORMAL;
     print_tank ( &temp );
     print_digit ( temp.x, temp.y + 7, CNT_KILLED[BASIC_TANK] / 10 );
     print_digit ( temp.x, temp.y + 11, CNT_KILLED[BASIC_TANK] % 10 );
@@ -943,6 +946,8 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
                 temp.animation_counter = 0;
                 temp.power_type = NORMAL;
                 temp.type = levelConfiguration[TANKS_PER_LEVEL - 1 - i * 2 - j];
+                if ( temp.type == ARMOR_TANK ) temp.hit_points = 4;
+                else temp.hit_points = 1;
                 print_tank ( &temp );
             }
         }

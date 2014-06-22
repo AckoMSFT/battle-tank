@@ -323,7 +323,9 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                     for ( di = 0; di < 3; di++ ) for ( dj = 0; dj < 3; dj++ )
                         if ( map[ tanks[i].x + di ][ tanks[i].y + dj ] == GRASS )
                         map[ tanks[i].x + di ][ tanks[i].y + dj ] = EXPLOSION_GRASS;
-                        else map[ tanks[i].x + di ][ tanks[i].y + dj ] = EXPLOSION;
+                        else if ( map[tanks[i].x + di][tanks[i].y + dj] == WATER )
+                                  map[tanks[i].x + di][tanks[i].y + dj] = EXPLOSION_WATER;
+                             else map[ tanks[i].x + di ][ tanks[i].y + dj ] = EXPLOSION;
                     sound_explosion();
 
                     score += tanks[i].value;

@@ -74,6 +74,7 @@
 #define FRAME 'F'
 #define EXPLOSION 'E'
 #define EXPLOSION_GRASS 'Y'
+#define EXPLOSION_WATER 'Z'
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128
