@@ -34,7 +34,6 @@ int read_input(){
     return getchar();
 #endif // _WIN32
 }
-#include <mmsystem.h>
 int main(int argc, char **argv)
 {
     int menu_choice, level, i, difficulty = 0;

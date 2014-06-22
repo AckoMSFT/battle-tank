@@ -30,12 +30,12 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
     memset(mapMove,0,sizeof(mapMove));
     memset(mapMoveLast,0,sizeof(mapMove));
 
-    move(50,50);
-    printw("%d %d    ",chaseMeX,chaseMeY);
-    move(51,50);
-    printw("%d %d    ",player1.x, player1.y);
-    refresh();
-    move(52,50); printw("inna ai          "); refresh();
+//    move(50,50);
+//    printw("%d %d    ",chaseMeX,chaseMeY);
+//    move(51,50);
+//    printw("%d %d    ",player1.x, player1.y);
+//    refresh();
+//    move(52,50); printw("inna ai          "); refresh();
 
 
 
@@ -103,7 +103,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
                 popY = popX % MAP_SIZE;
                 popX /= MAP_SIZE;
 
-                move(53,50);printw("pop: %d %d       ",popX,popY);refresh();
+               // move(53,50);printw("pop: %d %d       ",popX,popY);refresh();
 
                 if (popX ==0 && popY ==0){
                     popX =0 ;

@@ -128,7 +128,8 @@ void load_editor(int level)
     int i,j,c,get_me_out_of_here=0,iter;
     char level_name[20], buffer[20];
     strcpy(level_name, "level");
-    itoa(level, buffer, 10);
+    //itoa(level, buffer, 10);
+    sprintf(buffer,"%d",level);
     strcat(level_name, buffer);
     strcat(level_name, ".map");
     FILE * input_file = fopen(level_name, "r");

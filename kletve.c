@@ -672,7 +672,8 @@ void print_start_level_screen ( int level )
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
     strcpy ( message, "STAGE " );
-    itoa ( level, buffer, 10 );
+    //itoa ( level, buffer, 10 );
+    sprintf(buffer,"%d",level);
     strcat ( message, buffer );
     erase ( );
     print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
@@ -704,8 +705,12 @@ void print_end_level_screen ( int level )
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y, score_x, score_y, temp_score, base;
     Tank temp;
+
+    sound_level_end();
+
     strcpy ( message, "STAGE " );
-    itoa ( level, buffer, 10 );
+    //itoa ( level, buffer, 10 );
+    sprintf(buffer,"%d",level);
     strcat ( message, buffer );
     strcat ( message, " COMPLETE!!!" );
     erase ( );
