@@ -3,8 +3,9 @@
 void find_space_tank(int *x, int *y){
     int i,j,empty,di,dj;
     int jPositions[3] = {0,MAP_SIZE/2 -1 , MAP_SIZE-3};
+    int newRand = rand() % ENEMYSPAWNRANDOM;
 
-    for(i=0;i<3;i++){
+    if (player1.x > 2 ) for(i=0;i<3;i++){
         j=jPositions[(i + totalSpawned) %3];
         empty = 1;
         for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
@@ -19,6 +20,7 @@ void find_space_tank(int *x, int *y){
         }
     }
 
+
     for (i = 4; i < MAP_SIZE-2; i++)
         for (j = 0; j < MAP_SIZE-2; j++){
 
@@ -28,7 +30,8 @@ void find_space_tank(int *x, int *y){
 
             }
 
-            if (empty){
+            if (empty && --newRand == 0){
+
                 *x= i;
                 *y=j;
                 return;
