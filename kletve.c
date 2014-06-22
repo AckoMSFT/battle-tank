@@ -32,6 +32,8 @@ void init_colors ( void )
     init_pair ( 17, COLOR_GREEN, COLOR_BLACK );
     init_pair ( 18, COLOR_WHITE, COLOR_GREEN );
     init_pair ( 19, COLOR_WHITE, COLOR_BLUE );
+    init_pair ( 20, COLOR_RED, COLOR_YELLOW );
+
 }
 
 void print_border ( int y1, int x1, int y2, int x2 )
@@ -404,10 +406,26 @@ void print_steel(int y, int x)
     attroff(A_STANDOUT);
 }
 
+void print_explosion(int y, int x)
+{
+    attron(A_BOLD);
+    move(y, x);
+    attron(COLOR_PAIR(20));
+    //if ( rand ( ) % 2 ) printw ( " " );
+    //else
+        printw("*");
+    attroff((COLOR_PAIR(20)));
+    attroff(A_BOLD);
+    //refresh();
+}
+
 void print_field ( int y, int x, int type )
 {
     switch ( type )
     {
+    case EXPLOSION:
+        print_explosion( y + MAP_OFFSET_X, x + MAP_OFFSET_Y );
+        break;
     case EMPTY:
         print_empty ( y + MAP_OFFSET_X, x + MAP_OFFSET_Y );
         break;
@@ -604,7 +622,7 @@ void load_map ( char * input_file_name )
 
 void print_map ( void )
 {
-    int i, j;
+    int i, j, k;
     base_x = -1;
     base_y = -1;
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y-1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
@@ -613,6 +631,11 @@ void print_map ( void )
         {
             switch ( map[i][j] )
             {
+                case EXPLOSION:
+                {
+                    print_field( i, j, EXPLOSION );
+                    break;
+                }
                 case EMPTY:
                 case BRICK:
                 case WATER:
@@ -623,6 +646,7 @@ void print_map ( void )
                 case BASE:
                     if ( base_x == -1 ) base_x = i, base_y = j;
                     break;
+
             }
         }
 

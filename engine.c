@@ -239,6 +239,8 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                             if(empty) break;
                         }
                     }
+                    for ( di = 0; di < 3; di++ ) for ( dj = 0; dj < 3; dj++ )
+                        map[ tanks[i].x + di ][ tanks[i].y + dj ] = EXPLOSION;
                     sound_explosion();
 
                     score += tanks[i].value;
@@ -292,6 +294,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                 if (bullets[i].source > 0 && bullets[j].source > 0) continue;
                 bullets[ i ].alive = 0;
                 bullets[ j ].alive = 0;
+                map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION;
             }
 
 
@@ -307,20 +310,20 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
     {
         if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == BRICK )
         {
-            map[ bullets[ i ].x ][ bullets[ i ].y ] = EMPTY;
+            map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION;
             bullets[ i ].alive = 0;
             // should actually destroy 1x3 instead of 1x1
             switch (bullets[i].dir)
             {
             case UP:
             case DOWN:
-                if (map[bullets[i].x][bullets[i].y - 1] == BRICK) map[bullets[i].x][bullets[i].y - 1] = EMPTY;
-                if (map[bullets[i].x][bullets[i].y + 1] == BRICK) map[bullets[i].x][bullets[i].y + 1] = EMPTY;
+                if (map[bullets[i].x][bullets[i].y - 1] == BRICK) map[bullets[i].x][bullets[i].y - 1] = EXPLOSION;
+                if (map[bullets[i].x][bullets[i].y + 1] == BRICK) map[bullets[i].x][bullets[i].y + 1] = EXPLOSION;
                 break;
             case LEFT:
             case RIGHT:
-                if (map[bullets[i].x - 1][bullets[i].y] == BRICK) map[bullets[i].x - 1][bullets[i].y] = EMPTY;
-                if (map[bullets[i].x + 1][bullets[i].y] == BRICK) map[bullets[i].x + 1][bullets[i].y] = EMPTY;
+                if (map[bullets[i].x - 1][bullets[i].y] == BRICK) map[bullets[i].x - 1][bullets[i].y] = EXPLOSION;
+                if (map[bullets[i].x + 1][bullets[i].y] == BRICK) map[bullets[i].x + 1][bullets[i].y] = EXPLOSION;
                 break;
             }
         }

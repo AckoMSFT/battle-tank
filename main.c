@@ -36,7 +36,7 @@ int read_input(){
 #include <mmsystem.h>
 int main(int argc, char **argv)
 {
-    int menu_choice, level, difficulty = 0;
+    int menu_choice, level,i, difficulty = 0;
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
