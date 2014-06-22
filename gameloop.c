@@ -97,14 +97,12 @@ void startGame(int difficulty)
         if ( gameOver == true )
         {
             sound_end();
-            kill_curses();
-            puts("osvojio si");
-            printf("%d\n",score);
-            update_high_scores("al3ksandar",score);
+            update_high_scores("al3ksandar",score, difficulty);
             return;
         }
         else print_end_level_screen ( i );
     }
+    sound_end();
     update_high_scores("al3ksandar",score,difficulty);
     return;
 }

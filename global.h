@@ -51,7 +51,7 @@
 #define MAP_OFFSET_Y 1
 #define MAP_SIZE 39
 
-#define NUMBER_OF_LEVELS 10
+#define NUMBER_OF_LEVELS 35
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
 #define REFRESHTIME 10
