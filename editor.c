@@ -160,7 +160,10 @@ void load_editor(int level)
       printEditorTanks ();
       if(kbhit())
       {
-          c=getch();
+          while(kbhit()){
+                    c = read_input();
+
+            }
       switch(c)
       {
           get_me_out_of_here=0;
