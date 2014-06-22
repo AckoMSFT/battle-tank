@@ -12,7 +12,7 @@ void update_mapUsed();
 void startGame(int);
 int startLevel(int, int*, int*);
 //AI
-void updateDecisions();
+void updateDecisions(Tank *tank, float, float);
 int get_decision_easy(Tank *tank);
 int get_decision_medium(Tank *tank);
 int get_decision_hard(Tank *tank);

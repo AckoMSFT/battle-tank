@@ -10,7 +10,7 @@ void go_right( Tank *tank );
 void shoot( Tank *tank, int origin );
 // Updating bullets states and moving them, and tank shooting states, and tank moving states
 void update_states() ;
-
+int bullets_collision( Bullet bullet1, Bullet bullet2 );
 // Check for collisions of tanks and bullets, respectively bullets and bullets
 void collision(int *, int *) ;
 

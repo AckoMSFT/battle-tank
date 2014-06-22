@@ -75,25 +75,25 @@
 #define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
-#define AI_SPEED 5
+#define AI_SPEED 10
 
 
 #define SPAWNSPEED_EASY 100
 #define ENEMYSHOOTSPEED_EASY 200
-#define BASE_EASY 0
-#define MYTANK_EASY 0
+#define BASE_EASY 0.1
+#define MYTANK_EASY 0.1
 
 //medium
 #define SPAWNSPEED_MEDIUM 75
 #define ENEMYSHOOTSPEED_MEDIUM 100
-#define BASE_MEDIUM 0
-#define MYTANK_MEDIUM 0
+#define BASE_MEDIUM 0.3
+#define MYTANK_MEDIUM 0.1
 
 //hard
 #define SPAWNSPEED_HARD 50
 #define ENEMYSHOOTSPEED_HARD 50
-#define BASE_HARD 0
-#define MYTANK_HARD 0
+#define BASE_HARD 0.5
+#define MYTANK_HARD 0.5
 
 typedef struct tank
 {
@@ -133,7 +133,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
-int totalSpawned;
+extern int totalSpawned;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
@@ -150,4 +150,6 @@ int read_input();
 #include "engine.h"
 #include "gameloop.h"
 #include "sound.h"
+#include "stack.h"
+#include "queue.h"
 #endif // GLOBAL_H_INCLUDED
