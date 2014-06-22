@@ -31,8 +31,6 @@ int main(int argc, char **argv)
     srand(time(NULL));
     init_curses();
     resize_term(80,120);
-
-
     while ( 1 )
     {
         menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);

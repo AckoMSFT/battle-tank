@@ -108,7 +108,6 @@ void print_tank(int dir, int y, int x)
 }
 void print_armor_tank(int dir, int y, int x)
 {
-    attron(COLOR_PAIR(8));
     switch (dir)
     {
     case UP:
@@ -144,11 +143,9 @@ void print_armor_tank(int dir, int y, int x)
         printw("***");
         break;
     }
-    attroff(COLOR_PAIR(8));
 }
 void print_fast_tank(int dir, int y, int x)
 {
-    attron(COLOR_PAIR(8));
     switch (dir)
     {
     case UP:
@@ -184,11 +181,9 @@ void print_fast_tank(int dir, int y, int x)
         printw("## ");
         break;
     }
-    attroff(COLOR_PAIR(8));
 }
 void print_power_tank(int dir, int y, int x)
 {
-    attron(COLOR_PAIR(8));
     switch (dir)
     {
     case UP:
@@ -224,7 +219,6 @@ void print_power_tank(int dir, int y, int x)
         printw("##");addch(ACS_HLINE);
         break;
     }
-    attroff(COLOR_PAIR(8));
 }
 void print_enemy_tank(int dir, int y, int x, int hit_points)
 {
