@@ -60,7 +60,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
                 while(empty && currX < MAP_SIZE -2 && currX >= 0 && currY < MAP_SIZE -2 && currY >= 0){
 
                     for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-                        if (mapAI[ currX + di ][ currY + dj ] != EMPTY ) empty = 0;
+                        if (mapAI[ currX + di ][ currY + dj ] != EMPTY && mapAI[ currX + di ][ currY + dj ] != GRASS) empty = 0;
                     }
 
                     if (empty){
@@ -107,7 +107,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
 
                         empty =1;
                         for(di=0;di<3;di++) for(dj=0;dj<3;dj++){
-                            if (mapAI[ currX + di ][ currY + dj ] != EMPTY ) empty = 0;
+                            if (mapAI[ currX + di ][ currY + dj ] != EMPTY && mapAI[ currX + di ][ currY + dj ] != GRASS) empty = 0;
                         }
 
                         if (empty && ( mapMove[ currX ][ currY ]==0 || mapMove[ currX ][ currY ] > mapMove[ popX ][ popY ] + 1) ){
@@ -224,7 +224,14 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
 
     //just do it random
     for( i=0; i<AI_SPEED; i++ ){
-        tank->AIDecisions[i] = rand()%6;
+        dir = rand()%6;
+
+        for (di =0 ;di<AI_PARAM1; di++){
+            if (i + di >= AI_SPEED) break;
+            tank->AIDecisions[ i+di ] = dir;
+
+        }
+        i+=di-1;
 
     }
 

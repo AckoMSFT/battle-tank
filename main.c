@@ -10,7 +10,7 @@ int totalSpawned;
 int power_indexes[] = {4, 11, 18};
 Power power_up;
 //configuration for difficulty
-const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard}};
+const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy,ENEMYMOVESPEED_EASY},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium,ENEMYMOVESPEED_MEDIUM},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard,ENEMYMOVESPEED_HARD}};
 
 char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Show High Scores"}, {"Exit Game"}};
 char levels[][100] = {{"Level  1"}, {"Level  2"}, {"Level  3"}, {"Level  4"}, {"Level  5"},
