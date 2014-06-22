@@ -51,7 +51,7 @@
 #define MAP_OFFSET_Y 1
 #define MAP_SIZE 39
 
-#define NUMBER_OF_LEVELS 5
+#define NUMBER_OF_LEVELS 10
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
 
@@ -72,27 +72,32 @@
 #define DEBUG 0
 #define MAX_SPRITES 128
 #define FRAMES_PER_SEC 30
+
 #define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3
+
 #define AI_SPEED 10
+#define AI_PARAM1 5
 
-
-#define SPAWNSPEED_EASY 100
-#define ENEMYSHOOTSPEED_EASY 200
+#define SPAWNSPEED_EASY 160
+#define ENEMYSHOOTSPEED_EASY 30
 #define BASE_EASY 0.1
 #define MYTANK_EASY 0.1
+#define ENEMYMOVESPEED_EASY 9
 
 //medium
-#define SPAWNSPEED_MEDIUM 75
-#define ENEMYSHOOTSPEED_MEDIUM 100
+#define SPAWNSPEED_MEDIUM 120
+#define ENEMYSHOOTSPEED_MEDIUM 20
 #define BASE_MEDIUM 0.3
+#define ENEMYMOVESPEED_MEDIUM 6
 #define MYTANK_MEDIUM 0.1
 
 //hard
-#define SPAWNSPEED_HARD 50
-#define ENEMYSHOOTSPEED_HARD 50
+#define SPAWNSPEED_HARD 100
+#define ENEMYSHOOTSPEED_HARD 15
 #define BASE_HARD 0.5
+#define ENEMYMOVESPEED_HARD 4
 #define MYTANK_HARD 0.5
 
 #define POWERS_PER_LEVEL 3
@@ -100,7 +105,7 @@ extern int power_indexes[];
 
 typedef struct tank
 {
-    int x, y, dir, shoot_state, shoot_rate, move_state, move_rate, value, hit_points, stars, invulnerable, power_type, type, animation_counter;
+    int x, y, dir, shoot_state, shoot_rate, shoot_speed, move_speed, move_state, move_rate, value, hit_points, stars, invulnerable, power_type, type, animation_counter;
     int AIDecisions [ AI_SPEED ], AIState;
     bool alive, player;
 } Tank;
@@ -113,13 +118,14 @@ typedef struct bullet
 
 typedef struct
 {
-    int type, x, y, state;
+    int type, x, y, state, time;
 } Power;
 
 typedef struct difficulty
 {
     int spawn,shoot;
     int (*AI) ();
+    int speed;
 } Difficulty;
 
 // types of tanks
@@ -129,7 +135,9 @@ enum { BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK };
 // types of power-ups
 enum { NORMAL, BOMB, HELMET, SHOVEL, STAR, LIFE, TIMER };
 
-#define FREEZE_SECS 15
+#define TIMER_SECS 15
+#define SHOVEL_SECS 20
+#define HELMET_SECS 15
 
 int levelConfiguration[20];
 
@@ -139,7 +147,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
-extern int totalSpawned;
+extern int totalSpawned, cntKilled, score;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];

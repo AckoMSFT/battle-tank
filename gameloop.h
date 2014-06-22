@@ -10,7 +10,7 @@ void update_mapUsed();
 
 //start the gameloop
 void startGame(int);
-int startLevel(int, int*, int*);
+int startLevel(int);
 //AI
 void updateDecisions(Tank *tank, float, float);
 int get_decision_easy(Tank *tank);

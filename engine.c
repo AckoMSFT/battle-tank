@@ -4,7 +4,7 @@
 void move_tank ( Tank *tank, int direction){
 
     //if this tank moved TANKSPEED earlier, just ignore. else, set move_state to 0
-    if (tank->move_state < TANK_SPEED) return;
+    if (tank->move_state < tank->move_speed ) return;
 
     tank->move_state = 0;
 
@@ -59,7 +59,7 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
 
 
     //if this tank shoot SHOOTSPEED earlier, just ignore.
-    if (tank->shoot_state < SHOOT_SPEED) return;
+    if (tank->shoot_state < tank->shoot_speed) return;
 
     //play a sound !
     if (tank == &player1) sound_shot();
@@ -102,19 +102,44 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
         }
 }
 
+void base_set(char fieldType){
+    int i,j;
+
+    j= base_y -1;
+    for (i= base_x -1;  i< base_x + 4; i++ )
+        if (i >=0 && i < MAP_SIZE && j >= 0 && j< MAP_SIZE)
+            map[ i ][ j ] = fieldType;
+
+    j= base_y +3;
+    for (i= base_x -1;  i< base_x + 4; i++ )
+        if (i >=0 && i < MAP_SIZE && j >= 0 && j< MAP_SIZE)
+            map[ i ][ j ] = fieldType;
+
+    i= base_x -1;
+    for (j= base_y -1;  j< base_y + 4; j++ )
+        if (i >=0 && i < MAP_SIZE && j >= 0 && j< MAP_SIZE)
+            map[ i ][ j ] = fieldType;
+
+    i= base_x +3;
+    for (j= base_y -1;  j< base_y + 4; j++ )
+        if (i >=0 && i < MAP_SIZE && j >= 0 && j< MAP_SIZE)
+            map[ i ][ j ] = fieldType;
+
+}
+
 void update_states() // Updating bullets states and moving them, and tank shooting states, and tank moving states
 {
-    int i;
+    int i,j;
 
     //update the tanks shoot state and move_state
     for(i=0; i < MAX_SPRITES ; i++){
         if (tanks[ i ].alive == true){
 
-            if (tanks[ i ].move_state < TANK_SPEED){
+            if (tanks[ i ].move_state < tanks[i].move_speed){
                 tanks[ i ].move_state += tanks[i].move_rate;
             }
 
-            if (tanks[ i ].shoot_state < SHOOT_SPEED){
+            if (tanks[ i ].shoot_state < tanks[ i ].shoot_speed){
                 tanks[ i ].shoot_state += tanks[i].shoot_rate;
             }
 
@@ -123,8 +148,32 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 
     }
     //also for player_1
-    if (player1.shoot_state < SHOOT_SPEED) player1.shoot_state += player1.shoot_rate;
-    if (player1.move_state < TANK_SPEED) player1.move_state += player1.move_rate;
+    if (player1.shoot_state < player1.shoot_speed) player1.shoot_state += player1.shoot_rate;
+    if (player1.move_state < player1.move_speed) player1.move_state += player1.move_rate;
+
+
+
+    //update power up state
+    if (power_up.time) {
+        power_up.time++;
+        switch(player1.power_type){
+        case TIMER:
+            for(i=0; i < MAX_SPRITES ; i++)
+                if (tanks[ i ].alive == true)
+                    tanks[ i ].move_state = 0;
+                    tanks[ i ].shoot_state =0 ;
+        }
+
+    }
+
+    else {
+        switch(player1.power_type){
+        case SHOVEL:
+            base_set(BRICK);
+            break;
+        }
+        player1.power_type = NORMAL;
+    }
 
 
     for ( i = 0; i < MAX_SPRITES; i++ )
@@ -153,7 +202,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
         }
 }
 
-void collision(int * cntKilled, int * score) // Check for collisions of tanks and bullets, respectively bullets and bullets
+void collision() // Check for collisions of tanks and bullets, respectively bullets and bullets
 {
     int i, j, di, dj;
     bool empty;
@@ -185,41 +234,50 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
                             for(di=0;di<3;di++)
                                 for(dj=0;dj<3;dj++)
                                 {
-                                    if (map[ power_up.x + di ][ power_up.y + dj ] != EMPTY ) empty = true;
+                                    if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY ) empty = true;
                                 }
                             if(empty) break;
                         }
                     }
                     sound_explosion();
 
-                    * score += tanks[i].value;
-                    ( * cntKilled )++;
+                    score += tanks[i].value;
+                    cntKilled++;
                     numberOfTanks--;
                 }
             }
     }
 
     // tank powerUP collision
-    if ( fabs ( power_up.x - player1.x ) <= 2 && fabs ( power_up.y - power_up.y ) <= 2 )
+    if ( fabs ( power_up.x - player1.x ) <= 2 && fabs ( power_up.y - player1.y ) <= 2  && power_up.type !=NORMAL)
     {
         switch ( power_up.type )
         {
         case BOMB:
+            for ( i = 0; i < MAX_SPRITES; i++ )
+                tanks[ i ].alive= 0;
+            sound_explosion();
             break;
         case HELMET:
+            player1.invulnerable = FRAMES_PER_SEC * HELMET_SECS;
             break;
         case SHOVEL:
+            power_up.time = - FRAMES_PER_SEC * SHOVEL_SECS;
+            base_set(STEEL);
             break;
         case STAR:
+            if (player1.stars < 3) player1.stars++;
             break;
         case LIFE:
             player1.hit_points++;
             break;
         case TIMER:
-            for( i = 0; i < MAX_SPRITES; i++ ) tanks[i].move_state = - FRAMES_PER_SEC * FREEZE_SECS;
+            power_up.time = - FRAMES_PER_SEC * TIMER_SECS;
             break;
         }
 
+        score += 500;
+        player1.power_type = power_up.type;
         power_up.type = NORMAL;
     }
     //check for bullet-bullet colisions
@@ -289,12 +347,13 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
                 player1.x = 35;
                 player1.y = 12;
                 player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
+                sound_explosion();
             }
         }
     }
 }
 
-void spawn_tank( int x, int y, int dir, int type )
+void spawn_tank( int x, int y, int dir, int type, int speed, int shootSpeed )
 {
     numberOfTanks++;
     totalSpawned++;
@@ -311,6 +370,8 @@ void spawn_tank( int x, int y, int dir, int type )
             tanks[i].AIState = 1;
             tanks[i].power_type = NORMAL;
             tanks[i].player = false;
+            tanks[i].move_speed = speed;
+            tanks[i].shoot_speed = shootSpeed;
             tanks[i].type = type;
             for ( j = 0; j < POWERS_PER_LEVEL; j++ )
             {
@@ -329,14 +390,14 @@ void spawn_tank( int x, int y, int dir, int type )
                 tanks[i].value = 100;
                 break;
             case FAST_TANK:
-                tanks[i].move_rate = 5;
+                tanks[i].move_rate = 3;
                 tanks[i].shoot_rate = 1;
                 tanks[i].hit_points = 1;
                 tanks[i].value = 200;
                 break;
             case POWER_TANK:
                 tanks[i].move_rate = 1;
-                tanks[i].shoot_rate = 5;
+                tanks[i].shoot_rate = 3;
                 tanks[i].hit_points = 1;
                 tanks[i].value = 300;
                 break;

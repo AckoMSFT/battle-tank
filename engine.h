@@ -12,8 +12,8 @@ void shoot( Tank *tank, int origin );
 void update_states() ;
 int bullets_collision( Bullet bullet1, Bullet bullet2 );
 // Check for collisions of tanks and bullets, respectively bullets and bullets
-void collision(int *, int *) ;
+void collision() ;
 
 //spawn a new tank
-void spawn_tank( int x, int y, int dir, int lives );
+void spawn_tank( int x, int y, int dir, int lives, int, int );
 #endif // ENGINE_H_INCLUDED
