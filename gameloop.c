@@ -145,9 +145,10 @@ bool startLevel(int level)
 
     power_up.x = 30;
     power_up.y = 10;
-    power_up.type = TIMER;
+    power_up.type = NORMAL;
     power_up.state = 0;
-    power_up.time = 0;
+    power_up.time
+     = 0;
 
     while(gameOver == false)
     {
