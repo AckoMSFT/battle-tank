@@ -543,6 +543,7 @@ void print_power ( Power * this )
         print_bomb ( this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y );
         break;
     case HELMET:
+        print_helmet ( this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y );
         break;
     case SHOVEL:
         print_shovel ( this -> x + MAP_OFFSET_X, this -> y + MAP_OFFSET_Y );
