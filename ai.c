@@ -1,6 +1,6 @@
 #include "global.h"
 
-void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
+void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMeX, int chaseMeY, int aiSpeed, int aiParam1, int aiParam2, int dontShoot){
 
     int x = tank->x, y = tank->y,i,dx,dy,di,dj, currX, currY, empty, popX, popY,dir, fromX, fromY;
     float newRand = (float)rand()/(float)RAND_MAX;
@@ -43,13 +43,19 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
         }
         else{
             //go toward ME
-            fromX = player1.x+1;
-            fromY = player1.y+1;
+            fromX = chaseMeX;
+            fromY = chaseMeY;
 
         }
 
+        if (dontShoot){
+            map [ fromX ][ fromY ] = 1;
+            queuePush(&matrixQueue, fromX*MAP_SIZE + fromY);
+        }
+
+
         //generate mapShoot and init for mapMove (set ones from the spot that can shoot)
-        for (dx = -1; dx < 2; dx++)
+        else for (dx = -1; dx < 2; dx++)
             for (dy = -1; dy < 2; dy++){
                 if ( (dx+dy)%2 == 0) continue;
 
@@ -63,7 +69,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
                         if (mapAI[ currX + di ][ currY + dj ] != EMPTY && mapAI[ currX + di ][ currY + dj ] != GRASS) empty = 0;
                     }
 
-                    if (empty){
+                    if (empty && !dontShoot){
                         mapMove[currX][currY] = 1;
                         queuePush(&matrixQueue, currX*MAP_SIZE + currY);
                     }
@@ -149,7 +155,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
             //you can go to the base
             if (mapMove[ currX ][ currY ]){
 
-                i=AI_SPEED;
+                i=aiSpeed;
 
                 while(i--){
 
@@ -174,7 +180,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
                         }
 
                         //now check if the last decision was exactly this direction
-                        if ( i== AI_SPEED-1 ){
+                        if ( i== aiSpeed-1 ){
                             if (tank->dir != dir){
 
                                 tank->AIDecisions[ i-- ] = dir;
@@ -223,12 +229,12 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
     }
 
     //just do it random
-    for( i=0; i<AI_SPEED; i++ ){
-        dir = rand()%(int)(5 + AI_PARAM2*4.);
+    for( i=0; i<aiSpeed; i++ ){
+        dir = rand()%(int)(5 + aiParam2*4.);
 
-        if (dir > 3 && dir < (int)(4 + AI_PARAM2*4.) ) dir = 4;
-        for (di =0 ;di<AI_PARAM1; di++){
-            if (i + di >= AI_SPEED) break;
+        if (dir > 3 && dir < (int)(4 + aiParam2*4.) ) dir = 4;
+        for (di =0 ;di<aiParam1; di++){
+            if (i + di >= aiSpeed) break;
             tank->AIDecisions[ i+di ] = dir;
 
         }
@@ -242,7 +248,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom){
 int get_decision_easy(Tank *tank){
     if (--(tank->AIState) < 0){
 
-        updateDecisions(tank, BASE_EASY,MYTANK_EASY);
+        updateDecisions(tank, BASE_EASY,MYTANK_EASY, player1.x+1, player1.y +1, AI_SPEED, AI_PARAM1, AI_PARAM2,0);
 
         tank->AIState = AI_SPEED-1;
     }
@@ -253,7 +259,7 @@ int get_decision_easy(Tank *tank){
 int get_decision_medium(Tank *tank){
     if (--(tank->AIState) < 0){
 
-        updateDecisions(tank, BASE_MEDIUM,MYTANK_MEDIUM);
+        updateDecisions(tank, BASE_MEDIUM,MYTANK_MEDIUM, player1.x+1, player1.y +1, AI_SPEED, AI_PARAM1, AI_PARAM2, 0);
 
         tank->AIState = AI_SPEED-1;
     }
@@ -264,7 +270,7 @@ int get_decision_medium(Tank *tank){
 int get_decision_hard(Tank *tank){
     if (--(tank->AIState) < 0){
 
-        updateDecisions(tank, BASE_HARD,MYTANK_HARD);
+        updateDecisions(tank, BASE_HARD,MYTANK_HARD, player1.x+1, player1.y +1, AI_SPEED, AI_PARAM1, AI_PARAM2, 0);
 
         tank->AIState = AI_SPEED-1;
     }

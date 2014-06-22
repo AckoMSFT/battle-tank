@@ -86,16 +86,16 @@
 
 #define SPAWNSPEED_EASY 160
 #define ENEMYSHOOTSPEED_EASY 30
-#define BASE_EASY 0.1
-#define MYTANK_EASY 0.1
+#define BASE_EASY 0.2
+#define MYTANK_EASY 0.2
 #define ENEMYMOVESPEED_EASY 9
 
 //medium
 #define SPAWNSPEED_MEDIUM 120
 #define ENEMYSHOOTSPEED_MEDIUM 20
-#define BASE_MEDIUM 0.3
+#define BASE_MEDIUM 0.4
 #define ENEMYMOVESPEED_MEDIUM 6
-#define MYTANK_MEDIUM 0.1
+#define MYTANK_MEDIUM 0.2
 
 //hard
 #define SPAWNSPEED_HARD 100
@@ -151,6 +151,7 @@ extern char characterMap[];
 Tank tanks[MAX_SPRITES];
 Tank player1, player2;
 Bullet bullets[MAX_SPRITES];
+extern int demo;
 extern int totalSpawned, cntKilled, score;
 extern int gameDifficulty;
 extern const Difficulty confDiff[3];

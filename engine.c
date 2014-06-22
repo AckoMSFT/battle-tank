@@ -300,11 +300,11 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                         {
                             power_up.x = rand ( ) % ( MAP_SIZE - 3 );
                             power_up.y = rand ( ) % ( MAP_SIZE - 3 );
-                            empty = false;
+                            empty = demo;
                             for(di=0;di<3;di++)
                                 for(dj=0;dj<3;dj++)
                                 {
-                                    if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY ) empty = true;
+                                    if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY ) empty = !demo;
                                 }
                             if(empty) break;
                         }
