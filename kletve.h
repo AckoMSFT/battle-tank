@@ -6,7 +6,7 @@ void print_border(int y1, int x1, int y2, int x2);
 void print_tank(Tank * this);
 void print_enemy_tank(int dir, int y, int x, int lives);
 void print_empty(int y, int x);
-void print_bullet(int y, int x);
+void print_bullet(int y, int x, int origin);
 void print_grass(int y, int x);
 void print_water(int y, int x);
 void print_brick(int y, int x);
