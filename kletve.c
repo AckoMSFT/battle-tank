@@ -446,6 +446,27 @@ void print_bomb ( int y, int x )
     //refresh ( );
 }
 
+void print_helmet ( int y, int x )
+{
+    attron ( A_REVERSE );
+    attron ( COLOR_PAIR ( 7 ) );
+    move ( y, x );
+    addch ( ACS_ULCORNER );
+    addch ( ACS_HLINE );
+    addch ( ACS_URCORNER );
+    move ( y + 1, x );
+    addch ( ACS_VLINE );
+    printw ("H");
+    addch ( ACS_VLINE );
+    move ( y + 2, x );
+    addch ( ACS_LLCORNER );
+    addch ( ACS_HLINE );
+    addch ( ACS_LRCORNER );
+    attroff ( COLOR_PAIR ( 7 ) );
+    attroff ( A_REVERSE );
+    //refresh ( );
+}
+
 void print_star ( int y, int x )
 {
     attron ( A_REVERSE );
