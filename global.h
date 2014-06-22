@@ -51,12 +51,12 @@
 #define MAP_OFFSET_Y 1
 #define MAP_SIZE 39
 
-#define NUMBER_OF_LEVELS 5
+#define NUMBER_OF_LEVELS 10
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
-
+#define REFRESHTIME 10
 #define INVULNERABLE_SECS 5
-
+#define EXPTIME 1000
 // map tiles
 
 #define  TANK 'T'
@@ -67,7 +67,7 @@
 #define STEEL 'S'
 #define BRICK 'B'
 #define FRAME 'F'
-
+#define EXPLOSION 'E'
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128

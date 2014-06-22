@@ -36,12 +36,11 @@ int read_input(){
 #include <mmsystem.h>
 int main(int argc, char **argv)
 {
-    int menu_choice, level, difficulty = 0;
+    int menu_choice, level,i, difficulty = 0;
     setlocale (LC_CTYPE, "");
     srand(time(NULL));
     init_curses();
     resize_term(80,80);
-    print_life(50,10);
     while ( 1 )
     {
         menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);

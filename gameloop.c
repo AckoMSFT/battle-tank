@@ -111,7 +111,7 @@ bool startLevel(int level, int *stars, int *score)
     sound_start_music();
 
 
-    int i,j,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
+    int i,j,k,keyPressed,enemySpawn,x,y,enemyChoice,di,dj, cntKilled = 0;
     const int SLEEP_TIME = 1000 / FRAMES_PER_SEC;
 
     gameOver = false;
@@ -202,9 +202,17 @@ bool startLevel(int level, int *stars, int *score)
 
         print_map();
         for ( i = 0; i < MAP_SIZE; i++ )
-            for ( j = 0; j < MAP_SIZE; j++ ) if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
-        refresh ( );
+            for ( j = 0; j < MAP_SIZE; j++ )
+                if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
 
+        refresh();
+        for ( i = 0; i < MAP_SIZE; i++ )
+            for ( j = 0; j < MAP_SIZE; j++ )
+                if ( map[i][j] == EXPLOSION )
+                {
+                    map[i][j] = EMPTY;
+                    print_empty( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
+                }
         if ( cntKilled == TANKS_PER_LEVEL ) return true;
         if ( player1.hit_points <= 0 ) return false;
         print_indicators(totalSpawned, player1.hit_points, * stars, * score);
