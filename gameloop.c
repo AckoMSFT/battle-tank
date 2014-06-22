@@ -116,8 +116,8 @@ bool startLevel(int level)
     strcat(level_name, ".map");
     load_map(level_name);
 
-
-    int i,j,keyPressed,enemySpawn,x,y,di,dj;
+    int i,j,keyPressed,enemySpawn,x,y,di,dj, enemyChoicePlayer;
+    int chaseX, chaseY, chaseI = -1;
     int enemyChoice[MAX_SPRITES];
     const int SLEEP_TIME = 1000 / FRAMES_PER_SEC;
 
@@ -196,28 +196,84 @@ bool startLevel(int level)
             enemyChoice[i] = confDiff[gameDifficulty].AI(tanks + i);
         }
 
-        if (kbhit()){
-            while(kbhit()){
-                    keyPressed = read_input();
+        if (!demo) {
+                if (kbhit()){
+                while(kbhit()){
+                        keyPressed = read_input();
 
-            }
-            switch(keyPressed){
+                }
+                switch(keyPressed){
 
-                case NEW_KEY_RIGHT:
-                case NEW_KEY_LEFT:
-                case NEW_KEY_UP:
-                case NEW_KEY_DOWN:
-                    move_tank(&player1, keyPressed - MIN_KEY);
-                    break;
-                case SPACE:
-                    shoot(&player1, 1);
-                    break;
-                case KEY_F(6): return true;
+                    case NEW_KEY_RIGHT:
+                    case NEW_KEY_LEFT:
+                    case NEW_KEY_UP:
+                    case NEW_KEY_DOWN:
+                        move_tank(&player1, keyPressed - MIN_KEY);
+                        break;
+                    case SPACE:
+                        shoot(&player1, 1);
+                        break;
+                    case KEY_F(6): return true;
+                }
             }
         }
 
+        else if (! (enemyChoicePlayer == 4 && player1.shoot_state < player1.shoot_speed) && !( player1.move_state < player1.move_speed) ) {
+
+            if (enemyChoicePlayer >=0 && enemyChoicePlayer <=3) move_tank(&player1, enemyChoicePlayer);
+            else if (enemyChoicePlayer == 4) shoot(&player1, 1);
+
+            //update tank position
+            if (chaseI != -1) {
+                chaseX = tanks[chaseI].x;
+                chaseY = tanks[chaseI].y;
+
+            }
+
+            //if there is a powerUP
+            if (power_up.type !=NORMAL){
+                for (di = 0 ; di < 3; di++) for (dj =0; dj <3; dj++)
+                if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY || map[ power_up.x + di ][ power_up.y + dj ] == GRASS){
+                    chaseX = power_up.x + di;
+                    chaseY = power_up.y + dj;
+                    break;
+                }
+
+            }
+
+            //if we havent chosed a tank to chase
+            else if (chaseI == -1) for(i=0; i<MAX_SPRITES; i++){
+                if (!tanks[i].alive) continue;
+
+                chaseI = i;
+                chaseX = tanks[i].x;
+                chaseY = tanks[i].y;
+                break;
+
+            }
+
+            if (chaseI != -1){
+
+                if (--(player1.AIState) < 0){
+
+                    updateDecisions(&player1, 0, 1 , chaseX, chaseY,1 , 0 ,0, power_up.type != NORMAL);
+
+                    player1.AIState = 0;
+                }
+
+                enemyChoicePlayer = player1.AIDecisions[ player1.AIState ];
+            }
+
+            //dont do anything
+            else enemyChoicePlayer = 5;
+
+        }
+
+
         update_states();
         collision();
+        //if we dont have a chosed tank
+        if (chaseI != -1 && !tanks[chaseI].alive) chaseI =-1;
 
         print_map();
 

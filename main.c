@@ -1,6 +1,7 @@
 #include "global.h"
 
 int gameOver;
+int demo;
 int gameDifficulty;
 char characterMap[] = { '.', 'B', 'S', 'W', 'G', 'X', 'T' };
 char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
