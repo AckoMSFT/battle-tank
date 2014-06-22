@@ -331,14 +331,14 @@ void spawn_tank( int x, int y, int dir, int type, int speed, int shootSpeed )
                 tanks[i].value = 100;
                 break;
             case FAST_TANK:
-                tanks[i].move_rate = 5;
+                tanks[i].move_rate = 3;
                 tanks[i].shoot_rate = 1;
                 tanks[i].hit_points = 1;
                 tanks[i].value = 200;
                 break;
             case POWER_TANK:
                 tanks[i].move_rate = 1;
-                tanks[i].shoot_rate = 5;
+                tanks[i].shoot_rate = 3;
                 tanks[i].hit_points = 1;
                 tanks[i].value = 300;
                 break;
