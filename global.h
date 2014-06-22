@@ -51,7 +51,7 @@
 #define MAP_OFFSET_Y 1
 #define MAP_SIZE 39
 
-#define NUMBER_OF_LEVELS 3
+#define NUMBER_OF_LEVELS 5
 #define MAX_NUMBER_OF_TANKS 5
 #define TANKS_PER_LEVEL 20
 
@@ -71,7 +71,7 @@
 //game config options
 #define DEBUG 0
 #define MAX_SPRITES 128
-#define FRAMES_PER_SEC 20
+#define FRAMES_PER_SEC 30
 #define BULLET_SPEED 2
 #define SHOOT_SPEED 10
 #define TANK_SPEED 3

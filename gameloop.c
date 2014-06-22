@@ -250,6 +250,7 @@ bool startLevel(int level, int *stars, int *score)
                 case SPACE:
                     shoot(&player1, 1);
                     break;
+                case KEY_F(6): return true;
             }
         }
 
