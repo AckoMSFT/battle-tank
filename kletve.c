@@ -612,6 +612,8 @@ void print_map ( void )
                     break;
             }
         }
+
+    print_power(&power_up);
     print_tank ( &player1 );
     print_base ( base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y );
     for ( i = 0; i < MAX_SPRITES; i++ )

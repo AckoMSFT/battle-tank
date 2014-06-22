@@ -185,7 +185,7 @@ void collision(int * cntKilled, int * score) // Check for collisions of tanks an
                             for(di=0;di<3;di++)
                                 for(dj=0;dj<3;dj++)
                                 {
-                                    if (map[ power_up.x + di ][ power_up.y + dj ] != EMPTY ) empty = true;
+                                    if (map[ power_up.x + di ][ power_up.y + dj ] == EMPTY ) empty = true;
                                 }
                             if(empty) break;
                         }

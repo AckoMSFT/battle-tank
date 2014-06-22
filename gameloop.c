@@ -140,12 +140,11 @@ bool startLevel(int level, int *stars, int *score)
 
     power_up.x = 50;
     power_up.y = 10;
-    power_up.type = TIMER;
+    power_up.type = NORMAL;
     power_up.state = 0;
 
     while(gameOver == false)
     {
-        print_power(&power_up);
         enemySpawn++;
         if ( enemySpawn == confDiff[gameDifficulty].spawn )
         {
