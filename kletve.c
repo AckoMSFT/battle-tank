@@ -376,8 +376,8 @@ void print_water ( int y, int x )
     attron ( A_BOLD );
     move ( y, x );
     attron ( COLOR_PAIR ( 1 ) );
-    if ( rand ( ) % 2 ) printw ( "~" );
-    else printw(" ");
+    if ( rand ( ) % 2 ) printw ( " " );
+    else printw("~");
     attroff ( ( COLOR_PAIR ( 1 ) ) );
     attroff ( A_BOLD );
     //refresh ( );
@@ -561,12 +561,12 @@ void print_base ( int y, int x )
     attron ( A_ALTCHARSET );
     addch ( 165 );
     attroff ( A_ALTCHARSET );
+    attron( COLOR_PAIR( 4 ) );
     addch ( ACS_VLINE );
     move ( y + 2, x );
     addch ( ACS_LLCORNER );
     addch ( ACS_HLINE );
     addch ( ACS_LRCORNER );
-    attroff ( COLOR_PAIR ( 5 ) );
     attroff ( COLOR_PAIR ( 4 ) );
     //refresh ( );
 }
