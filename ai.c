@@ -242,6 +242,9 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
         dir = rand()%(int)(5 + aiParam2*4.);
 
         if (dir > 3 && dir < (int)(4 + aiParam2*4.) ) dir = 4;
+
+        if (tank == &player1 && dir == 4 && tank->dir != UP) dir = UP;
+
         for (di =0 ;di<aiParam1; di++){
             if (i + di >= aiSpeed) break;
             tank->AIDecisions[ i+di ] = dir;
