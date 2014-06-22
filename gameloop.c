@@ -211,9 +211,16 @@ bool startLevel(int level)
         collision();
 
         print_map();
+
         for ( i = 0; i < MAP_SIZE; i++ )
             for ( j = 0; j < MAP_SIZE; j++ ) if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
         refresh ( );
+        for ( i = 0; i < MAP_SIZE; i++ )
+            for ( j = 0; j < MAP_SIZE; j++ )
+            {
+                if ( map[i][j] == EXPLOSION_GRASS ) map[i][j] = GRASS;
+                if ( map[i][j] == EXPLOSION ) map[i][j] = EMPTY;
+            }
 
         print_power(&power_up);
 
