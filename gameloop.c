@@ -85,7 +85,8 @@ void update_mapUsed(int usePowerUp){
 
 void startGame(int difficulty)
 {
-    int i;
+    int i, j, curr_x, curr_y, size;
+    char user_name[42], message[42];
     score = 0;
     gameDifficulty = difficulty;
     player1.hit_points = (demo?9:3);
@@ -93,17 +94,80 @@ void startGame(int difficulty)
     player1.shoot_rate = 1;
     for (i = 1; i <= NUMBER_OF_LEVELS; i++)
     {
-        bool gameOver = 1 - startLevel(i);
-        if ( gameOver == true )
-        {
-            sound_end();
-            update_high_scores("al3ksandar",score, difficulty);
-            return;
-        }
+        bool gameOver = startLevel(i) ^ true;
+        if ( gameOver == true ) break;
         else print_end_level_screen ( i );
     }
     sound_end();
-    update_high_scores("al3ksandar",score,difficulty);
+    if ( demo ) Sleep ( 5000 );
+    else
+    {
+        erase ( );
+        print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
+        curr_x = MAP_OFFSET_X + MAP_SIZE / 2 - 3;
+        curr_y = MAP_OFFSET_Y;
+        strcpy ( message, "CONGRATULATIONS!!!" );
+        size = strlen ( message );
+        for ( j = 0; j + size < MAP_SIZE; j++ )
+        {
+            attron ( A_BOLD );
+            move ( curr_x, curr_y );
+            for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+            if ( j )
+            {
+                move ( curr_x + 1, curr_y + j - 1 );
+                printw ( " " );
+                refresh ( );
+            }
+            move ( curr_x + 1, curr_y + j );
+            printw ( "%s", message );
+            move ( curr_x + 2, curr_y );
+            for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+            refresh ( );
+            Sleep ( 256 );
+            attroff ( A_BOLD );
+        }
+        curr_x = MAP_OFFSET_X + MAP_SIZE / 2 + 1;
+        curr_y = MAP_OFFSET_Y;
+        strcpy ( message, "INPUT YOUR USER NAME AND PRESS ENTER:" );
+        size = strlen ( message );
+        for ( j = 0; j + size < MAP_SIZE; j++ )
+        {
+            attron ( A_BOLD );
+            move ( curr_x, curr_y );
+            for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+            if ( j )
+            {
+                move ( curr_x + 1, curr_y + j - 1 );
+                printw ( " " );
+                refresh ( );
+            }
+            move ( curr_x + 1, curr_y + j );
+            printw ( "%s", message );
+            move ( curr_x + 2, curr_y );
+            for ( i = 0; i < MAP_SIZE; i++ ) printw( "*" );
+            refresh ( );
+            Sleep ( 256 );
+            attroff ( A_BOLD );
+        }
+        curr_x += 4;
+        move ( curr_x, curr_y );
+        attron ( A_BOLD );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw ( "*" );
+        move ( curr_x + 1, curr_y );
+        printw ( "*" );
+        move ( curr_x + 1, curr_y + MAP_SIZE - 1 );
+        printw ( "*" );
+        move ( curr_x + 2, curr_y );
+        for ( i = 0; i < MAP_SIZE; i++ ) printw ( "*" );
+        move ( curr_x + 1, curr_y + 4 );
+        refresh ( );
+        echo ( );
+        getstr(user_name);
+        noecho ( );
+        attroff ( A_BOLD );
+        update_high_scores(user_name,score,difficulty);
+    }
     return;
 }
 

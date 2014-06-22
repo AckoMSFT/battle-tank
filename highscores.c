@@ -4,7 +4,7 @@ void update_high_scores (char name[20], int score, int difficulty)
 {
      int i,n,j;
      char names[21][20], t[20];
-     char temp[20];
+     char temp[42];
      strcpy(temp, "high_scores");
      switch ( difficulty )
      {

@@ -781,11 +781,6 @@ void print_end_level_screen ( int level )
     }
 }
 
-void print_end_game_screen ( void )
-{
-    sound_end();
-}
-
 void print_empty_tank(int y, int x)
 {
     move ( y, x );
