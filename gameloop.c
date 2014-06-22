@@ -133,6 +133,7 @@ bool startLevel(int level, int *stars, int *score)
     player1.stars = stars;
     player1.move_rate = 1;
     player1.move_speed = TANK_SPEED;
+    player1.shoot_speed = SHOOT_SPEED;
     player1.shoot_rate = 1;
     player1.player = true;
     totalSpawned = 0;
@@ -171,7 +172,7 @@ bool startLevel(int level, int *stars, int *score)
         for ( i = 0; i < MAX_SPRITES; i++ )
         {
             if ( tanks[i].alive == false ) continue;
-            if ( tanks[i].move_state < TANK_SPEED) continue;
+            if ( tanks[i].move_state < tanks[i].move_speed) continue;
             enemyChoice = confDiff[gameDifficulty].AI(tanks + i);
             if (enemyChoice >=0 && enemyChoice <=3) move_tank(tanks+i, enemyChoice);
             else if (enemyChoice == 4) shoot(tanks+i, 0);

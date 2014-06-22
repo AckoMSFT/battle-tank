@@ -59,7 +59,7 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
 
 
     //if this tank shoot SHOOTSPEED earlier, just ignore.
-    if (tank->shoot_state < SHOOT_SPEED) return;
+    if (tank->shoot_state < tank->shoot_speed) return;
 
     //play a sound !
     if (tank == &player1) sound_shot();
@@ -114,7 +114,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
                 tanks[ i ].move_state += tanks[i].move_rate;
             }
 
-            if (tanks[ i ].shoot_state < SHOOT_SPEED){
+            if (tanks[ i ].shoot_state < tanks[ i ].shoot_speed){
                 tanks[ i ].shoot_state += tanks[i].shoot_rate;
             }
 
@@ -123,7 +123,7 @@ void update_states() // Updating bullets states and moving them, and tank shooti
 
     }
     //also for player_1
-    if (player1.shoot_state < SHOOT_SPEED) player1.shoot_state += player1.shoot_rate;
+    if (player1.shoot_state < player1.shoot_speed) player1.shoot_state += player1.shoot_rate;
     if (player1.move_state < player1.move_speed) player1.move_state += player1.move_rate;
 
 
