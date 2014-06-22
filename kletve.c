@@ -739,6 +739,19 @@ void print_end_level_screen ( int level )
     size = strlen ( message );
     score_x = curr_x + 5;
     score_y = curr_y + 5;
+    attron ( A_BOLD );
+    move ( score_x, score_y );
+    printw ( "###" );
+    move ( score_x + 1, score_y );
+    printw ( " # " );
+    move ( score_x + 2, score_y );
+    printw ( "  #" );
+    move ( score_x + 3, score_y );
+    printw ( " # " );
+    move ( score_x + 4, score_y );
+    printw ( "###" );
+    attroff ( A_BOLD );
+    score_y += 7;
     temp_score = score;
     base = 100000;
     for ( i = 0; i < 6; i++ )

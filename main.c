@@ -44,12 +44,13 @@ int main(int argc, char **argv)
     resize_term(80,80);
     while ( 1 )
     {
-        menu_choice = print_menu (2, 5, 4, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
+        menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
         if (menu_choice == 0)
         {
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
             erase();
+            demo = 0;
             startGame(difficulty);
         }
         if (menu_choice == 1)
@@ -59,7 +60,13 @@ int main(int argc, char **argv)
             erase();
             load_editor(level);
          }
-        if (menu_choice == 2)
+        if ( menu_choice == 2 )
+        {
+            erase();
+            demo = 1;
+            startGame(0);
+        }
+        if (menu_choice == 3)
         {
             int i;
             char ch;
@@ -73,7 +80,7 @@ int main(int argc, char **argv)
             erase();
             i = print_menu (2, 5, 20, 15, "PRESS ENTER TO RETURN", highScores, 1);
         }
-        if (menu_choice == 3)
+        if (menu_choice == 4)
         {
             kill_curses();
             return 0;
