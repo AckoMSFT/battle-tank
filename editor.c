@@ -1,5 +1,7 @@
 #include "global.h"
 
+int editorTanks[TANKS_PER_LEVEL], highlightedTank, tankAnim;
+
 void print_editor()
 {
     int i,j,tank_x=-1,tank_y=-1,base_x=-1,base_y=-1;
@@ -25,6 +27,7 @@ void save_editor(char * mapFile)
         for(j=0;j<MAP_SIZE;j++) fprintf(output_file,"%c",editor[i][j]);
         fprintf(output_file,"\n");
     }
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fprintf(output_file, "%d ", editorTanks[i] );
     fclose(output_file);
 }
 
@@ -94,9 +97,44 @@ void move_down()
         editor_cursor_x++;
 }
 
-void load_editor(char * level_name)
+void printEditorTanks(void)
+{
+    int i, j, currX = MAP_OFFSET_X, currY = MAP_OFFSET_Y + MAP_SIZE + 5;
+    // tank indicators
+    for ( i = 0; i < TANKS_PER_LEVEL / 2; i++ )
+    {
+        for ( j = 0; j < 2; j++ )
+        {
+            if ( i * 2 + j == highlightedTank && tankAnim == 3 ) attron ( A_BLINK );
+            switch ( editorTanks[i * 2 + j] )
+            {
+            case BASIC_TANK:
+                print_enemy_tank(RIGHT, currX, currY + j * 4, 1);
+                break;
+            case FAST_TANK:
+                print_fast_tank(RIGHT, currX, currY + j * 4 );
+                break;
+            case POWER_TANK:
+                print_power_tank(RIGHT, currX, currY + j * 4 );
+                break;
+            case ARMOR_TANK:
+                print_armor_tank(RIGHT, currX, currY + j * 4 );
+                break;
+            }
+            if ( i * 2 + j == highlightedTank && tankAnim == 3 ) attroff ( A_BLINK );
+        }
+        currX += 4;
+    }
+}
+
+void load_editor(int level)
 {
     int i,j,c,get_me_out_of_here=0,iter;
+    char level_name[20], buffer[20];
+    strcpy(level_name, "level");
+    itoa(level, buffer, 10);
+    strcat(level_name, buffer);
+    strcat(level_name, ".map");
     FILE * input_file = fopen(level_name, "r");
     clock_t prev,curr;
     print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y -1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
@@ -105,17 +143,24 @@ void load_editor(char * level_name)
         for(j=0;j<MAP_SIZE;j++) fscanf(input_file,"%c",&editor[i][j]);
         fgetc(input_file);
     }
+    for ( i = 0; i < TANKS_PER_LEVEL; i++ ) fscanf(input_file,"%d",&editorTanks[i]);
     fclose(input_file);
     editor_cursor_x=0;
     editor_cursor_y=0;
     editor_cursor_id=0;
     create_base(35,17);
-    create_tank(36,14);
+    create_tank(36,12);
     print_editor();
     draw_cursor();
+    highlightedTank = 0;
+    tankAnim = 0;
     while(1)
     {
-      c=getch();
+      tankAnim = ( tankAnim + 1 ) % 5;
+      printEditorTanks ();
+      if(kbhit())
+      {
+          c=getch();
       switch(c)
       {
           get_me_out_of_here=0;
@@ -132,9 +177,22 @@ void load_editor(char * level_name)
           case 'G':
           case 'g': map_generator(15); break;
           case 'n':
-          case 'N': clear_editor(); create_base(35,17); create_tank(36,14); break;
+          case 'N': clear_editor(); create_base(35,17); create_tank(36,12); break;
+          case 'j':
+          case 'J':
+              highlightedTank = ( highlightedTank - 1 + TANKS_PER_LEVEL ) % TANKS_PER_LEVEL;
+            break;
+          case 'k':
+          case 'K':
+              highlightedTank = ( highlightedTank + 1 ) % TANKS_PER_LEVEL;
+            break;
+          case 'l':
+          case 'L':
+              editorTanks[highlightedTank] = ( editorTanks[highlightedTank] + 1 ) % 4;
+            break;
           case KEY_F(2): get_me_out_of_here=1; break;
           case KEY_F(12): get_me_out_of_here=2; break;
+      }
       }
       if(get_me_out_of_here==1)
       {
@@ -143,23 +201,11 @@ void load_editor(char * level_name)
       }
       else if(get_me_out_of_here==2) break;
       print_editor();
+      if ( tankAnim == 3 ) attron(A_BLINK);
       draw_cursor();
+      if ( tankAnim == 3 ) attroff(A_BLINK);
       refresh();
-      prev=clock();
-      iter=0;
-      while(!kbhit())
-      {
-          Sleep(30);
-          curr=clock();
-          if((double)(curr-prev)/CLOCKS_PER_SEC<0.1)continue;
-          prev=curr;
-          print_editor();
-          if(iter)attron(A_BLINK);
-          draw_cursor();
-          if(iter)attroff(A_BLINK);
-          iter=(iter+1)%2;
-          refresh();
-      }
+      Sleep(50);
     }
 }
 

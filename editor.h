@@ -31,7 +31,7 @@ void move_up();
 void move_down();
 
 //initialize the editor with starting values and load it
-void load_editor(char * level_name);
+void load_editor(int level);
 
 //function for drawing the right cursor
 void draw_cursor();
