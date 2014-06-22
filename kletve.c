@@ -644,6 +644,7 @@ void print_map ( void )
 
 void print_start_level_screen ( int level )
 {
+    attron ( A_BOLD );
     sound_start_music();
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
@@ -672,11 +673,12 @@ void print_start_level_screen ( int level )
         refresh ( );
         Sleep ( 128 );
     }
+    attroff ( A_BOLD );
 }
 
 void print_end_level_screen ( int level )
 {
-    //sound_end();
+    attron ( A_BOLD );
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
     strcpy ( message, "STAGE " );
@@ -705,6 +707,7 @@ void print_end_level_screen ( int level )
         refresh ( );
         Sleep ( 128 );
     }
+    attroff ( A_BOLD );
 }
 
 void print_end_game_screen ( void )
@@ -724,6 +727,7 @@ void print_empty_tank(int y, int x)
 
 void print_digit ( int y, int x, int digit )
 {
+    attron ( A_BOLD );
     switch ( digit )
     {
     case 0:
@@ -847,6 +851,7 @@ void print_digit ( int y, int x, int digit )
         printw ("  #" );
         break;
     }
+    attroff ( A_BOLD );
 }
 
 void print_indicators ( int totalSpawned, int lives, int stars, int score )
@@ -875,7 +880,9 @@ void print_indicators ( int totalSpawned, int lives, int stars, int score )
     currX = MAP_OFFSET_X;
     currY = MAP_OFFSET_Y + MAP_SIZE + 15;
     move ( currX, currY );
+    attron ( A_BOLD );
     printw ( "1P" );
+    attroff ( A_BOLD );
     Tank P1;
     P1.x = currX + 2 - MAP_OFFSET_X, P1.y = currY - MAP_OFFSET_Y, P1.dir = UP;
     P1.invulnerable = 0;
