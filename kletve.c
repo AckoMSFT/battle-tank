@@ -751,7 +751,7 @@ void print_end_level_screen ( int level )
     move ( score_x + 4, score_y );
     printw ( "###" );
     attroff ( A_BOLD );
-    score_y += 7;
+    score_y += 6;
     temp_score = score;
     base = 100000;
     for ( i = 0; i < 6; i++ )
