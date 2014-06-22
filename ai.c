@@ -49,7 +49,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
         }
 
         if (dontShoot){
-            map [ fromX ][ fromY ] = 1;
+            mapMove [ fromX ][ fromY ] = 1;
             queuePush(&matrixQueue, fromX*MAP_SIZE + fromY);
         }
 
