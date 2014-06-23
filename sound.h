@@ -1,3 +1,7 @@
+/**
+ *  @file sound.h
+ *  @brief - Definicije funkcija za zvuk.
+ */
 #ifndef SOUND_H_INCLUDED
 #define SOUND_H_INCLUDED
 

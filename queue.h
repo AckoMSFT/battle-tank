@@ -1,3 +1,7 @@
+/**
+ *  @file queue.h
+ *  @brief - Definicija funkcija i strukture za rad sa neprioritetnim redom.
+ */
 #ifndef QUEUЕ_H_INCLUDED
 #define QUEUЕ_H_INCLUDED
 

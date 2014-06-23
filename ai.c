@@ -1,5 +1,5 @@
 /**
- *  @file kletve.c
+ *  @file ai.c
  *  @brief - Implementacije funkcija za vestacku inteligenciju.
  */
 #include "global.h"

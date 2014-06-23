@@ -1,3 +1,7 @@
+/**
+ *  @file stack.h
+ *  @brief - Definicije funkcija za rad sa stekom.
+ */
 #ifndef STACK_H_INCLUDED
 #define STACK_H_INCLUDED
 

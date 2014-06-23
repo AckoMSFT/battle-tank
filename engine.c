@@ -1,6 +1,6 @@
 /**
- *  @file gameloop.c
- *  @brief - Implementacije funkcija za logiku igrice.
+ *  @file engine.c
+ *  @brief - Implementacija funkcija za logiku igrice.
  */
  #include "global.h"
 

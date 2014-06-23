@@ -1,3 +1,7 @@
+/**
+ *  @file gameloop.h
+ *  @brief - Definicija funkcija za tok igrice.
+ */
 #ifndef GAMELOOP_H_INCLUDED
 #define GAMELOOP_H_INCLUDED
 #define DEBUG 0

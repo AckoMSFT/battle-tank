@@ -1,3 +1,7 @@
+/**
+ *  @file gameloop.h
+ *  @brief - Definicija globalnih struktura i konstanti, deklaracija globalnih promenljivih.
+ */
 #ifndef GLOBAL_H_INCLUDED
 #define GLOBAL_H_INCLUDED
 

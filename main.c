@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file main.c
+ *  @brief - Implementacije funkcija za pokretanje i upravljanje ostalim delovima igrice.
+ */
+ #include "global.h"
 
 int gameOver;
 int demo;

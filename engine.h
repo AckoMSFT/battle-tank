@@ -1,4 +1,8 @@
-#ifndef ENGINE_H_INCLUDED
+/**
+ *  @file engine.h
+ *  @brief - Definicija funkcija za logiku igrice.
+ */
+ #ifndef ENGINE_H_INCLUDED
 #define ENGINE_H_INCLUDED
 
 void move_tank ( Tank *tank, int direction);

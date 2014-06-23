@@ -1,3 +1,7 @@
+/**
+ *  @file editor.h
+ *  @brief - Definicije funkcija za editor mape.
+ */
 #ifndef EDITOR_H_INCLUDED
 #define EDITOR_H_INCLUDED
 

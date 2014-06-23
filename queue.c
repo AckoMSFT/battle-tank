@@ -1,3 +1,7 @@
+/**
+ *  @file gameloop.c
+ *  @brief - Implementacije funkcija za rad sa neprioritetnim redom.
+ */
 #include "global.h"
 
 int queueEmpty(queue * myQueue){

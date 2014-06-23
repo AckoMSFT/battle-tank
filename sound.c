@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file sound.c
+ *  @brief - Implementacije funkcija za zvuk.
+ */
+ #include "global.h"
 
 void sound_play(char *snd){
 

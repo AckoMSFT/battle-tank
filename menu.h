@@ -1,3 +1,7 @@
+/**
+ *  @file menu.h
+ *  @brief - Definicija funkcije za crtanje menija.
+ */
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
 

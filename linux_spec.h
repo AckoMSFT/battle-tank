@@ -1,3 +1,7 @@
+/**
+ *  @file linux_spec.h
+ *  @brief - Definicije funkcija kbhit() i Sleep() za linux sistem.
+ */
 #ifndef LINUX_SPEC_H_INCLUDED
 #define LINUX_SPEC_H_INCLUDED
 

@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file stack.c
+ *  @brief - Implementacije funkcija za rad sa stekom.
+ */
+ #include "global.h"
 
 int stackEmpty(stack * myStack){
     if (myStack->top) return 0;

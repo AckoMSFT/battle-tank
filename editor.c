@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file editor.c
+ *  @brief - Implementacije funkcija za editor mape.
+ */
+ #include "global.h"
 
 int highlightedTank, tankAnim;
 Tank editorTanks[TANKS_PER_LEVEL];

@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file menu.c
+ *  @brief - Implementacija funkcije za crtanje menija.
+ */
+ #include "global.h"
 
 int print_menu (int starty, int x, int number_of_entries, int width, char title[], char entries[][100], int idx)
 {

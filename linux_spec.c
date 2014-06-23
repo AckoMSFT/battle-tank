@@ -1,3 +1,7 @@
+/**
+ *  @file linux_spec.c
+ *  @brief - Implementacije funkcija kbhit() i Sleep() za linux sistem.
+ */
 #include "global.h"
 
 #ifndef _WIN32
