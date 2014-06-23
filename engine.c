@@ -373,7 +373,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
             }
             break;
         case LIFE:
-            player1.hit_points++;
+            if (player1.hit_points<9) player1.hit_points++;
             break;
         case TIMER:
             power_up.time = - FRAMES_PER_SEC * TIMER_SECS;
@@ -454,6 +454,7 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                 player1.hit_points--;
                 player1.x = 36;
                 player1.y = 12;
+                player1.dir = UP;
                 player1.invulnerable = FRAMES_PER_SEC * INVULNERABLE_SECS;
                 sound_explosion();
             }
