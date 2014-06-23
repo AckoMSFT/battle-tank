@@ -1,3 +1,7 @@
+/**
+ *  @file gameloop.c
+ *  @brief - Implementacije funkcija za tok igrice.
+ */
 #include "global.h"
 
 void find_space_tank(int *x, int *y){
@@ -295,54 +299,12 @@ bool startLevel(int level)
                 if (keyPressed == KEY_F(6)) return true;
             }
 
-            //move(52,50); printw("inna gameloop     ");refresh();
-
             if (! (enemyChoicePlayer == 4 && player1.shoot_state < player1.shoot_speed) && !( player1.move_state < player1.move_speed) ) {
 
                 if (enemyChoicePlayer >=0 && enemyChoicePlayer <=3) move_tank(&player1, enemyChoicePlayer);
                 else if (enemyChoicePlayer == 4) shoot(&player1, 1);
 
-                chaseX=-1;
-                di = RAND_MAX;
-
-                //if there is a powerUP
-                if (power_up.type !=NORMAL){
-                    chaseX = power_up.x;
-                    chaseY = power_up.y;
-                    chasePowerUp = true;
-                    di =(player1.x - power_up.x)*(player1.x - power_up.x) + (player1.y - power_up.y)*(player1.y - power_up.y);
-                }
-
-                //find nearest
-                for(i=0; i<MAX_SPRITES; i++){
-                    if (!tanks[i].alive) continue;
-
-                    dj = (player1.x - tanks[i].x)*(player1.x - tanks[i].x) + (player1.y - tanks[i].y)*(player1.y - tanks[i].y);
-                    if (di > dj) {
-                        di = dj;
-                        chasePowerUp = false;
-                        chaseX = tanks[i].x;
-                        chaseY = tanks[i].y;
-                    }
-
-                }
-
-                if (chaseX != -1 ){
-
-                    if (--(player1.AIState) < 0){
-
-                        updateDecisions(&player1, 0, 1 , chaseX, chaseY,1 , 1 ,1, chasePowerUp );
-
-
-
-                        player1.AIState = 0;
-                    }
-
-                    enemyChoicePlayer = player1.AIDecisions[ player1.AIState ];
-                }
-
-                //dont do anything
-                else enemyChoicePlayer = 5;
+                enemyChoicePlayer = get_decision_demo(enemyChoicePlayer);
 
             }
 
