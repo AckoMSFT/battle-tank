@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file highscores.c
+ *  @brief - Implementacije funkcija za rad sa listom najboljih rezultata.
+ */
+ #include "global.h"
 
 void update_high_scores (char name[20], int score, int difficulty)
 {

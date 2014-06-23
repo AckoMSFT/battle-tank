@@ -1,3 +1,7 @@
+/**
+ *  @file kletve.c
+ *  @brief - Implementacije funkcija za crtanje.
+ */
 #include "global.h"
 
 void init_curses ( void )
@@ -352,9 +356,9 @@ void print_empty ( int y, int x )
     printw ( " " );
 }
 
-void print_bullet ( int y, int x, int origin )
+void print_bullet ( int y, int x, int source )
 {
-    if ( origin == 1 ) attron ( COLOR_PAIR ( 8 ) );
+    if ( source == 1 ) attron ( COLOR_PAIR ( 8 ) );
     attron ( A_BOLD );
     if ( map[y][x] == GRASS ) attron ( COLOR_PAIR ( 18 ) );
     if ( map[y][x] == WATER ) attron ( COLOR_PAIR ( 19 ) );
@@ -363,7 +367,7 @@ void print_bullet ( int y, int x, int origin )
     if ( map[y][x] == WATER ) attroff ( COLOR_PAIR ( 19 ) );
     if ( map[y][x] == GRASS ) attroff ( COLOR_PAIR ( 18 ) );
     attroff ( A_BOLD );
-    if ( origin == 1 ) attroff ( COLOR_PAIR ( 8 ) );
+    if ( source == 1 ) attroff ( COLOR_PAIR ( 8 ) );
 }
 
 void print_grass ( int y, int x )
@@ -397,7 +401,7 @@ void print_brick ( int y, int x )
     attroff ( A_BOLD );
 }
 
-void print_steel(int y, int x)
+void print_steel ( int y, int x )
 {
     attron(A_STANDOUT);
     move(y, x);
@@ -407,15 +411,14 @@ void print_steel(int y, int x)
     attroff(A_STANDOUT);
 }
 
-void print_explosion(int y, int x)
+void print_explosion ( int y, int x )
 {
-    attron(A_BOLD);
-    move(y, x);
-    attron(COLOR_PAIR(20));
-    printw("*");
-    attroff((COLOR_PAIR(20)));
-    attroff(A_BOLD);
-    //refresh();
+    attron ( A_BOLD );
+    move ( y, x );
+    attron ( COLOR_PAIR ( 20 ) );
+    printw ( "*" );
+    attroff ( ( COLOR_PAIR ( 20 ) ) );
+    attroff ( A_BOLD );
 }
 
 void print_field ( int y, int x, int type )
@@ -479,7 +482,6 @@ void print_helmet ( int y, int x )
     addch ( ACS_LRCORNER );
     attroff ( COLOR_PAIR ( 7 ) );
     attroff ( A_REVERSE );
-    //refresh ( );
 }
 
 void print_star ( int y, int x )
@@ -606,10 +608,10 @@ void load_map ( char * input_file_name )
 {
     int i, j;
     char buffer;
-    FILE * input_file = fopen(input_file_name, "r");
-    for (i = 0; i < MAP_SIZE; i++)
+    FILE * input_file = fopen ( input_file_name, "r" );
+    for ( i = 0; i < MAP_SIZE; i++ )
     {
-        for (j = 0; j < MAP_SIZE; j++)
+        for ( j = 0; j < MAP_SIZE; j++ )
         {
             fscanf(input_file, "%c", &map[i][j]);
         }
@@ -624,7 +626,7 @@ void print_map ( void )
     int i, j, k;
     base_x = -1;
     base_y = -1;
-    print_border(MAP_OFFSET_X-1, MAP_OFFSET_Y-1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE);
+    print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
     for ( i = 0; i < MAP_SIZE; i++ )
         for ( j = 0; j < MAP_SIZE; j++ )
         {
@@ -651,7 +653,7 @@ void print_map ( void )
             }
         }
 
-    print_power(&power_up);
+    print_power ( &power_up );
     print_tank ( &player1 );
     print_base ( base_x + MAP_OFFSET_X, base_y + MAP_OFFSET_Y );
     for ( i = 0; i < MAX_SPRITES; i++ )
@@ -670,12 +672,12 @@ void print_map ( void )
 void print_start_level_screen ( int level )
 {
     attron ( A_BOLD );
-    sound_start_music();
+    sound_start_music ( );
     char message[42], buffer[42];
     int i, j, size, curr_x, curr_y;
     strcpy ( message, "STAGE " );
     //itoa ( level, buffer, 10 );
-    sprintf(buffer,"%d",level);
+    sprintf ( buffer, "%d", level );
     strcat ( message, buffer );
     erase ( );
     print_border ( MAP_OFFSET_X - 1, MAP_OFFSET_Y - 1, MAP_OFFSET_X + MAP_SIZE, MAP_OFFSET_Y + MAP_SIZE );
@@ -708,11 +710,11 @@ void print_end_level_screen ( int level )
     int i, j, size, curr_x, curr_y, score_x, score_y, temp_score, base;
     Tank temp;
 
-    sound_level_end();
+    sound_level_end ( );
 
     strcpy ( message, "STAGE " );
     //itoa ( level, buffer, 10 );
-    sprintf(buffer,"%d",level);
+    sprintf ( buffer,"%d",level );
     strcat ( message, buffer );
     strcat ( message, " COMPLETE!!!" );
     erase ( );
@@ -789,7 +791,7 @@ void print_end_level_screen ( int level )
     }
 }
 
-void print_empty_tank(int y, int x)
+void print_empty_tank ( int y, int x )
 {
     move ( y, x );
     printw ( "   " );
