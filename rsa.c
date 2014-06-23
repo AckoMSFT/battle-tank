@@ -46,6 +46,7 @@ void check ( int difficulty )
         break;
     }
     rsa = fopen ( temp, "r" );
+    if ( temp == NULL || rsa == NULL ) clear_high_scores ( difficulty );
     while ( fscanf ( high_scores, "%c", &c ) != EOF )
     {
         int curr = c;
