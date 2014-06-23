@@ -10,7 +10,7 @@ void Sleep(int time){
     usleep(time*1000);
 }
 
-int kbhit(void)
+bool kbhit(void)
 {
   struct termios oldt, newt;
   int ch;

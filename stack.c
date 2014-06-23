@@ -4,9 +4,9 @@
  */
  #include "global.h"
 
-int stackEmpty(stack * myStack){
-    if (myStack->top) return 0;
-    else return 1;
+bool stackEmpty(stack * myStack){
+    if (myStack->top) return false;
+    else return true;
 }
 
 void stackPush(stack * myStack, int pushMe){

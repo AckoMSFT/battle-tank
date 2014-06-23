@@ -26,7 +26,8 @@ void startGame();
 /**
  *  @brief - Inicijalizuje odgovarajuci nivo i pokrece petlju igrice
  *  @param level nivo koji se pokrece
+ *  @return Funkcija vraca true ako je nivo uspesno predjen, a u suprotnom false.
 */
-int startLevel(int level);
+bool startLevel(int level);
 
 #endif // GAMELOOP_H_INCLUDED

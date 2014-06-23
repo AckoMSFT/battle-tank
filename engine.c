@@ -57,7 +57,7 @@ void go_right( Tank *tank )
     tank->dir = RIGHT;
     if ( (right < MAP_SIZE ) && ( mapUsed[ x ][ right ] == 0 ) && ( mapUsed[ x + 1 ][ right ] == 0 ) && ( mapUsed[ x + 2 ][ right ] == 0 ) ) tank->y = right - 2;
 }
-void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
+void shoot( Tank *tank ) // Spawns new bullet after shoot command
 {
     int i, x, y, x2, y2;
 
@@ -99,7 +99,7 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
                 bullets[i].y = y;
                 bullets[i].dir = tank->dir;
                 bullets[i].state = 0;
-                bullets[i].source = origin;
+                bullets[i].source = tank->player;
 
                 break;
             }
@@ -145,7 +145,7 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
                 bullets[i].y = y;
                 bullets[i].dir = tank->dir;
                 bullets[i].state = 0;
-                bullets[i].source = origin;
+                bullets[i].source = tank->player;
 
                 break;
             }
@@ -158,7 +158,7 @@ void shoot( Tank *tank, int origin ) // Spawns new bullet after shoot command
                 bullets[i].y = y2;
                 bullets[i].dir = tank->dir;
                 bullets[i].state = 0;
-                bullets[i].source = origin;
+                bullets[i].source = tank->player;
 
                 break;
             }

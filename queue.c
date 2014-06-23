@@ -4,9 +4,9 @@
  */
 #include "global.h"
 
-int queueEmpty(queue * myQueue){
-    if (myQueue->front == myQueue->end) return 1;
-    else return 0;
+bool queueEmpty(queue * myQueue){
+    if (myQueue->front == myQueue->end) return true;
+    else return false;
 }
 
 void queuePush(queue * myQueue, int pushMe){

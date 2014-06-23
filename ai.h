@@ -20,23 +20,27 @@ void updateDecisions(Tank *tank,float baseRandom, float chaseRandom,int chaseMeX
 /**
  *  @brief - Poziva funkciju za azuriranje vestacke inteligencije za neprijateljski tenk za najmanju tezinu igrice
  *  @param *tank tenk za koji se azurira vestacka inteligencija
+ *  @return Funkcija vraca odluku za zadatu tezinu igre i zadati tenk.
  */
 int get_decision_easy(Tank *tank);
 
 /**
  *  @brief - Poziva funkciju za azuriranje vestacke inteligencije za neprijateljski tenk za srednju tezinu igrice
  *  @param *tank tenk za koji se azurira vestacka inteligencija
+ *  @return Funkcija vraca odluku za zadatu tezinu igre i zadati tenk.
  */
 int get_decision_medium(Tank *tank);
 
 /**
  *  @brief - Poziva funkciju za azuriranje vestacke inteligencije za neprijateljski tenk za najvecu tezinu igrice
  *  @param *tank tenk za koji se azurira vestacka inteligencija
+ *  @return Funkcija vraca odluku za zadatu tezinu igre i zadati tenk.
  */
 int get_decision_hard(Tank *tank);
 
 /**
  *  @brief - Poziva funkciju za azuriranje vestacke inteligencije igraca u demo modu
+ *  @return Funkcija vraca odluku za igraca u demo modu.
  */
 int get_decision_demo();
 

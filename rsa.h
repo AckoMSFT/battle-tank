@@ -21,7 +21,7 @@ void check ( int difficulty );
  *  @brief - Enkriptuje listu najboljih rezultata za datu tezinu.
  *  @param difficulty tezina
  */
-void encrypt ( int difficulty )
+void encrypt ( int difficulty );
 
 /**
  *  @brief - Dekriptuje broj c sa privatnim kljucem (n, d).

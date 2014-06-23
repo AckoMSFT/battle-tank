@@ -165,6 +165,7 @@ void startGame()
         for ( i = 0; i < MAP_SIZE; i++ ) printw ( "*" );
         move ( curr_x + 1, curr_y + 4 );
         refresh ( );
+        while ( kbhit ( ) ) read_input ( );
         echo ( );
         getstr(user_name);
         noecho ( );
@@ -200,7 +201,7 @@ bool startLevel(int level)
     myScore = 0;
 
     cntKilled = 0;
-
+    while ( kbhit ( ) ) read_input ( );
     // initialize player1
     player1.x = 36;
     player1.y = 12;
@@ -259,7 +260,7 @@ bool startLevel(int level)
             else if ( tanks[i].move_state < tanks[i].move_speed) continue;
 
             if (enemyChoice[i] >=0 && enemyChoice[i] <=3) move_tank(tanks+i, enemyChoice[i]);
-            else if (enemyChoice[i] == 4) shoot(tanks+i, 0);
+            else if (enemyChoice[i] == 4) shoot(tanks+i);
 
             enemyChoice[i] = confDiff[gameDifficulty].AI(tanks + i);
         }
@@ -282,7 +283,7 @@ bool startLevel(int level)
                         move_tank(&player1, keyPressed - MIN_KEY);
                         break;
                     case SPACE:
-                        shoot(&player1, 1);
+                        shoot(&player1);
                         break;
                     case KEY_F(6): return true;
                     case 27: return false;
@@ -305,7 +306,7 @@ bool startLevel(int level)
             if (! (enemyChoicePlayer == 4 && player1.shoot_state < player1.shoot_speed) && !( player1.move_state < player1.move_speed) ) {
 
                 if (enemyChoicePlayer >=0 && enemyChoicePlayer <=3) move_tank(&player1, enemyChoicePlayer);
-                else if (enemyChoicePlayer == 4) shoot(&player1, 1);
+                else if (enemyChoicePlayer == 4) shoot(&player1);
 
                 enemyChoicePlayer = get_decision_demo(enemyChoicePlayer);
 

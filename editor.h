@@ -5,54 +5,103 @@
 #ifndef EDITOR_H_INCLUDED
 #define EDITOR_H_INCLUDED
 
-//this is a function for printing the editor
+/**
+ *  @brief - Iscrtavanje editora.
+ */
 void print_editor();
 
-//save editor to file mapFile.map
+/**
+ *  @brief - Iscrtavanje mape u datoteku.
+ *  @param *mapFile ime datoteke
+ */
 void save_editor(char * mapFile);
 
-//change the type of a cursor
+/**
+ *  @brief - Promena tipa kursora.
+ */
 void change_cursor();
 
-//add base to map at (x,y)
+/**
+ *  @brief - Kreiranje baze na zadatim koordinatama.
+ *  @param x, y koordinate
+ */
 void create_base(int x, int y);
 
-//add tank to map at (x,y)
+/**
+ *  @brief - Kreiranje tenka na zadatim koordinatama.
+ *  @param x, y koordinate
+ */
 void create_tank(int x, int y);
 
-//erase tank
+/**
+ *  @brief - Brisanje tenka sa zadatih koordinata.
+ *  @param x, y koordinate
+ */
 void erase_tank(int x, int y);
 
+/**
+ *  @brief - Kreiranje kursora na zadatim koordinatama.
+ *  @param x, y koordinate
+ */
 void create_cursor(int x, int y);
 
-//move cursor
+/**
+ *  @brief - Pomeranje kursora u desno.
+ */
 void move_right();
 
+/**
+ *  @brief - Pomeranje kursora u levo.
+ */
 void move_left();
 
+/**
+ *  @brief - Pomeranje kursora na gore.
+ */
 void move_up();
 
+/**
+ *  @brief - Pomeranje kursora na dole.
+ */
 void move_down();
 
-//initialize the editor with starting values and load it
+/**
+ *  @brief - Inicijalizacija editora i ucitavanje nivoa.
+ *  @param level nivo
+ */
 void load_editor(int level);
 
-//function for drawing the right cursor
+/**
+ *  @brief - Iscrtavanje kursora
+ */
 void draw_cursor();
 
-//draw the right field at the right place
+/**
+ *  @brief - Iscrtavanje polja na zadatim koordinatama.
+ *  @param x, y koordinate
+ */
 void draw_field(int x, int y);
 
-//changing cursor size
+/**
+ *  @brief - Promena velicine kursora.
+ */
 void change_size();
 
-//clear everything
+/**
+ *  @brief - Ciscenje editora.
+ */
 void clear_editor();
 
-//print the start wall
+/**
+ *  @brief - Ispisvanje proizvoljnog pravougaonog zida.
+ *  @param a, b dimenzije
+ */
 void print_wall(int a, int b);
 
-//generate a random map
+/**
+ *  @brief - Generisanje proizvoljne mape.
+ *  @param n broj zidova u mapi
+ */
 void map_generator(int n);
 
 #endif // EDITOR_H_INCLUDED

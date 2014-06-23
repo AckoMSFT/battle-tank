@@ -11,8 +11,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-int kbhit(void);
+/**
+ *  @brief - Provera da li je nesto pritisnuto na tastaturi za linux sistem.
+ */
+bool kbhit(void);
 
+/**
+ *  @brief - Uspavljivanje programa time milisekundi
+ */
 void Sleep(int time);
 #endif // _WIN32
 #endif // KBHIT_LINUX_H_INCLUDED

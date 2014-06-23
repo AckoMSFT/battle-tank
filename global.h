@@ -188,4 +188,6 @@ int read_input();
 #include "stack.h"
 #include "queue.h"
 #include "ai.h"
+#include "rsa.h"
+#include "highscores.h"
 #endif // GLOBAL_H_INCLUDED
