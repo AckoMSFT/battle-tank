@@ -25,10 +25,19 @@ void clear_high_scores ( int difficulty )
     f = fopen ( temp, "w" );
     for ( i = 0; i < 20; i++ ) fprintf ( f, "0 jovanaETF\n" );
     fclose ( f );
+    encrypt ( difficulty );
+}
+
+void check_high_scores ( void )
+{
+    check ( 0 );
+    check ( 1 );
+    check ( 2 );
 }
 
 void update_high_scores (char name[20], int score, int difficulty)
 {
+     check_high_scores ( );
      int i,n,j;
      char names[21][20], t[20];
      char temp[42];
@@ -48,6 +57,11 @@ void update_high_scores (char name[20], int score, int difficulty)
      int scores[21];
      FILE *high_scores;
      high_scores = fopen(temp, "r");
+     if ( high_scores == NULL )
+     {
+        clear_high_scores ( difficulty );
+        high_scores = fopen ( temp, "r" );
+     }
      n=0;
      while (fscanf(high_scores,"%d",&scores[n])!=EOF)
      {
@@ -87,4 +101,5 @@ void update_high_scores (char name[20], int score, int difficulty)
          i++;
      }
      fclose (high_scores);
+     encrypt ( difficulty );
 }

@@ -44,6 +44,7 @@ int main(int argc, char **argv)
     resize_term(80,80);
     while ( 1 )
     {
+        check_high_scores ( );
         erase ( );
         menu_choice = print_menu (2, 5, 6, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
         if (menu_choice == 0)
@@ -76,6 +77,7 @@ int main(int argc, char **argv)
             erase();
             difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
             if ( difficulty >= INF ) continue;
+            check_high_scores ( );
             strcpy(temp, "high_scores");
             switch ( difficulty )
             {
@@ -93,6 +95,11 @@ int main(int argc, char **argv)
             int i;
             char ch;
             FILE * high_scores_file = fopen ( temp, "r" );
+            if ( high_scores_file == NULL )
+            {
+                clear_high_scores ( difficulty );
+                high_scores_file = fopen ( temp, "r" );
+            }
             for (i = 0; i < 20; i++)
             {
                 fgets(highScores[i], 100, high_scores_file);
