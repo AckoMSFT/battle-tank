@@ -4,7 +4,7 @@
  */
 #include "global.h"
 
-void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMeX, int chaseMeY, int aiSpeed, int aiParam1, int aiParam2, int dontShoot){
+void updateDecisions(Tank *tank,float baseRandom, float chaseRandom,int chaseMeX, int chaseMeY, int aiSpeed, int aiParam1, int aiParam2, bool dontShoot){
 
     int x = tank->x, y = tank->y,i,dx,dy,di,dj, currX, currY, empty, popX, popY,dir, fromX, fromY;
     float newRand = (float)rand()/(float)RAND_MAX;
@@ -44,7 +44,7 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMe
 
 
     //go towards base
-    if (newRand < baseRandom + mytankRandom){
+    if (newRand < baseRandom + chaseRandom){
 
         if (newRand < baseRandom){
             //go toward base
