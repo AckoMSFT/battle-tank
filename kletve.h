@@ -1,6 +1,10 @@
 #ifndef KLETVE_H_INCLUDED
 #define KLETVE_H_INCLUDED
-void init_curses(void);
+
+/**
+ *  @brief Inicijalizuje stvari potrebne za rad biblioteke ncurses.
+ */
+void init_curses ( void );
 void init_colors(void);
 void print_border(int y1, int x1, int y2, int x2);
 void print_tank(Tank * this);
