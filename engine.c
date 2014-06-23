@@ -1,4 +1,8 @@
-#include "global.h"
+/**
+ *  @file gameloop.c
+ *  @brief - Implementacije funkcija za logiku igrice.
+ */
+ #include "global.h"
 
 // moves the tank
 void move_tank ( Tank *tank, int direction){

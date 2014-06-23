@@ -1,3 +1,7 @@
+/**
+ *  @file kletve.c
+ *  @brief - Implementacije funkcija za vestacku inteligenciju.
+ */
 #include "global.h"
 
 void updateDecisions(Tank *tank,float baseRandom, float mytankRandom,int chaseMeX, int chaseMeY, int aiSpeed, int aiParam1, int aiParam2, int dontShoot){
@@ -290,4 +294,49 @@ int get_decision_hard(Tank *tank){
     return tank->AIDecisions[ tank->AIState ];
 }
 
+int get_decision_demo(){
 
+    int chaseX,chaseY,di,dj,i,chasePowerUp;
+
+        chaseX=-1;
+        di = RAND_MAX;
+
+        //if there is a powerUP
+        if (power_up.type !=NORMAL){
+            chaseX = power_up.x;
+            chaseY = power_up.y;
+            chasePowerUp = true;
+            di =(player1.x - power_up.x)*(player1.x - power_up.x) + (player1.y - power_up.y)*(player1.y - power_up.y);
+        }
+
+        //find nearest
+        for(i=0; i<MAX_SPRITES; i++){
+            if (!tanks[i].alive) continue;
+
+            dj = (player1.x - tanks[i].x)*(player1.x - tanks[i].x) + (player1.y - tanks[i].y)*(player1.y - tanks[i].y);
+            if (di > dj) {
+                di = dj;
+                chasePowerUp = false;
+                chaseX = tanks[i].x;
+                chaseY = tanks[i].y;
+            }
+
+        }
+
+        if (chaseX != -1 ){
+
+            if (--(player1.AIState) < 0){
+
+                updateDecisions(&player1, 0, 1 , chaseX, chaseY,1 , 1 ,1, chasePowerUp );
+
+
+                player1.AIState = 0;
+            }
+
+            return player1.AIDecisions[ player1.AIState ];
+        }
+
+        //dont do anything
+        return 5;
+
+}

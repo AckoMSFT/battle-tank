@@ -4,4 +4,5 @@ void updateDecisions(Tank *tank,float baseRandom, float mytankRandom, int chaseM
 int get_decision_easy(Tank *tank);
 int get_decision_medium(Tank *tank);
 int get_decision_hard(Tank *tank);
+int get_decision_demo();
 #endif AI_H_INCLUDED
