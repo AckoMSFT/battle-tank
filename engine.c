@@ -302,9 +302,8 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                         power_up.type = tanks[i].power_type;
                         while ( 1 )
                         {
-                            //power_up.x = rand ( ) % ( MAP_SIZE - 3 );
+                            power_up.x = rand ( ) % ( MAP_SIZE - 3 );
                             power_up.y = rand ( ) % ( MAP_SIZE - 3 );
-                            power_up.x = 0;
                             if (demo) empty = true;
                             else empty = false;
                             for(di=0;di<3;di++)
