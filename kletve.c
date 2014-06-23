@@ -639,7 +639,6 @@ void print_map ( void )
                     print_field( i, j, EXPLOSION );
                     break;
                 }
-                case EMPTY:
                 case BRICK:
                 case WATER:
                 case GRASS:
@@ -649,7 +648,7 @@ void print_map ( void )
                 case BASE:
                     if ( base_x == -1 ) base_x = i, base_y = j;
                     break;
-
+                default: print_field(i,j, EMPTY);
             }
         }
 

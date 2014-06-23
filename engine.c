@@ -394,7 +394,8 @@ void collision() // Check for collisions of tanks and bullets, respectively bull
                 if (bullets[i].source > 0 && bullets[j].source > 0) continue;
                 bullets[ i ].alive = 0;
                 bullets[ j ].alive = 0;
-                if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == GRASS ) map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION_GRASS;
+                if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == WATER ) map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION_WATER;
+                else if ( map[ bullets[ i ].x ][ bullets[ i ].y ] == GRASS ) map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION_GRASS;
                 else map[ bullets[ i ].x ][ bullets[ i ].y ] = EXPLOSION;
             }
 

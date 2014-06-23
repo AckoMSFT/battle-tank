@@ -55,37 +55,130 @@
 
 #define SPACE ' '
 
+/**
+ *  @brief - Ofset pri crtanju mape.
+ */
 #define MAP_OFFSET_X 1
+
+/**
+ *  @brief - Ofset pri crtanju mape.
+ */
 #define MAP_OFFSET_Y 1
+
+/**
+ *  @brief - Velicina mape.
+ */
 #define MAP_SIZE 39
 
+
+/**
+ *  @brief - Broj nivoa.
+ */
 #define NUMBER_OF_LEVELS 35
+
+/**
+ *  @brief - Maksimalni broj neprijateljskih tenkova koji se trenutno nalaze na mapi.
+ */
 #define MAX_NUMBER_OF_TANKS 5
+
+/**
+ *  @brief - Broj neprijateljskih tenkova po nivou.
+ */
 #define TANKS_PER_LEVEL 20
-#define REFRESHTIME 10
+
+/**
+ *  @brief - Broj sekundi koliko traje TIMER pojacanje.
+ */
+#define TIMER_SECS 15
+
+/**
+ *  @brief - Broj sekundi koliko traje SHOVEL pojacanje.
+ */
+#define SHOVEL_SECS 20
+
+/**
+ *  @brief - Broj sekundi koliko traje HELMET pojacanje.
+ */
+#define HELMET_SECS 15
+
+/**
+ *  @brief - Broj sekundi koliko traje pocetna neunistivost igraca.
+ */
 #define INVULNERABLE_SECS 5
-#define EXPTIME 1000
-// map tiles
 
 #define INF 123454321
 
+
+/**
+ *  @brief - Parametar RSA enkripcije.
+ */
 #define RSA_N 3233
+
+/**
+ *  @brief - Parametar RSA enkripcije.
+ */
 #define RSA_E 17
+
+/**
+ *  @brief - Parametar RSA enkripcije.
+ */
 #define RSA_D 2753
 
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define  TANK 'T'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define  BASE 'X'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define WATER 'W'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define GRASS 'G'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EMPTY '.'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define STEEL 'S'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define BRICK 'B'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define FRAME 'F'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EXPLOSION 'E'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EXPLOSION_GRASS 'Y'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EXPLOSION_WATER 'Z'
-//game config options
-#define DEBUG 0
+
 #define MAX_SPRITES 128
 #define FRAMES_PER_SEC 30
 
@@ -155,9 +248,6 @@ enum { BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK };
 // types of power-ups
 enum { NORMAL, BOMB, HELMET, SHOVEL, STAR, LIFE, TIMER };
 
-#define TIMER_SECS 15
-#define SHOVEL_SECS 20
-#define HELMET_SECS 15
 
 int levelConfiguration[20];
 

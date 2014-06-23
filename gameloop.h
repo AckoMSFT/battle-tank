@@ -4,7 +4,6 @@
  */
 #ifndef GAMELOOP_H_INCLUDED
 #define GAMELOOP_H_INCLUDED
-#define DEBUG 0
 
 /**
  *  @brief - Funkcija za odredjivanje pozicije novog neprijateljskog tenka.
