@@ -314,7 +314,7 @@ int get_decision_demo(){
             if (!tanks[i].alive) continue;
 
             dj = (player1.x - tanks[i].x)*(player1.x - tanks[i].x) + (player1.y - tanks[i].y)*(player1.y - tanks[i].y);
-            if (di > dj) {
+            if ((float)di/dj > AI_PARAM3) {
                 di = dj;
                 chasePowerUp = false;
                 chaseX = tanks[i].x;
