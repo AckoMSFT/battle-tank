@@ -87,12 +87,11 @@ void update_mapUsed(int usePowerUp){
 
 }
 
-void startGame(int difficulty)
+void startGame()
 {
     int i, j, curr_x, curr_y, size;
     char user_name[42], message[42];
     score = 0;
-    gameDifficulty = difficulty;
     player1.hit_points = (demo?9:3);
     player1.stars = 0;
     player1.shoot_rate = 1;
@@ -170,7 +169,7 @@ void startGame(int difficulty)
         getstr(user_name);
         noecho ( );
         attroff ( A_BOLD );
-        update_high_scores(user_name,score,difficulty);
+        update_high_scores(user_name,score,gameDifficulty);
     }
     return;
 }
@@ -286,7 +285,8 @@ bool startLevel(int level)
                         shoot(&player1, 1);
                         break;
                     case KEY_F(6): return true;
-                }
+                    case 27: return false;
+                    }
             }
         }
 
@@ -296,7 +296,10 @@ bool startLevel(int level)
                         keyPressed = read_input();
 
                 }
-                if (keyPressed == KEY_F(6)) return true;
+                switch(keyPressed){
+                    case KEY_F(6): return true;
+                    case 27: return false;
+                    }
             }
 
             if (! (enemyChoicePlayer == 4 && player1.shoot_state < player1.shoot_speed) && !( player1.move_state < player1.move_speed) ) {

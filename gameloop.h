@@ -6,14 +6,26 @@
 #define GAMELOOP_H_INCLUDED
 #define DEBUG 0
 
-//find a first spot ehre a new tank can be put
+/**
+ *  @brief - Funkcija za odredjivanje pozicije novog neprijateljskog tenka.
+ *  @param *x, *y pokazivaci na varijable u koje ce se upisati pozicija
+ */
 void find_space_tank(int *x, int *y);
 
-//update the mapused, so we can check collisions and find space and tank movement
-void update_mapUsed(int usePowerUp);
+/**
+ *  @brief - Azurira mapu zauzetih polja.
+ *  @param usePowerUp predstavlja 1 ako treba da se azurira pojacanje, 0 u suprotnom
+*/
+void update_mapUsed(bool usePowerUp);
 
+/**
+ *  @brief - Azurira mapu zauzetih polja.
+ *  @param usePowerUp predstavlja 1 ako treba da se azurira pojacanje, 0 u suprotnom
+*/
 //start the gameloop
-void startGame(int);
-int startLevel(int);
+void startGame();
+
+
+int startLevel(int level);
 
 #endif // GAMELOOP_H_INCLUDED

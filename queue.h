@@ -5,7 +5,7 @@
 #ifndef QUEUЕ_H_INCLUDED
 #define QUEUЕ_H_INCLUDED
 
-#define QUEUEMAX 2000
+#define QUEUEMAX MAP_SIZE*MAP_SIZE
 
 typedef struct {
     int contents[QUEUEMAX];

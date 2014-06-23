@@ -5,8 +5,11 @@
 #ifndef STACK_H_INCLUDED
 #define STACK_H_INCLUDED
 
-#define MAXSTACK 2000
+#define MAXSTACK MAP_SIZE*MAP_SIZE
 
+/**
+ *  @brief - Inicijalizacija stvari potrebnih za rad biblioteke ncurses.
+ */
 typedef struct {
     int contents[MAXSTACK];
     int top;

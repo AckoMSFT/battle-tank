@@ -54,11 +54,11 @@ int main(int argc, char **argv)
         if (menu_choice == 0)
         {
             erase();
-            difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
-            if ( difficulty >= INF ) continue;
+            gameDifficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            if ( gameDifficulty >= INF ) continue;
             erase();
             demo = 0;
-            startGame(difficulty);
+            startGame();
         }
         if (menu_choice == 1)
         {
@@ -71,10 +71,10 @@ int main(int argc, char **argv)
         if ( menu_choice == 2 )
         {
             erase();
-            difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
-            if ( difficulty >= INF ) continue;
+            gameDifficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            if ( gameDifficulty >= INF ) continue;
             demo = 1;
-            startGame(difficulty);
+            startGame();
         }
         if (menu_choice == 3)
         {
