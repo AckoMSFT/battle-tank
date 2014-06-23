@@ -13,7 +13,7 @@ Power power_up;
 //configuration for difficulty
 const Difficulty confDiff[3] = {{SPAWNSPEED_EASY,ENEMYSHOOTSPEED_EASY,get_decision_easy,ENEMYMOVESPEED_EASY},{SPAWNSPEED_MEDIUM,ENEMYSHOOTSPEED_MEDIUM,get_decision_medium,ENEMYMOVESPEED_MEDIUM},{SPAWNSPEED_HARD,ENEMYSHOOTSPEED_HARD,get_decision_hard,ENEMYMOVESPEED_HARD}};
 
-char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Start DEMO"}, {"Show High Scores"}, {"Exit Game"}};
+char mainMenu[][100] = {{"Start Game"}, {"Edit Level"}, {"Start DEMO"}, {"Show High Scores"}, {"Clear High Scores"}, {"Exit Game"}};
 char levels[][100] = {{"Level  1"}, {"Level  2"}, {"Level  3"}, {"Level  4"}, {"Level  5"},
                       {"Level  6"}, {"Level  7"}, {"Level  8"}, {"Level  9"}, {"Level 10"},
                       {"Level 11"}, {"Level 12"}, {"Level 13"}, {"Level 14"}, {"Level 15"},
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     while ( 1 )
     {
         erase ( );
-        menu_choice = print_menu (2, 5, 5, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
+        menu_choice = print_menu (2, 5, 6, 15, "Battle Tank - MAIN MENU", mainMenu, 1);
         if (menu_choice == 0)
         {
             erase();
@@ -104,6 +104,26 @@ int main(int argc, char **argv)
             i = print_menu (2, 5, 20, 15, "PRESS ENTER TO RETURN", highScores, 1);
         }
         if (menu_choice == 4)
+        {
+            erase();
+            difficulty = print_menu(2, 5, 3, 15, "SELECT DIFFICULTY", difficulties, 1);
+            if ( difficulty >= INF ) continue;
+            strcpy(temp, "high_scores");
+            switch ( difficulty )
+            {
+            case 0:
+                strcat(temp, "_easy.txt");
+                break;
+            case 1:
+                strcat(temp, "_medium.txt");
+                break;
+            case 2:
+                strcat(temp, "_hard.txt");
+                break;
+            }
+            clear_high_scores ( difficulty );
+        }
+        if (menu_choice == 5)
         {
             kill_curses();
             return 0;

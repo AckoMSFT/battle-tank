@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <locale.h>
 #include <time.h>
 
@@ -63,6 +64,10 @@
 // map tiles
 
 #define INF 123454321
+
+#define RSA_N 3233
+#define RSA_E 17
+#define RSA_D 2753
 
 #define  TANK 'T'
 #define  BASE 'X'

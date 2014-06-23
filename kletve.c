@@ -666,6 +666,19 @@ void print_map ( void )
         if ( bullets[i].alive == false ) continue;
         print_bullet ( bullets[i].x + MAP_OFFSET_X, bullets[i].y + MAP_OFFSET_Y, bullets[i].source );
     }
+    if ( rand ( ) % 10 )
+    {
+        for ( i = 0; i < MAP_SIZE; i++ )
+            for ( j = 0; j < MAP_SIZE; j++ ) if ( map[i][j] == GRASS ) print_grass ( i + MAP_OFFSET_X, j + MAP_OFFSET_Y );
+    }
+    for ( i = 0; i < MAP_SIZE; i++ )
+        for ( j = 0; j < MAP_SIZE; j++ )
+        {
+            if ( map[i][j] == EXPLOSION_GRASS ) map[i][j] = GRASS;
+            if ( map[i][j] == EXPLOSION_WATER ) map[i][j] = WATER;
+            if ( map[i][j] == EXPLOSION ) map[i][j] = EMPTY;
+        }
+    print_power ( &power_up );
     refresh ( );
 }
 
