@@ -55,72 +55,273 @@
 
 #define SPACE ' '
 
+/**
+ *  @brief - Ofset pri crtanju mape.
+ */
 #define MAP_OFFSET_X 1
+
+/**
+ *  @brief - Ofset pri crtanju mape.
+ */
 #define MAP_OFFSET_Y 1
+
+/**
+ *  @brief - Velicina mape.
+ */
 #define MAP_SIZE 39
 
+
+/**
+ *  @brief - Broj nivoa.
+ */
 #define NUMBER_OF_LEVELS 35
+
+/**
+ *  @brief - Maksimalni broj neprijateljskih tenkova koji se trenutno nalaze na mapi.
+ */
 #define MAX_NUMBER_OF_TANKS 5
+
+/**
+ *  @brief - Broj neprijateljskih tenkova po nivou.
+ */
 #define TANKS_PER_LEVEL 20
-#define REFRESHTIME 10
+
+/**
+ *  @brief - Broj sekundi koliko traje TIMER pojacanje.
+ */
+#define TIMER_SECS 15
+
+/**
+ *  @brief - Broj sekundi koliko traje SHOVEL pojacanje.
+ */
+#define SHOVEL_SECS 20
+
+/**
+ *  @brief - Broj sekundi koliko traje HELMET pojacanje.
+ */
+#define HELMET_SECS 15
+
+/**
+ *  @brief - Broj sekundi koliko traje pocetna neunistivost igraca.
+ */
 #define INVULNERABLE_SECS 5
-#define EXPTIME 1000
-// map tiles
 
 #define INF 123454321
 
+
+/**
+ *  @brief - Parametar RSA enkripcije.
+ */
 #define RSA_N 3233
+
+/**
+ *  @brief - Parametar RSA enkripcije.
+ */
 #define RSA_E 17
+
+/**
+ *  @brief - Parametar RSA enkripcije.
+ */
 #define RSA_D 2753
 
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define  TANK 'T'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define  BASE 'X'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define WATER 'W'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define GRASS 'G'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EMPTY '.'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define STEEL 'S'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define BRICK 'B'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define FRAME 'F'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EXPLOSION 'E'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EXPLOSION_GRASS 'Y'
+
+/**
+ *  @brief - Prikazivanje elemenata mape pomocu karaktera.
+ */
 #define EXPLOSION_WATER 'Z'
-//game config options
-#define DEBUG 0
+
+/**
+ *  @brief - Maksimalni broj tenkova i metaka.
+ */
 #define MAX_SPRITES 128
+
+/**
+ *  @brief - Broj prolaska kroz petlju igrice u sekundi.
+ */
 #define FRAMES_PER_SEC 30
 
+
+/**
+ *  @brief - Brzina metka.
+ */
 #define BULLET_SPEED 2
+
+/**
+ *  @brief - Brzina pucanja.
+ */
 #define SHOOT_SPEED 10
+
+/**
+ *  @brief - Brzina kretanja tenka.
+ */
 #define TANK_SPEED 3
+
+/**
+ *  @brief - Parametar funkcije pronalazenja slobodnog mesta za novog neprijateljskog tenka.
+*/
 #define ENEMYSPAWNRANDOM 25
 
+
+/**
+ *  @brief - Brzina pozivanja funkcije za azuriranje vestacke inteligencije.
+ */
 #define AI_SPEED 7
+
+/**
+ *  @brief - Parametar vestacke inteligencije, odredjuje koliko ima istih odluka za redom ukoliko je odlucivanje slucajno.
+ */
 #define AI_PARAM1 3
-//how often should it shot ( ratio between shooting and moving )
+
+/**
+ *  @brief - Parametar vestacke inteligencije, odredjuje odnos odluka pucanja i odluka kretanja ukoliko je odlucivanje slucajno.
+*/
 #define AI_PARAM2 1
+
+/**
+ *  @brief - Parametar vestacke inteligencije, pomaze pri odlucivanju kretanja igraca u demo modu.
+*/
 #define AI_PARAM3 1.1
 
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja koliko se brzo stvaraju novi tenkovi.
+*/
 #define SPAWNSPEED_EASY 160
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja koliko brzo pucaju neprijateljski tenkovi.
+*/
 #define ENEMYSHOOTSPEED_EASY 30
-#define BASE_EASY 0.2
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja verovatnocu da neprijateljski tenk ide ka bazi.
+*/
+#define BASE_EASY 0.3
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja verovatnocu da neprijateljski tenk ide ka igracu.
+*/
 #define MYTANK_EASY 0.2
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja brzinu kretanja neprijateljskih tenkova.
+*/
 #define ENEMYMOVESPEED_EASY 9
 
 //medium
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja koliko se brzo stvaraju novi tenkovi.
+*/
 #define SPAWNSPEED_MEDIUM 120
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja koliko brzo pucaju neprijateljski tenkovi.
+*/
 #define ENEMYSHOOTSPEED_MEDIUM 20
-#define BASE_MEDIUM 0.4
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja verovatnocu da neprijateljski tenk ide ka bazi.
+*/
+#define BASE_MEDIUM 0.3
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja brzinu kretanja neprijateljskih tenkova.
+*/
 #define ENEMYMOVESPEED_MEDIUM 6
-#define MYTANK_MEDIUM 0.2
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja verovatnocu da neprijateljski tenk ide ka igracu.
+*/
+#define MYTANK_MEDIUM 0.4
 
 //hard
-#define SPAWNSPEED_HARD 100
-#define ENEMYSHOOTSPEED_HARD 15
-#define BASE_HARD 0.5
-#define ENEMYMOVESPEED_HARD 4
-#define MYTANK_HARD 0.5
 
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja koliko se brzo stvaraju novi tenkovi.
+*/
+#define SPAWNSPEED_HARD 100
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja koliko brzo pucaju neprijateljski tenkovi.
+*/
+#define ENEMYSHOOTSPEED_HARD 15
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja verovatnocu da neprijateljski tenk ide ka bazi.
+*/
+#define BASE_HARD 0.3
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja brzinu kretanja neprijateljskih tenkova.
+*/
+#define ENEMYMOVESPEED_HARD 4
+
+/**
+ *  @brief - Parametar neprijateljskih tenkova sa najmanju tezinu, predstavlja verovatnocu da neprijateljski tenk ide ka igracu.
+*/
+#define MYTANK_HARD 0.6
+
+
+/**
+ *  @brief - Broj pojacanja po nivou.
+*/
 #define POWERS_PER_LEVEL 3
+
+/**
+ *  @brief - Broj tipova pojacanja.
+*/
+#define NUMBER_OF_POWERS 7
+
 extern int power_indexes[];
 
 typedef struct tank
@@ -154,13 +355,9 @@ typedef struct difficulty
 // types of tanks
 enum { BASIC_TANK, FAST_TANK, POWER_TANK, ARMOR_TANK };
 
-#define NUMBER_OF_POWERS 7
 // types of power-ups
 enum { NORMAL, BOMB, HELMET, SHOVEL, STAR, LIFE, TIMER };
 
-#define TIMER_SECS 15
-#define SHOVEL_SECS 20
-#define HELMET_SECS 15
 
 int levelConfiguration[20];
 
@@ -173,6 +370,7 @@ Bullet bullets[MAX_SPRITES];
 extern int demo;
 extern int totalSpawned, cntKilled, score;
 extern int gameDifficulty;
+
 extern const Difficulty confDiff[3];
 extern char map[MAP_SIZE][MAP_SIZE], editor[MAP_SIZE][MAP_SIZE];
 extern int mapUsed[MAP_SIZE][MAP_SIZE];
