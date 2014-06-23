@@ -1,3 +1,7 @@
+/**
+ *  @file rsa.c
+ *  @brief - Implementacije funkcija za enkripciju i dekripciju.
+ */
 #include "global.h"
 
 int pow ( int a, int b, int c )
