@@ -4,6 +4,29 @@
  */
  #include "global.h"
 
+void clear_high_scores ( int difficulty )
+{
+    int i;
+    char temp[42];
+    FILE * f;
+    strcpy(temp, "high_scores");
+    switch ( difficulty )
+    {
+    case 0:
+        strcat(temp, "_easy.txt");
+        break;
+    case 1:
+        strcat(temp, "_medium.txt");
+        break;
+    case 2:
+        strcat(temp, "_hard.txt");
+        break;
+    }
+    f = fopen ( temp, "w" );
+    for ( i = 0; i < 20; i++ ) fprintf ( f, "0 jovanaETF\n" );
+    fclose ( f );
+}
+
 void update_high_scores (char name[20], int score, int difficulty)
 {
      int i,n,j;
