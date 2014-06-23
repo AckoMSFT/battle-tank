@@ -37,18 +37,47 @@ void go_left( Tank *tank );
 void go_right( Tank *tank );
 
 /**
- *  @brief - Pucanje
+ *  @brief - Ispaljivanje metka iz tenka.
  *  @param *tank pokazivac na tenk
- *  @param origin poreklo metka
  */
 void shoot( Tank *tank );
-// Updating bullets states and moving them, and tank shooting states, and tank moving states
+
+/**
+ *  @brief - Azuriranje stanja svih tenkova i metkova.
+ */
 void update_states() ;
+
+/**
+ *  @brief - Kolizija metkova.
+ */
 int bullets_collision( Bullet bullet1, Bullet bullet2 );
-// Check for collisions of tanks and bullets, respectively bullets and bullets
-void collision() ;
+
+/**
+ *  @brief - Provera svih kolizija.
+ */
+void collision ( );
+
+/**
+ *  @brief - Da li metak moze da srusi dato polje?
+ *  @param x, y koordinate polja
+ *  @return true ili false.
+ */
 int bullet_can_collide(int x,int y);
+
+/**
+ *  @brief - Namestanje zida oko baze
+ *  @param filedType tip zida
+ */
 void base_set(char fieldType);
-//spawn a new tank
-void spawn_tank( int x, int y, int dir, int lives, int, int );
+
+/**
+ *  @brief Stvaranje novog tenka
+ *  @param x, y koordinate
+ *  @param dir smer
+ *  @param type tip
+ *  @param speed brzina kretanja
+ *  @param shootSpeed brzina pucanja
+ */
+void spawn_tank( int x, int y, int dir, int type, int speed, int shootSpeed );
+
 #endif // ENGINE_H_INCLUDED
