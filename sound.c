@@ -4,10 +4,10 @@
  */
  #include "global.h"
 
-void sound_play(char *snd){
+void sound_play(char *sound){
 
 #ifdef _WIN32
-    PlaySound(snd,NULL, SND_ASYNC);
+    PlaySound(sound,NULL, SND_ASYNC);
 #endif
 }
 

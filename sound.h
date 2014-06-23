@@ -5,22 +5,35 @@
 #ifndef SOUND_H_INCLUDED
 #define SOUND_H_INCLUDED
 
-//play sound from file
-void sound_play(char *);
+/**
+ *  @brief - Pustanje zvukova.
+ *  @param *sound ime .wav fajla
+ */
+void sound_play(char *sound);
 
-//play end level sound
+/**
+ *  @brief - Pustanje zvuka za kraj nivoa.
+ */
 void sound_level_end();
 
-//play end game sound
+/**
+ *  @brief - Pustanje zvuka za kraj igrice.
+ */
 void sound_end();
 
-//play level start music
+/**
+ *  @brief - Pustanje zvuka za kraj nivoa.
+ */
 void sound_start_music();
 
-//play explosion sound
+/**
+ *  @brief - Pustanje zvuka za eksploziju.
+ */
 void sound_explosion();
 
-//play sound on shot
+/**
+ *  @brief - Pustanje zvuka za ispaljivanje metka.
+ */
 void sound_shot();
 
 #endif // SOUND_H_INCLUDED
