@@ -326,7 +326,10 @@ extern int power_indexes[];
 
 typedef struct tank
 {
-    int x, y, dir, shoot_state, shoot_rate, shoot_speed, move_speed, move_state, move_rate, value, hit_points, stars, invulnerable, power_type, type, animation_counter;
+    int x; /**< x koordinata*/
+    int y; /**< y koordinata*/
+    int dir; /**< smer*/;
+    int shoot_state, shoot_rate, shoot_speed, move_speed, move_state, move_rate, value, hit_points, stars, invulnerable, power_type, type, animation_counter;
     int AIDecisions [ AI_SPEED ], AIState;
     bool alive, player;
 } Tank;
